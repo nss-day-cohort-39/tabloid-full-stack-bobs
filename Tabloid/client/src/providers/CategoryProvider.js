@@ -1,7 +1,7 @@
 import React, { useState, useContext, createContext } from "react";
 import { UserProfileContext } from "./UserProfileProvider";
 
-export const CategoryContext = React.createContext();
+export const CategoryContext = createContext();
 
 export const CategoryProvider = (props) => {
   const [categories, setCategories] = useState([]);
@@ -41,24 +41,25 @@ export const CategoryProvider = (props) => {
       fetch(`/api/category/${id}`, {
         method: "DELETE",
         headers: {
-            Authorization: `Bearer ${token}`
+          Authorization: `Bearer ${token}`,
+        },
+      }).then((resp) => {
+        if (resp.ok) {
+          return resp.json();
         }
-    }).then((resp) => {
-      if (resp.ok) {
-      return resp.json();
-    }
-    throw new Error("Unauthorized");
-  }))
+        throw new Error("Unauthorized");
+      })
+    );
 
   const updateCategory = (category) =>
     getToken().then((token) =>
       fetch(`/api/category/${category.id}`, {
-          method: "PUT",
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify(category)
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(category),
       }).then((resp) => {
         if (resp.ok) {
           return resp.json();
@@ -74,7 +75,7 @@ export const CategoryProvider = (props) => {
         getAllCategories,
         addCategory,
         deleteCategory,
-        updateCategory
+        updateCategory,
       }}
     >
       {props.children}

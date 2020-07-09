@@ -1,16 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Infrastructure;
-using Microsoft.AspNetCore.Components;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Tabloid.Data;
 using Tabloid.Models;
 using Tabloid.Repositories;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Tabloid.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class CategoryController : ControllerBase
@@ -19,6 +15,12 @@ namespace Tabloid.Controllers
         public CategoryController(ApplicationDbContext context)
         {
             _categoryRepository = new CategoryRepository(context);
+        }
+
+        [HttpGet]
+        public IActionResult Get()
+        {
+            return Ok(_categoryRepository.GetAll());
         }
 
         [HttpGet("{Id}")]
