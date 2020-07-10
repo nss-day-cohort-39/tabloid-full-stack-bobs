@@ -1,7 +1,8 @@
 import React, { useContext, useEffect, useRef } from 'react';
 import { CategoryContext } from '../../providers/CategoryProvider';
 import { PostContext } from '../../providers/PostProvider';
-import { Button } from 'reactstrap';
+import { Button, Form } from 'reactstrap';
+import { useHistory } from 'react-router-dom';
 
 export default ({ toggleModal }) => {
 
@@ -61,13 +62,13 @@ export default ({ toggleModal }) => {
                     <label htmlFor="category" className="form-label">Category:</label>
                     <input type="text" name="caption" required className="form-control"
                         placeholder="type caption here..."
-                        ref={caption}
+                        ref={category}
                         id="postCategory"
                     />
                     <select useRef={category}>
                         {
                             categories.map(c => {
-                                <option value={c.id}>{c.name}</option>
+                                return <option value={c.id}>{c.name}</option>
                             })
                         }
                     </select>
