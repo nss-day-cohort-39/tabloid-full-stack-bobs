@@ -27,10 +27,10 @@ export const Category = ({ category }) => {
       <Card className="categoryCard">
         <CardBody>
           <CardTitle>{category.name}</CardTitle>
-          <Button className="secondary" onClick={toggleEdit}>
+          <Button color="secondary" onClick={toggleEdit}>
             Edit
           </Button>
-          <Button className="danger" onClick={toggleDelete}>
+          <Button color="danger" onClick={toggleDelete}>
             Delete
           </Button>
         </CardBody>
@@ -42,7 +42,7 @@ export const Category = ({ category }) => {
         <div>
           Are you sure you want to delete this category?
           <Button
-            className="danger"
+            color="danger"
             onClick={(e) => {
               e.preventDefault();
               deleteCategory(category.id);
@@ -50,7 +50,7 @@ export const Category = ({ category }) => {
           >
             Yes, delete
           </Button>
-          <Button className="secondary" onClick={toggleDelete}>
+          <Button color="secondary" onClick={toggleDelete}>
             No, go back
           </Button>
         </div>

@@ -45,6 +45,7 @@ export const EditCategoryForm = (props) => {
       >
         Save Updates
       </Button>
+      <Button onClick={props.toggle}>Cancel</Button>
     </form>
   );
 };

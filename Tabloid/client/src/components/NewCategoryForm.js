@@ -33,6 +33,7 @@ export const NewCategoryForm = (props) => {
         />
       </FormGroup>
       <Button
+        color="primary"
         type="submit"
         onClick={(e) => {
           e.preventDefault();
