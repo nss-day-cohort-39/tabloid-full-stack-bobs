@@ -1,11 +1,13 @@
 import React, { useState, useContext, createContext } from "react";
 import { UserProfileContext } from "./UserProfileProvider";
+import { useHistory } from "react-router-dom";
 
 export const CategoryContext = createContext();
 
 export const CategoryProvider = (props) => {
   const [categories, setCategories] = useState([]);
   const { getToken } = useContext(UserProfileContext);
+  const history = useHistory();
 
   const getAllCategories = () =>
     getToken().then((token) =>
@@ -30,9 +32,10 @@ export const CategoryProvider = (props) => {
         body: JSON.stringify(category),
       }).then((resp) => {
         if (resp.ok) {
-          return resp.json();
+          getAllCategories();
+        } else {
+          throw new Error("Unauthorized");
         }
-        throw new Error("Unauthorized");
       })
     );
 
@@ -45,14 +48,15 @@ export const CategoryProvider = (props) => {
         },
       }).then((resp) => {
         if (resp.ok) {
-          return resp.json();
+          getAllCategories();
+        } else {
+          throw new Error("Unauthorized");
         }
-        throw new Error("Unauthorized");
       })
     );
 
-  const updateCategory = (category) =>
-    getToken().then((token) =>
+  const updateCategory = (category) => {
+    return getToken().then((token) =>
       fetch(`/api/category/${category.id}`, {
         method: "PUT",
         headers: {
@@ -62,11 +66,13 @@ export const CategoryProvider = (props) => {
         body: JSON.stringify(category),
       }).then((resp) => {
         if (resp.ok) {
-          return resp.json();
+          getAllCategories();
+        } else {
+          throw new Error("Unauthorized");
         }
-        throw new Error("Unauthorized");
       })
     );
+  };
 
   return (
     <CategoryContext.Provider

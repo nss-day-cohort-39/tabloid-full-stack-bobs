@@ -36,16 +36,17 @@ export const Category = ({ category }) => {
         </CardBody>
       </Card>
       <Modal isOpen={editModal}>
-        <Form>
-          <EditCategoryForm toggle={toggleEdit} category={category} />
-        </Form>
+        <EditCategoryForm toggle={toggleEdit} category={category} />
       </Modal>
       <Modal isOpen={deleteModal}>
         <div>
           Are you sure you want to delete this category?
           <Button
             className="danger"
-            onClick={() => deleteCategory(category.Id)}
+            onClick={(e) => {
+              e.preventDefault();
+              deleteCategory(category.id);
+            }}
           >
             Yes, delete
           </Button>
