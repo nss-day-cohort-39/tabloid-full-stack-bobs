@@ -19,7 +19,7 @@ namespace Tabloid.Repositories
 
         public List<Category> GetAll()
         {
-            return _context.Category.ToList();
+            return _context.Category.OrderBy(c => c.Name).ToList();
         }
 
         public Category GetById(int Id)
