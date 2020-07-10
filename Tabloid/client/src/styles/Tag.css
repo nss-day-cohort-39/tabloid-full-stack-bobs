@@ -1,0 +1,5 @@
+.tagContainer {
+    display: flex;
+    flex-direction: row;
+  }
+  
