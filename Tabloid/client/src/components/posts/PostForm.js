@@ -25,7 +25,7 @@ export default ({ toggleModal }) => {
             createDateTime: new Date().toJSON(),
             publishDateTime: publicationDate.current.value,
             isApproved: true,
-            categoryId: category.current.value,
+            categoryId: parseInt(category.current.value),
             userProfileId: userProfile.id
         })
     }
@@ -60,12 +60,7 @@ export default ({ toggleModal }) => {
             <fieldset>
                 <div className="form-group">
                     <label htmlFor="category" className="form-label">Category:</label>
-                    <input type="text" name="caption" required className="form-control"
-                        placeholder="type caption here..."
-                        ref={category}
-                        id="postCategory"
-                    />
-                    <select useRef={category}>
+                    <select ref={category}>
                         {
                             categories.map(c => {
                                 return <option value={c.id}>{c.name}</option>

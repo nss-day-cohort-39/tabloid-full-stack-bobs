@@ -24,6 +24,7 @@ export const PostProvider = (props) => {
     }
 
     const addPost = (post) => {
+        console.log(post)
         return fetch("/api/post", {
             method: "POST",
             headers: {
