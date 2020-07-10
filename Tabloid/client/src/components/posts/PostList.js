@@ -16,8 +16,11 @@ const PostList = () => {
     }
 
     useEffect(() => {
-        getAllPosts().then(() => getPostsByUserProfileId(user.id)
-            .then(setUserPosts))
+        getAllPosts()
+            .then(() => {
+                getPostsByUserProfileId(user.id)
+                    .then(setUserPosts)
+            })
 
     }, []);
 
