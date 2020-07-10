@@ -1,22 +1,28 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useReducer, useRef } from 'react';
 import { CategoryContext } from '../../providers/CategoryProvider';
 
 export default () => {
 
-    const imageUrl = useRef()
-    const { categories, getAllCategories } = useContext(CategoryContext);
-    const title = useRef()
-    const content = useRef()
+    const { categories, getAllCategories } = useContext(CategoryContext)
     const userProfile = JSON.parse(sessionStorage.getItem("userProfile"))
+    const form = document.querySelector(".postForm")
     const { addPost } = useContext(PostContext)
+    const publicationDate = useRef()
     const history = useHistory()
-    const form = document.querySelector(".gifForm")
+    const category = useRef()
+    const imageUrl = useRef()
+    const content = useRef()
+    const title = useRef()
+
     const createNewGif = () => {
         addPost({
             title: title.current.value,
-            imageUrl: imageUrl.current.value,
-            caption: caption.current.value,
-            dateCreated: new Date().toJSON(),
+            content: content.current.value,
+            imageLocation: imageUrl.current.value,
+            createDateTime: new Date().toJSON(),
+            publishDateTime: publicationDate.current.value,
+            isApproved: true,
+            categoryId: category.current.value,
             userProfileId: userProfile.id
         })
     }
@@ -56,7 +62,7 @@ export default () => {
                         ref={caption}
                         id="postCategory"
                     />
-                    <select>
+                    <select useRef={category}>
                         {
                             categories.map(c => {
                                 <option value={c.id}>{c.name}</option>
@@ -87,10 +93,10 @@ export default () => {
             <Button type="submit" className="btn btn-primary"
                 onClick={evt => {
                     evt.preventDefault()
-                    createNewGif()
-                    history.push("/")
+                    createPost()
+                    history.push("/posts")
                 }}>
-                Save New Gif
+                Save New Post
                 </Button>
         </Form>
     )

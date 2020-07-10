@@ -45,7 +45,7 @@ const PostList = () => {
             <Button id="postToggleButton"
                 onClick={() => toggleButton()}>My Posts
             </Button>
-            <Button>New Post</Button>
+            <Button onClick={toggleModal}>New Post</Button>
             <div className="container">
                 <div className="row justify-content-center">
                     <div className="cards-column">
