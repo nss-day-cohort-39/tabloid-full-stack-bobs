@@ -18,11 +18,13 @@ export default ({ toggleModal }) => {
     const title = useRef()
 
     const createPost = () => {
+        const date = new Date()
+
         addPost({
             title: title.current.value,
             content: content.current.value,
             imageLocation: imageUrl.current.value,
-            createDateTime: new Date().toJSON(),
+            createDateTime: new Date(date.getTime() - (date.getTimezoneOffset() * 60000)).toJSON(),
             publishDateTime: publicationDate.current.value,
             isApproved: true,
             categoryId: parseInt(category.current.value),
