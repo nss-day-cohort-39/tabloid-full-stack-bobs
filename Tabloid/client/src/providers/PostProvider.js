@@ -15,6 +15,7 @@ export const PostProvider = (props) => {
     const getPostsByUserProfileId = (id) => {
         return fetch(`/api/post/getbyuser/${id}`)
             .then((res) => res.json())
+            .then(setPosts)
     }
 
     const getPostById = (id) => {
@@ -30,7 +31,7 @@ export const PostProvider = (props) => {
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify(post),
+            body: JSON.stringify(post)
         })
             .then(getAllPosts)
     };

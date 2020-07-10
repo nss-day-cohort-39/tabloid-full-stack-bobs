@@ -22,20 +22,25 @@ const PostList = () => {
         setModal(!modal)
     }
 
-    useEffect(() => {
-        getAllPosts()
-            .then(() => {
-                getPostsByUserProfileId(user.id)
-                    .then(setUserPosts)
-            })
-    }, []);
+    // useEffect(() => {
+    //     getAllPosts()
+    //     .then(() => {
+    //         getPostsByUserProfileId(user.id)
+    //             .then(setUserPosts)
+    //     })
+    // }, []);
+
 
     useEffect(() => {
         if (myView === true) {
-            setList(userPosts)
+            // setList(userPosts)
+            getPostsByUserProfileId(user.id)
+            document.getElementById("postListHeader").innerHTML = "My Posts"
             document.getElementById("postToggleButton").innerHTML = "All Posts";
         } else {
-            setList(posts)
+            // setList(posts)
+            getAllPosts()
+            document.getElementById("postListHeader").innerHTML = "All Posts"
             document.getElementById("postToggleButton").innerHTML = "My Posts";
         }
     }, [myView]);
@@ -45,12 +50,13 @@ const PostList = () => {
             <Button id="postToggleButton"
                 onClick={() => toggleButton()}>My Posts
             </Button>
-            <Button onClick={toggleModal}>New Post</Button>
+            <Button onClick={toggleModal}>Add Post</Button>
             <div className="container">
+                <h2 id="postListHeader">All Posts</h2>
                 <div className="row justify-content-center">
                     <div className="cards-column">
                         {
-                            list.map((post) => (
+                            posts.map((post) => (
                                 <Post key={post.id} post={post} />
                             ))}
                     </div>
