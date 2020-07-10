@@ -6,13 +6,13 @@ import { Button, Modal, Form } from "reactstrap";
 import { NewTagForm } from "./NewTagForm";
 
 export const TagList = () => {
-  const { categories, getAllCategories } = useContext(TagContext);
+  const { tags, getAllTags } = useContext(TagContext);
   const [newTagModal, setTagModal] = useState(false);
 
   const toggleNewTagModal = () => setTagModal(!newTagModal);
 
   useEffect(() => {
-    getAllCategories();
+    getAllTags();
   }, []);
 
   return (
@@ -26,7 +26,7 @@ export const TagList = () => {
       <div className="tagContainer">
         <div className="row justify-content-center">
           <div className="cards-column">
-            {categories.map((tag) => (
+            {tags.map((tag) => (
               <Tag key={tag.id} tag={tag} />
             ))}
           </div>

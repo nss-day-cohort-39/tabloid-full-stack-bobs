@@ -5,7 +5,7 @@ import { Button } from "reactstrap";
 export const EditTagForm = (props) => {
   const { updateTag } = useContext(TagContext);
 
-  const [updatedTag, setTag] = useState(props.Tag);
+  const [updatedTag, setTag] = useState(props.tag);
 
   const handleControlledInputChange = (event) => {
     const newTag = Object.assign({}, updatedTag);
