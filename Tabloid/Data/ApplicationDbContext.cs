@@ -12,5 +12,6 @@ namespace Tabloid.Data
         public DbSet<Category> Category { get; set; }
 
         public DbSet<Tag> Tag { get; set; }
+        public DbSet<Post> Post { get; set; }
     }
 }
