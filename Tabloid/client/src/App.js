@@ -3,6 +3,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 import { UserProfileProvider } from "./providers/UserProfileProvider";
 import Header from "./components/Header";
 import ApplicationViews from "./components/ApplicationViews";
+import { PostProvider } from "./providers/PostProvider";
 import { CategoryProvider } from "./providers/CategoryProvider";
 import { TagProvider } from "./providers/TagProvider";
 
@@ -11,10 +12,12 @@ function App() {
     <Router>
       <UserProfileProvider>
         <CategoryProvider>
-          <TagProvider>
-            <Header />
-            <ApplicationViews />
-          </TagProvider>
+          <PostProvider>
+            <TagProvider>
+              <Header />
+              <ApplicationViews />
+            </TagProvider>
+          </PostProvider>
         </CategoryProvider>
       </UserProfileProvider>
     </Router>
