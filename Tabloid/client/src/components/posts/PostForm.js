@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
+import { CategoryContext } from '../../providers/CategoryProvider';
 
 export default () => {
 
     const imageUrl = useRef()
-    const { getUserProfile } = useContext(UserProfileContext)
+    const { categories, getAllCategories } = useContext(CategoryContext);
     const title = useRef()
     const content = useRef()
     const userProfile = JSON.parse(sessionStorage.getItem("userProfile"))
@@ -19,6 +20,10 @@ export default () => {
             userProfileId: userProfile.id
         })
     }
+
+    useEffect(() => {
+        getAllCategories();
+    }, []);
 
     return (
         <Form className="postForm">
@@ -51,6 +56,13 @@ export default () => {
                         ref={caption}
                         id="postCategory"
                     />
+                    <select>
+                        {
+                            categories.map(c => {
+                                <option value={c.id}>{c.name}</option>
+                            })
+                        }
+                    </select>
                 </div>
             </fieldset>
             <fieldset>

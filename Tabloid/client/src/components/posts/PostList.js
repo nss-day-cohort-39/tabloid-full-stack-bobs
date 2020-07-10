@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState, useRef } from "react";
 import { PostContext } from "../../providers/PostProvider"
 import Post from "./Post";
 import { Button, Modal, ModalHeader, ModalBody } from 'reactstrap';
+import PostForm from "./PostForm";
 
 
 
@@ -57,7 +58,9 @@ const PostList = () => {
             </div>
             <Modal isOpen={modal} toggle={toggleModal}>
                 <ModalHeader toggle={toggleModal}></ModalHeader>
-                <ModalBody></ModalBody>
+                <ModalBody>
+                    <PostForm />
+                </ModalBody>
             </Modal>
         </>
     );
