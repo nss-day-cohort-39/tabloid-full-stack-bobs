@@ -1,7 +1,9 @@
-import React, { useContext, useEffect, useReducer, useRef } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 import { CategoryContext } from '../../providers/CategoryProvider';
+import { PostContext } from '../../providers/PostProvider';
+import { Button } from 'reactstrap';
 
-export default () => {
+export default ({ toggleModal }) => {
 
     const { categories, getAllCategories } = useContext(CategoryContext)
     const userProfile = JSON.parse(sessionStorage.getItem("userProfile"))
@@ -14,7 +16,7 @@ export default () => {
     const content = useRef()
     const title = useRef()
 
-    const createNewPost = () => {
+    const createPost = () => {
         addPost({
             title: title.current.value,
             content: content.current.value,
@@ -94,10 +96,14 @@ export default () => {
                 onClick={evt => {
                     evt.preventDefault()
                     createPost()
-                    history.push("/posts")
+                    toggleModal()
                 }}>
                 Save New Post
-                </Button>
+            </Button>
+            <Button onClick={() => toggleModal()}>
+                Cancel
+            </Button>
+
         </Form>
     )
 }

@@ -59,7 +59,7 @@ const PostList = () => {
             <Modal isOpen={modal} toggle={toggleModal}>
                 <ModalHeader toggle={toggleModal}></ModalHeader>
                 <ModalBody>
-                    <PostForm />
+                    <PostForm toggleModal={toggleModal} />
                 </ModalBody>
             </Modal>
         </>
