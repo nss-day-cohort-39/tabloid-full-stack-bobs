@@ -25,11 +25,11 @@ namespace Tabloid.Controllers
             return Ok(_postRepository.GetAll());
         }
 
-        //[HttpGet("{getByUser/:id}")]
-        //public IActionResult GetByUserId(int id)
-        //{
-        //    return Ok(_postRepository.GetByUserProfileId(id));
-        //}
+        [HttpGet("getByUser/{id}")]
+        public IActionResult GetByUserId(int id)
+        {
+            return Ok(_postRepository.GetByUserProfileId(id));
+        }
 
         [HttpGet("{id}")]
         public IActionResult Get(int id)
