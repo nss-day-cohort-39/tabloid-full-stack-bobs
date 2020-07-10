@@ -14,7 +14,7 @@ export default () => {
     const content = useRef()
     const title = useRef()
 
-    const createNewGif = () => {
+    const createNewPost = () => {
         addPost({
             title: title.current.value,
             content: content.current.value,
