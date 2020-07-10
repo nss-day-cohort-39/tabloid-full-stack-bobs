@@ -24,7 +24,7 @@ export const Category = ({ category }) => {
 
   return (
     <>
-      <Card>
+      <Card className="categoryCard">
         <CardBody>
           <CardTitle>{category.name}</CardTitle>
           <Button className="secondary" onClick={toggleEdit}>
