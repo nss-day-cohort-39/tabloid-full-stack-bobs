@@ -9,6 +9,10 @@ namespace Tabloid.Data
 
         public DbSet<UserProfile> UserProfile { get; set; }
         public DbSet<UserType> UserType { get; set; }
+<<<<<<< HEAD
         public DbSet<Post> Post { get; set; }
+=======
+        public DbSet<Category> Category { get; set; }
+>>>>>>> master
     }
 }

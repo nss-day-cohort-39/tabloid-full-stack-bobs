@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState, useRef } from "react";
 import { PostContext } from "../../providers/PostProvider"
 import Post from "./Post";
-import { Button } from 'reactstrap';
+import { Button, Modal, ModalHeader, ModalBody } from 'reactstrap';
 
 
 
@@ -11,8 +11,14 @@ const PostList = () => {
     const [list, setList] = useState(posts)
     const user = JSON.parse(sessionStorage.getItem("userProfile"))
     const [userPosts, setUserPosts] = useState([])
+    const [modal, setModal] = useState(false)
+
     const toggleButton = () => {
         setMyView(!myView)
+    }
+
+    const toggleModal = () => {
+        setModal(!modal)
     }
 
     useEffect(() => {
@@ -21,7 +27,6 @@ const PostList = () => {
                 getPostsByUserProfileId(user.id)
                     .then(setUserPosts)
             })
-
     }, []);
 
     useEffect(() => {
@@ -37,7 +42,9 @@ const PostList = () => {
     return (
         <>
             <Button id="postToggleButton"
-                onClick={() => toggleButton()}>My Posts</Button>
+                onClick={() => toggleButton()}>My Posts
+            </Button>
+            <Button>New Post</Button>
             <div className="container">
                 <div className="row justify-content-center">
                     <div className="cards-column">
@@ -48,6 +55,10 @@ const PostList = () => {
                     </div>
                 </div>
             </div>
+            <Modal isOpen={modal} toggle={toggleModal}>
+                <ModalHeader toggle={toggleModal}></ModalHeader>
+                <ModalBody></ModalBody>
+            </Modal>
         </>
     );
 };
