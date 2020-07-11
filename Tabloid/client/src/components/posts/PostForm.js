@@ -24,7 +24,7 @@ export default ({ toggleModal }) => {
             title: title.current.value,
             content: content.current.value,
             imageLocation: imageUrl.current.value,
-            createDateTime: new Date(date.getTime() - (date.getTimezoneOffset() * 60000)).toJSON(),
+            // createDateTime: new Date(date.getTime() - (date.getTimezoneOffset() * 60000)).toJSON(),
             publishDateTime: publicationDate.current.value,
             isApproved: true,
             categoryId: parseInt(category.current.value),
