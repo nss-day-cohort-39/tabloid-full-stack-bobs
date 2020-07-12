@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, createContext } from "react";
+import { UserProfileContext } from "./UserProfileProvider";
 
 
 export const PostContext = React.createContext();
 
+
 export const PostProvider = (props) => {
     const [posts, setPosts] = useState([]);
+    const { getToken } = useContext(UserProfileContext);
 
     const getAllPosts = () => {
         return fetch("/api/post")
@@ -25,7 +28,7 @@ export const PostProvider = (props) => {
 
     const deletePost = (id) =>
         getToken().then((token) =>
-            fetch(`/api/post/${id}`, {
+            fetch(`/api/post/getbyuser/${id}`, {
                 method: "DELETE",
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -39,9 +42,29 @@ export const PostProvider = (props) => {
             })
         );
 
+    const updatePost = (post) => {
+        return getToken().then((token) =>
+            fetch(`/api/post/getbyuser/${post.id}`, {
+                method: "PUT",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(post),
+            }).then((resp) => {
+                if (resp.ok) {
+                    getAllPosts();
+                } else {
+                    throw new Error("Unauthorized");
+                }
+            })
+        );
+    };
+
     return (
         <PostContext.Provider value={{
-            posts, getAllPosts, setPosts, getPostsByUserProfileId, getPostById, deletePost
+            posts, getAllPosts, setPosts, getPostsByUserProfileId,
+            getPostById, deletePost, updatePost
         }}>
             {props.children}
         </PostContext.Provider>

@@ -1,7 +1,8 @@
 import React, { useEffect, useContext, useState } from "react";
 import { PostContext } from "../../providers/PostProvider";
-import { Card, CardImg, CardBody, Button } from "reactstrap";
+import { Card, CardImg, CardBody, Button, Modal } from "reactstrap";
 import { Link, useParams, useHistory } from "react-router-dom";
+import { EditPostForm } from "../posts/EditPostForm";
 
 const PostDetails = () => {
     const { id } = useParams()
@@ -16,11 +17,13 @@ const PostDetails = () => {
     const [deleteModal, setDeleteModal] = useState(false);
     const toggleDelete = () => setDeleteModal(!deleteModal);
 
+    const [editModal, setEditModal] = useState(false);
+    const toggleEdit = () => setEditModal(!editModal);
+
     return (
         <>
             <Card className="m-4">
-                <p className="text-left px-2">
-                </p>
+                <p className="text-left px-2"></p>
                 <CardImg top src={post.imageLocation} alt={post.title} />
                 <CardBody>
                     <p><strong>{post.title}</strong></p>
@@ -28,24 +31,29 @@ const PostDetails = () => {
                     <p>{post.publishDateTime}</p>
                     <p>Author: {post.userProfile.displayName}</p>
                 </CardBody>
-                <Button id='backToPosts' onClick={() => history.push("/posts")}>Back</Button>
-                <Button color="danger" onClick={toggleDelete}>Delete</Button>
+                <Button id='backToPosts' onClick={() =>
+                    history.push("/posts")}> Back </Button>
+                <Button color="info" onClick={toggleEdit}> Edit </Button>
+                <Button color="danger" onClick={toggleDelete}> Delete </Button>
             </Card>
+            <Modal isOpen={editModal}>
+                <EditPostForm toggle={toggleEdit} post={post} />
+            </Modal>
             <Modal isOpen={deleteModal}>
                 <div>
                     Are you sure you want to delete this post?
-          <Button
+                <Button
                         color="danger"
                         onClick={(e) => {
                             e.preventDefault();
                             deletePost(post.id);
-                        }}
-                    >
+                        }}>
                         Yes, delete
-          </Button>
-                    <Button color="secondary" onClick={toggleDelete}>
+                </Button>
+                    <Button color="secondary"
+                        onClick={toggleDelete}>
                         No, go back
-          </Button>
+                    </Button>
                 </div>
             </Modal>
         </>
