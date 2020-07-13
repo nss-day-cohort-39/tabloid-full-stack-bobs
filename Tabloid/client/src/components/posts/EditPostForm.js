@@ -21,8 +21,12 @@ export const EditPostForm = (props) => {
     }, [])
 
     const editPost = () => {
+        updatedPost.categoryId = parseInt(updatedPost.categoryId)
+        console.log(updatedPost)
         updatePost(updatedPost).then(props.toggle).then(history.push("/posts"));
     }
+    console.log(categories)
+
 
     return (
         <>
@@ -62,6 +66,7 @@ export const EditPostForm = (props) => {
                                 defaultValue={props.post.categoryId}
                                 onChange={handleControlledInputChange}
                             >
+                                <option value={props.post.categoryId}>{props.post.category.name}</option>
                                 {categories.map((e) => (
                                     <option key={e.id} value={e.id}>
                                         {e.name}
@@ -71,7 +76,7 @@ export const EditPostForm = (props) => {
                             Header Image:
                      <input
                                 type="text"
-                                name="imageURL"
+                                name="imageLocation"
                                 className="form-control"
                                 placeholder="Edit post image"
                                 defaultValue={props.post.imageLocation}
