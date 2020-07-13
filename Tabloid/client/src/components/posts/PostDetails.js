@@ -1,6 +1,6 @@
 import React, { useEffect, useContext, useState } from "react";
 import { PostContext } from "../../providers/PostProvider";
-import { Card, CardImg, CardBody, Button, Modal } from "reactstrap";
+import { Card, CardImg, CardBody, Button, Modal, ModalBody, ModalHeader } from "reactstrap";
 import { Link, useParams, useHistory } from "react-router-dom";
 import { EditPostForm } from "../posts/EditPostForm";
 
@@ -37,7 +37,10 @@ const PostDetails = () => {
                 <Button color="danger" onClick={toggleDelete}> Delete </Button>
             </Card>
             <Modal isOpen={editModal}>
-                <EditPostForm toggle={toggleEdit} post={post} />
+                <ModalHeader>EDIT POST</ModalHeader>
+                <ModalBody>
+                    <EditPostForm toggle={toggleEdit} post={post} />
+                </ModalBody>
             </Modal>
             <Modal isOpen={deleteModal}>
                 <div>

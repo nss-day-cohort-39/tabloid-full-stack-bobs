@@ -1,11 +1,11 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { PostContext } from "../../providers/PostProvider";
 import { CategoryContext } from "../../providers/CategoryProvider";
 import { Button } from "reactstrap";
 
 export const EditPostForm = (props) => {
     const { updatePost } = useContext(PostContext);
-    const { categories } = useContext(CategoryContext)
+    const { categories, getAllCategories } = useContext(CategoryContext)
     const [updatedPost, setPost] = useState(props.post);
 
     const handleControlledInputChange = (event) => {
@@ -14,19 +14,20 @@ export const EditPostForm = (props) => {
         setPost(newPost);
     };
 
+    useEffect(() => {
+        getAllCategories()
+    }, [])
+
     const editPost = () => {
-        const categoryId = parseInt(updatedPost.categoryId);
         updatePost(updatedPost).then(props.toggle);
+    }
 
-        if (categoryId === 0) {
-            window.alert("Please select a category");
-        };
-
-        return (
+    return (
+        <>
             <form className="newPostForm">
                 <fieldset>
                     <div className="form-group">
-                        <label htmlFor="name">
+                        <label htmlFor="title">
                             Title:
                     <input
                                 type="text"
@@ -40,8 +41,10 @@ export const EditPostForm = (props) => {
                             />
                             Content:
                     <input
-                                type="text"
+                                type="textarea"
                                 name="content"
+                                rows="20"
+                                columns="50"
                                 required
                                 autoFocus
                                 className="form-control"
@@ -57,19 +60,16 @@ export const EditPostForm = (props) => {
                                 defaultValue={props.post.categoryId}
                                 onChange={handleControlledInputChange}
                             >
-                                <option value="0">Select a category</option>
                                 {categories.map((e) => (
                                     <option key={e.id} value={e.id}>
                                         {e.name}
                                     </option>
                                 ))}
                             </select>
-
                             Header Image:
                      <input
                                 type="text"
                                 name="imageURL"
-                                autoFocus
                                 className="form-control"
                                 placeholder="Edit post image"
                                 defaultValue={props.post.imageLocation}
@@ -78,16 +78,16 @@ export const EditPostForm = (props) => {
                             Published Date:
                      <input
                                 type="date"
-                                name="imageURL"
-                                autoFocus
+                                name="publishDateTime"
                                 className="form-control"
                                 placeholder="Edit publish date"
-                                defaultValue={props.post.publishDateTime}
+                                defaultValue={props.post.publishDateTime.split("T")[0]}
                                 onChange={handleControlledInputChange}
                             />
                         </label>
                     </div>
                 </fieldset>
+
                 <Button
                     color="primary"
                     onClick={(e) => {
@@ -101,6 +101,7 @@ export const EditPostForm = (props) => {
                     Cancel
                 </Button>
             </form>
-        );
-    }
+        </>
+    );
+
 }
