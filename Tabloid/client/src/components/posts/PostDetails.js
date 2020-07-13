@@ -14,19 +14,21 @@ const PostDetails = () => {
     }, [])
 
     return (
-        <Card className="m-4">
-            <p className="text-left px-2">
-            </p>
-            <CardImg top src={post.imageLocation} alt={post.title} />
-            <CardBody>
-                <p><strong>{post.title}</strong></p>
-                <p> {post.content}</p>
-                <p>{post.publishDateTime}</p>
-                <p>Author: {post.userProfile.displayName}</p>
-            </CardBody>
-            <Button id='backToPosts' onClick={() => history.push("/posts")}>Back</Button>
-        </Card>
-    );
+        <>
+            <Card className="m-4">
+                <p className="text-left px-2">
+                </p>
+                <CardImg top src={post.imageLocation} alt={post.title} />
+                <CardBody>
+                    <p><strong>{post.title}</strong></p>
+                    <p> {post.content}</p>
+                    <p>{post.publishDateTime}</p>
+                    <p>Author: {post.userProfile.displayName}</p>
+                </CardBody>
+                <Button id='backToPosts' onClick={() => history.push("/posts")}>Back</Button>
+            </Card>
+        </>
+    )
 };
 
 export default PostDetails;
