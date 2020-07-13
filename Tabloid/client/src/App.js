@@ -11,14 +11,14 @@ function App() {
   return (
     <Router>
       <UserProfileProvider>
-        <CategoryProvider>
-          <PostProvider>
-            <TagProvider>
+        <PostProvider>
+          <TagProvider>
+            <CategoryProvider>
               <Header />
               <ApplicationViews />
-            </TagProvider>
-          </PostProvider>
-        </CategoryProvider>
+            </CategoryProvider>
+          </TagProvider>
+        </PostProvider>
       </UserProfileProvider>
     </Router>
   );

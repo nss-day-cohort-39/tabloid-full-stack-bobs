@@ -38,6 +38,14 @@ namespace Tabloid.Controllers
             return Ok(_postRepository.GetById(id));
         }
 
+        [HttpPost]
+        public IActionResult Post(Post post)
+        {
+            post.CreateDateTime = DateTime.Now;
+            _postRepository.AddPost(post);
+            return CreatedAtAction("Get", new { id = post.Id }, post);
+        }
+
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {

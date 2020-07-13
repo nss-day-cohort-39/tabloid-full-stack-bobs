@@ -23,7 +23,8 @@ const PostDetails = () => {
     return (
         <>
             <Card className="m-4">
-                <p className="text-left px-2"></p>
+                <p className="text-left px-2">
+                </p>
                 <CardImg top src={post.imageLocation} alt={post.title} />
                 <CardBody>
                     <p><strong>{post.title}</strong></p>
@@ -31,8 +32,7 @@ const PostDetails = () => {
                     <p>{post.publishDateTime}</p>
                     <p>Author: {post.userProfile.displayName}</p>
                 </CardBody>
-                <Button id='backToPosts' onClick={() =>
-                    history.push("/posts")}> Back </Button>
+                <Button id='backToPosts' onClick={() => history.push("/posts")}>Back</Button>
                 <Button color="info" onClick={toggleEdit}> Edit </Button>
                 <Button color="danger" onClick={toggleDelete}> Delete </Button>
             </Card>
@@ -49,7 +49,7 @@ const PostDetails = () => {
                         color="danger"
                         onClick={(e) => {
                             e.preventDefault();
-                            deletePost(post.id);
+                            deletePost(id).then(history.push("/posts"));
                         }}>
                         Yes, delete
                 </Button>

@@ -1,12 +1,14 @@
 import React, { useContext, useState, useEffect } from "react";
 import { PostContext } from "../../providers/PostProvider";
 import { CategoryContext } from "../../providers/CategoryProvider";
-import { Button } from "reactstrap";
+import { Button, Form } from "reactstrap";
+import { useHistory } from "react-router-dom";
 
 export const EditPostForm = (props) => {
     const { updatePost } = useContext(PostContext);
     const { categories, getAllCategories } = useContext(CategoryContext)
     const [updatedPost, setPost] = useState(props.post);
+    const history = useHistory()
 
     const handleControlledInputChange = (event) => {
         const newPost = Object.assign({}, updatedPost);
@@ -19,12 +21,12 @@ export const EditPostForm = (props) => {
     }, [])
 
     const editPost = () => {
-        updatePost(updatedPost).then(props.toggle);
+        updatePost(updatedPost).then(props.toggle).then(history.push("/posts"));
     }
 
     return (
         <>
-            <form className="newPostForm">
+            <Form className="editPostForm">
                 <fieldset>
                     <div className="form-group">
                         <label htmlFor="title">
@@ -100,7 +102,7 @@ export const EditPostForm = (props) => {
                 <Button onClick={props.toggle}>
                     Cancel
                 </Button>
-            </form>
+            </Form>
         </>
     );
 

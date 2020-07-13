@@ -48,6 +48,11 @@ namespace Tabloid.Repositories
                             .FirstOrDefault(p => p.Id == id);
         }
 
+        public void AddPost(Post post)
+        {
+            _context.Add(post);
+            _context.SaveChanges();
+        }
         public void Delete(int id)
         {
             var post = GetById(id);

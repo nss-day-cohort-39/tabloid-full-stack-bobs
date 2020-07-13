@@ -7,7 +7,7 @@ export const PostContext = React.createContext();
 
 export const PostProvider = (props) => {
     const [posts, setPosts] = useState([]);
-    const { getToken } = useContext(UserProfileContext);
+
 
     const getAllPosts = () => {
         return fetch("/api/post")
@@ -18,6 +18,7 @@ export const PostProvider = (props) => {
     const getPostsByUserProfileId = (id) => {
         return fetch(`/api/post/getbyuser/${id}`)
             .then((res) => res.json())
+            .then(setPosts)
     }
 
     const getPostById = (id) => {
@@ -26,45 +27,44 @@ export const PostProvider = (props) => {
             .then((res) => res.json())
     }
 
-    const deletePost = (id) =>
-        getToken().then((token) =>
-            fetch(`/api/post/${id}`, {
-                method: "DELETE",
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            }).then((resp) => {
-                if (resp.ok) {
-                    getAllPosts();
-                } else {
-                    throw new Error("Unauthorized");
-                }
-            })
-        );
+    const deletePost = (id) => {
+        return fetch(`/api/post/${id}`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        }).then(getAllPosts)
+
+    }
 
     const updatePost = (post) => {
-        return getToken().then((token) =>
-            fetch(`/api/post/${post.id}`, {
-                method: "PUT",
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(post),
-            }).then((resp) => {
-                if (resp.ok) {
-                    getAllPosts();
-                } else {
-                    throw new Error("Unauthorized");
-                }
-            })
-        );
+        return fetch(`/api/post/${post.id}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(post),
+        }).then(getAllPosts);;
+
+    }
+
+    const addPost = (post) => {
+        console.log(post)
+        return fetch("/api/post", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(post)
+        })
+            .then(getAllPosts)
     };
 
     return (
         <PostContext.Provider value={{
             posts, getAllPosts, setPosts, getPostsByUserProfileId,
-            getPostById, deletePost, updatePost
+            getPostById, deletePost, updatePost,
+            addPost
         }}>
             {props.children}
         </PostContext.Provider>
