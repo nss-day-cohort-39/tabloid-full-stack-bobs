@@ -14,7 +14,7 @@ const Post = ({ post }) => {
                     <strong>{post.title}</strong>
                 </Link>
                 <p>Author: {post.userProfile.displayName}</p>
-                {<p>Category: {post.category.name}</p>}
+                <p>Category: {post.category.name}</p>
             </CardBody>
         </Card>
     );

@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, createContext } from "react";
+import { UserProfileContext } from "./UserProfileProvider";
 
 
 export const PostContext = React.createContext();
 
+
 export const PostProvider = (props) => {
     const [posts, setPosts] = useState([]);
+
 
     const getAllPosts = () => {
         return fetch("/api/post")
@@ -24,6 +27,27 @@ export const PostProvider = (props) => {
             .then((res) => res.json())
     }
 
+    const deletePost = (id) => {
+        return fetch(`/api/post/${id}`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        }).then(getAllPosts)
+
+    }
+
+    const updatePost = (post) => {
+        return fetch(`/api/post/${post.id}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(post),
+        }).then(getAllPosts);;
+
+    }
+
     const addPost = (post) => {
         console.log(post)
         return fetch("/api/post", {
@@ -38,7 +62,9 @@ export const PostProvider = (props) => {
 
     return (
         <PostContext.Provider value={{
-            posts, getAllPosts, setPosts, getPostsByUserProfileId, getPostById, addPost
+            posts, getAllPosts, setPosts, getPostsByUserProfileId,
+            getPostById, deletePost, updatePost,
+            addPost
         }}>
             {props.children}
         </PostContext.Provider>

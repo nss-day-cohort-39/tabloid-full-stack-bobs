@@ -1,21 +1,32 @@
 import React, { useEffect, useContext, useState } from "react";
 import { PostContext } from "../../providers/PostProvider";
-import { Card, CardImg, CardBody, Button } from "reactstrap";
+import {
+  Card,
+  CardImg,
+  CardBody,
+  Button,
+  Modal,
+  ModalBody,
+  ModalHeader,
+} from "reactstrap";
 import { Link, useParams, useHistory } from "react-router-dom";
-import { TagContext } from "../../providers/TagProvider";
+import { EditPostForm } from "../posts/EditPostForm";
 
 const PostDetails = () => {
   const { id } = useParams();
-  const { getPostById } = useContext(PostContext);
-  const { getTagsByPostId, tags } = useContext(TagContext);
-
+  const { getPostById, deletePost } = useContext(PostContext);
   const [post, setPost] = useState({ userProfile: {} });
   const history = useHistory();
 
   useEffect(() => {
-    getPostById(id).then(setPost).then(getTagsByPostId(id));
+    getPostById(id).then(setPost);
   }, []);
 
+  const [deleteModal, setDeleteModal] = useState(false);
+  const toggleDelete = () => setDeleteModal(!deleteModal);
+
+  const [editModal, setEditModal] = useState(false);
+  const toggleEdit = () => setEditModal(!editModal);
   return (
     <>
       <Card className="m-4">
@@ -28,19 +39,42 @@ const PostDetails = () => {
           <p> {post.content}</p>
           <p>{post.publishDateTime}</p>
           <p>Author: {post.userProfile.displayName}</p>
-          <p>
-            Tags:{" "}
-            {tags.map((t) => (
-              <>
-                <p>{t.name}</p>
-              </>
-            ))}
-          </p>
         </CardBody>
         <Button id="backToPosts" onClick={() => history.push("/posts")}>
           Back
         </Button>
+        <Button color="info" onClick={toggleEdit}>
+          {" "}
+          Edit{" "}
+        </Button>
+        <Button color="danger" onClick={toggleDelete}>
+          {" "}
+          Delete{" "}
+        </Button>
       </Card>
+      <Modal isOpen={editModal}>
+        <ModalHeader>EDIT POST</ModalHeader>
+        <ModalBody>
+          <EditPostForm toggle={toggleEdit} post={post} />
+        </ModalBody>
+      </Modal>
+      <Modal isOpen={deleteModal}>
+        <div>
+          Are you sure you want to delete this post?
+          <Button
+            color="danger"
+            onClick={(e) => {
+              e.preventDefault();
+              deletePost(id).then(history.push("/posts"));
+            }}
+          >
+            Yes, delete
+          </Button>
+          <Button color="secondary" onClick={toggleDelete}>
+            No, go back
+          </Button>
+        </div>
+      </Modal>
     </>
   );
 };
