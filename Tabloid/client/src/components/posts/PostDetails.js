@@ -19,7 +19,6 @@ const PostDetails = () => {
 
     const [editModal, setEditModal] = useState(false);
     const toggleEdit = () => setEditModal(!editModal);
-    console.log(id)
     return (
         <>
             <Card className="m-4">

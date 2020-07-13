@@ -25,8 +25,6 @@ export const EditPostForm = (props) => {
         console.log(updatedPost)
         updatePost(updatedPost).then(props.toggle).then(history.push("/posts"));
     }
-    console.log(categories)
-
 
     return (
         <>
