@@ -21,6 +21,18 @@ export const TagProvider = (props) => {
         .then(setTags)
     );
 
+  const getTagsByPostId = (id) =>
+    getToken().then((token) =>
+      fetch(`/api/tag/getbypost/${id}`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((res) => res.json())
+        .then(setTags)
+    );
+
   const addTag = (tag) =>
     getToken().then((token) =>
       fetch("/api/tag", {
@@ -79,6 +91,7 @@ export const TagProvider = (props) => {
       value={{
         tags,
         getAllTags,
+        getTagsByPostId,
         addTag,
         deleteTag,
         updateTag,
