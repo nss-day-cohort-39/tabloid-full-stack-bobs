@@ -53,6 +53,20 @@ namespace Tabloid.Repositories
             _context.Add(post);
             _context.SaveChanges();
         }
+        public void Delete(int id)
+        {
+            var post = GetById(id);
+            _context.Post.Remove(post);
+            _context.SaveChanges();
+        }
+
+        public void Update(Post post)
+        {
+            _context.Entry(post).State = EntityState.Modified;
+            _context.SaveChanges();
+        }
+
+
 
 
     }
