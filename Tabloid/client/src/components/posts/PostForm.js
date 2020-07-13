@@ -63,7 +63,7 @@ export default ({ toggleModal }) => {
                     <select ref={category}>
                         {
                             categories.map(c => {
-                                return <option value={c.id}>{c.name}</option>
+                                return <option key={c.id} value={c.id}>{c.name}</option>
                             })
                         }
                     </select>
