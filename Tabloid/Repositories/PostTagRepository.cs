@@ -29,7 +29,7 @@ namespace Tabloid.Repositories
 
 
 
-        public List<PostTag> GetTagsByPostId(int id)
+        public List<PostTag> GetPostTagsByPostId(int id)
         {
             return _context.PostTag.Include(pt => pt.Tag)
                                 .Where(pt => pt.PostId == id)

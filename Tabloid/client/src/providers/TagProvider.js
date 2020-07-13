@@ -5,6 +5,7 @@ import { useHistory } from "react-router-dom";
 export const TagContext = createContext();
 
 export const TagProvider = (props) => {
+  const [postTags, setPostTags] = useState([]);
   const [tags, setTags] = useState([]);
   const { getToken } = useContext(UserProfileContext);
   const history = useHistory();
@@ -21,16 +22,16 @@ export const TagProvider = (props) => {
         .then(setTags)
     );
 
-  const getTagsByPostId = (id) =>
+  const getPostTagsByPostId = (id) =>
     getToken().then((token) =>
-      fetch(`/api/tag/getbypost/${id}`, {
+      fetch(`/api/posttag/getbypost/${id}`, {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,
         },
       })
         .then((res) => res.json())
-        .then(setTags)
+        .then(setPostTags)
     );
 
   const addTag = (tag) =>
@@ -90,8 +91,9 @@ export const TagProvider = (props) => {
     <TagContext.Provider
       value={{
         tags,
+        postTags,
         getAllTags,
-        getTagsByPostId,
+        getPostTagsByPostId,
         addTag,
         deleteTag,
         updateTag,

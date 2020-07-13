@@ -28,9 +28,9 @@ namespace Tabloid.Controllers
         }
 
         [HttpGet("getByPost/{id}")]
-        public IActionResult GetTagsByPostId(int id)
+        public IActionResult GetPostTagsByPostId(int id)
         {
-            return Ok(_postTagRepository.GetTagsByPostId(id));
+            return Ok(_postTagRepository.GetPostTagsByPostId(id));
         }
 
         [HttpPost]

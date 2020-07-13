@@ -11,15 +11,20 @@ import {
 } from "reactstrap";
 import { Link, useParams, useHistory } from "react-router-dom";
 import { EditPostForm } from "../posts/EditPostForm";
+import { TagContext } from "../../providers/TagProvider";
 
 const PostDetails = () => {
-  const { id } = useParams();
+  let { id } = useParams();
+  id = parseInt(id);
   const { getPostById, deletePost } = useContext(PostContext);
   const [post, setPost] = useState({ userProfile: {} });
+
   const history = useHistory();
 
+  const { getPostTagsByPostId, postTags } = useContext(TagContext);
+
   useEffect(() => {
-    getPostById(id).then(setPost);
+    getPostById(id).then(setPost).then(getPostTagsByPostId(id));
   }, []);
 
   const [deleteModal, setDeleteModal] = useState(false);
@@ -27,6 +32,7 @@ const PostDetails = () => {
 
   const [editModal, setEditModal] = useState(false);
   const toggleEdit = () => setEditModal(!editModal);
+
   return (
     <>
       <Card className="m-4">
@@ -39,6 +45,12 @@ const PostDetails = () => {
           <p> {post.content}</p>
           <p>{post.publishDateTime}</p>
           <p>Author: {post.userProfile.displayName}</p>
+          <ul>
+            Tags:
+            {postTags.map((pt) => (
+              <li key={pt.id}>{pt.tag.name}</li>
+            ))}
+          </ul>
         </CardBody>
         <Button id="backToPosts" onClick={() => history.push("/posts")}>
           Back
