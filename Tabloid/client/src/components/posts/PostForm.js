@@ -18,13 +18,11 @@ export default ({ toggleModal }) => {
     const title = useRef()
 
     const createPost = () => {
-        const date = new Date()
 
         addPost({
             title: title.current.value,
             content: content.current.value,
             imageLocation: imageUrl.current.value,
-            // createDateTime: new Date(date.getTime() - (date.getTimezoneOffset() * 60000)).toJSON(),
             publishDateTime: publicationDate.current.value,
             isApproved: true,
             categoryId: parseInt(category.current.value),
@@ -42,7 +40,7 @@ export default ({ toggleModal }) => {
             <fieldset>
                 <div className="form-group">
                     <label htmlFor="title" className="form-label">Title:</label>
-                    <input type="text" name="title" required className="form-control"
+                    <input type="textarea" name="title" required className="form-control"
                         placeholder="type title here..."
                         ref={title}
                         id="postTitle"
