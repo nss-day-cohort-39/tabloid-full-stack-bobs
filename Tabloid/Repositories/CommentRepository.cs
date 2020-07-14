@@ -22,7 +22,7 @@ namespace Tabloid.Repositories
             return _context.Comment.Include(c => c.Post)
                             .Include(c => c.UserProfile)
                             .Where(c => c.PostId == id)
-                            .OrderBy(c => c.CreateDateTime)
+                            .OrderByDescending(c => c.CreateDateTime)
                             .ToList();
         }
 
