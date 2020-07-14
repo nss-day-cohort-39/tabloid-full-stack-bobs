@@ -25,5 +25,11 @@ namespace Tabloid.Repositories
                             .OrderBy(c => c.CreateDateTime)
                             .ToList();
         }
+
+        public void AddComment(Comment comment)
+        {
+            _context.Add(comment);
+            _context.SaveChanges();
+        }
     }
 }

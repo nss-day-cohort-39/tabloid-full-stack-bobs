@@ -21,23 +21,19 @@ export const CommentProvider = (props) => {
         .then(setComments)
     );
 
-  //   const addTag = (tag) =>
-  //     getToken().then((token) =>
-  //       fetch("/api/tag", {
-  //         method: "POST",
-  //         headers: {
-  //           Authorization: `Bearer ${token}`,
-  //           "Content-Type": "application/json",
-  //         },
-  //         body: JSON.stringify(tag),
-  //       }).then((resp) => {
-  //         if (resp.ok) {
-  //           getAllTags();
-  //         } else {
-  //           throw new Error("Unauthorized");
-  //         }
-  //       })
-  //     );
+  const addComment = (comment, postId) =>
+    getToken().then((token) =>
+      fetch("/api/comment", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(comment),
+      }).then(() => {
+        getCommentsByPostId(postId);
+      })
+    );
 
   //   const deleteTag = (id) =>
   //     getToken().then((token) =>
@@ -79,7 +75,7 @@ export const CommentProvider = (props) => {
       value={{
         comments,
         getCommentsByPostId,
-        // aComment,
+        addComment,
         // deleteTag,
         // updateTag,
       }}

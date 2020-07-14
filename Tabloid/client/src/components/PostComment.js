@@ -1,10 +1,21 @@
 import React, { useState } from "react";
-import { Collapse, Button, CardBody, Card } from "reactstrap";
+import {
+  Collapse,
+  Button,
+  CardBody,
+  Card,
+  Modal,
+  ModalHeader,
+  ModalBody,
+} from "reactstrap";
+import { NewCommentForm } from "./NewCommentForm";
 
-export const PostComment = ({ comments }) => {
+export const PostComment = ({ comments, postId }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [toggleNewComment, setNewComment] = useState(false);
 
   const toggle = () => setIsOpen(!isOpen);
+  const toggleNewCommentForm = () => setNewComment(!toggleNewComment);
 
   return (
     <div>
@@ -17,22 +28,31 @@ export const PostComment = ({ comments }) => {
             {comments.map((c) => (
               <div key={c.id}>
                 <p>
-                  <strong>Subject:</strong> {c.subject}
+                  <strong>{c.subject}</strong>
                 </p>
-                <p>
-                  <strong>Comment:</strong> {c.content}
-                </p>
-                <p>
-                  <strong>Author:</strong> {c.userProfile.displayName}
-                </p>
-                <p>
-                  <strong>Date Created:</strong>{" "}
-                  {c.createDateTime.toLocaleString()}
-                </p>
+                <p>{c.content}</p>
+                <p>Author: {c.userProfile.displayName}</p>
+                <p>Date Created: {c.createDateTime.toLocaleString()}</p>
               </div>
             ))}
           </CardBody>
         </Card>
+        <Button
+          color="primary"
+          onClick={toggleNewCommentForm}
+          style={{ marginBottom: "1rem" }}
+        >
+          Add a New Comment
+        </Button>
+        <Modal isOpen={toggleNewComment} toggle={toggleNewCommentForm}>
+          <ModalHeader toggle={toggleNewCommentForm}></ModalHeader>
+          <ModalBody>
+            <NewCommentForm
+              toggleModal={toggleNewCommentForm}
+              postId={postId}
+            />
+          </ModalBody>
+        </Modal>
       </Collapse>
     </div>
   );
