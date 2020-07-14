@@ -12,26 +12,37 @@ import {
 import { Link, useParams, useHistory } from "react-router-dom";
 import { EditPostForm } from "../posts/EditPostForm";
 import { TagContext } from "../../providers/TagProvider";
+import { PostTagForm } from "../PostTagForm";
 
 const PostDetails = () => {
   let { id } = useParams();
   id = parseInt(id);
   const { getPostById, deletePost } = useContext(PostContext);
+  const { getPostTagsByPostId, postTags, getAllPostTags, 
+            addTagToPost, deleteTagFromPost } = useContext(TagContext);
   const [post, setPost] = useState({ userProfile: {} });
 
   const history = useHistory();
 
-  const { getPostTagsByPostId, postTags } = useContext(TagContext);
+  
+    const [deleteModal, setDeleteModal] = useState(false);
+    const toggleDelete = () => setDeleteModal(!deleteModal);
+  
+    const [editModal, setEditModal] = useState(false);
+    const toggleEdit = () => setEditModal(!editModal);
+  
+    const [postTagModal, setPostTagModal] = useState(false);
+    const togglePostTag = () => setPostTagModal(!postTagModal);
 
   useEffect(() => {
-    getPostById(id).then(setPost).then(getPostTagsByPostId(id));
-  }, []);
+    getPostById(id)
+    .then(setPost)
+    .then(getPostTagsByPostId(id))
+    // .then(getAllPostTags);
+  }, [postTagModal]);
 
-  const [deleteModal, setDeleteModal] = useState(false);
-  const toggleDelete = () => setDeleteModal(!deleteModal);
+  // const associatedPostTags = getPostTagsByPostId(id);
 
-  const [editModal, setEditModal] = useState(false);
-  const toggleEdit = () => setEditModal(!editModal);
 
   return (
     <>
@@ -47,9 +58,9 @@ const PostDetails = () => {
           <p>Author: {post.userProfile.displayName}</p>
           <ul>
             Tags:
-            {postTags.map((pt) => (
-              <li key={pt.id}>{pt.tag.name}</li>
-            ))}
+            {postTags.map((pt) => {
+              return <li key={pt.id}>{pt.tag.name}</li>
+            })}
           </ul>
         </CardBody>
         <Button id="backToPosts" onClick={() => history.push("/posts")}>
@@ -63,6 +74,15 @@ const PostDetails = () => {
           {" "}
           Delete{" "}
         </Button>
+        <Button color="success" onClick={togglePostTag}>
+          {" "}
+          Manage Tags{" "}
+        </Button>
+        <Modal isOpen={postTagModal} toggle={togglePostTag}>
+          <ModalBody>
+            <PostTagForm postId={id} postTags={postTags}/>
+          </ModalBody>
+        </Modal>
       </Card>
       <Modal isOpen={editModal}>
         <ModalHeader>EDIT POST</ModalHeader>
@@ -92,3 +112,4 @@ const PostDetails = () => {
 };
 
 export default PostDetails;
+

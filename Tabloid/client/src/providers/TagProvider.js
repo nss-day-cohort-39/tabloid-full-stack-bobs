@@ -22,8 +22,20 @@ export const TagProvider = (props) => {
         .then(setTags)
     );
 
-  const getPostTagsByPostId = (id) =>
+    const getAllPostTags = () =>
     getToken().then((token) =>
+      fetch("/api/postTag", {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((res) => res.json())
+        .then(setPostTags)
+    );
+
+  const getPostTagsByPostId = (id) => {
+    return getToken().then((token) =>
       fetch(`/api/posttag/getbypost/${id}`, {
         method: "GET",
         headers: {
@@ -33,6 +45,7 @@ export const TagProvider = (props) => {
         .then((res) => res.json())
         .then(setPostTags)
     );
+  }
 
   const addTag = (tag) =>
     getToken().then((token) =>
@@ -52,9 +65,43 @@ export const TagProvider = (props) => {
       })
     );
 
+    const addTagToPost = (postTag) =>
+    getToken().then((token) =>
+      fetch("/api/postTag", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(postTag),
+      }).then((resp) => {
+        if (resp.ok) {
+          getAllTags();
+        } else {
+          throw new Error("Unauthorized");
+        }
+      })
+    );
+
   const deleteTag = (id) =>
     getToken().then((token) =>
       fetch(`/api/tag/${id}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }).then((resp) => {
+        if (resp.ok) {
+          getAllTags();
+        } else {
+          throw new Error("Unauthorized");
+        }
+      })
+    );
+
+    const deleteTagFromPost = (id) =>
+    getToken().then((token) =>
+      fetch(`/api/postTag/${id}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -93,9 +140,12 @@ export const TagProvider = (props) => {
         tags,
         postTags,
         getAllTags,
+        getAllPostTags,
         getPostTagsByPostId,
         addTag,
+        addTagToPost,
         deleteTag,
+        deleteTagFromPost,
         updateTag,
       }}
     >

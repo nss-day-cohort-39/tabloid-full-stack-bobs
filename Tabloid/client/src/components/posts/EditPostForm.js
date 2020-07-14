@@ -66,11 +66,13 @@ export const EditPostForm = (props) => {
                 <option value={props.post.categoryId}>
                   {props.post.category.name}
                 </option>
-                {categories.map((e) => (
-                  <option key={e.id} value={e.id}>
-                    {e.name}
-                  </option>
-                ))}
+                {
+                  categories.map((e) => (
+                    (e.id === props.post.categoryId)
+                      ? null
+                      : <option key={e.id} value={e.id}>{e.name}</option>
+                  ))
+                }
               </select>
               Header Image:
               <input
