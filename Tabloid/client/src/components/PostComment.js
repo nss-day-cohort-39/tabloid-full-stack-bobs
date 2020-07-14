@@ -15,7 +15,21 @@ export const PostComment = ({ comments }) => {
         <Card>
           <CardBody>
             {comments.map((c) => (
-              <p key={c.id}>{c.content}</p>
+              <div key={c.id}>
+                <p>
+                  <strong>Subject:</strong> {c.subject}
+                </p>
+                <p>
+                  <strong>Comment:</strong> {c.content}
+                </p>
+                <p>
+                  <strong>Author:</strong> {c.userProfile.displayName}
+                </p>
+                <p>
+                  <strong>Date Created:</strong>{" "}
+                  {c.createDateTime.toLocaleString()}
+                </p>
+              </div>
             ))}
           </CardBody>
         </Card>
