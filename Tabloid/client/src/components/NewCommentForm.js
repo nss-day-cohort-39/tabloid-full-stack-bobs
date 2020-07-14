@@ -67,7 +67,7 @@ export const NewCommentForm = ({ postId, toggleModal }) => {
           toggleModal();
         }}
       >
-        Save New Post
+        Save New Comment
       </Button>
       <Button onClick={() => toggleModal()}>Cancel</Button>
     </Form>
