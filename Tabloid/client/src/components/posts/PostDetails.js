@@ -35,8 +35,6 @@ const PostDetails = () => {
   const [editModal, setEditModal] = useState(false);
   const toggleEdit = () => setEditModal(!editModal);
 
-  debugger
-
   return (
     <>
       <Card className="m-4">
