@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import { TagContext } from "../providers/TagProvider";
 import { Button } from "reactstrap";
+import "../styles/Button.css"
 
 export const EditTagForm = (props) => {
   const { updateTag } = useContext(TagContext);

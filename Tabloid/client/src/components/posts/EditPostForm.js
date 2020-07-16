@@ -3,6 +3,7 @@ import { PostContext } from "../../providers/PostProvider";
 import { CategoryContext } from "../../providers/CategoryProvider";
 import { Button, Form } from "reactstrap";
 import { useHistory } from "react-router-dom";
+import "../../styles/Button.css";
 
 export const EditPostForm = (props) => {
   const { updatePost } = useContext(PostContext);
