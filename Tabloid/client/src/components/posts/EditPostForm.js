@@ -22,7 +22,7 @@ export const EditPostForm = (props) => {
 
   const editPost = () => {
     updatedPost.categoryId = parseInt(updatedPost.categoryId);
-    console.log(updatedPost);
+
     updatePost(updatedPost).then(props.toggle).then(history.push("/posts"));
   };
 
@@ -76,9 +76,7 @@ export const EditPostForm = (props) => {
                     : props.post.category.name}
                 </option>
                 {categories.map((e) =>
-                  e.isDeleted ? (
-                    <></>
-                  ) : (
+                  e.isDeleted ? null : (
                     <option key={e.id} value={e.id}>
                       {e.name}
                     </option>

@@ -28,7 +28,7 @@ export const CategoryList = () => {
           <div className="cards-column">
             {categories.map((category) =>
               category.isDeleted ? (
-                <></>
+                <option key={category.id}></option>
               ) : (
                 <Category key={category.id} category={category} />
               )
