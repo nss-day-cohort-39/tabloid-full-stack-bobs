@@ -6,7 +6,7 @@ import Register from "./Register";
 import Hello from "./Hello";
 import PostList from "./posts/PostList";
 import PostDetails from "./posts/PostDetails";
-import { CategoryList } from './CategoryList'
+import { CategoryList } from "./CategoryList";
 import { TagList } from "./TagList";
 
 export default function ApplicationViews() {
@@ -45,4 +45,4 @@ export default function ApplicationViews() {
       </Switch>
     </main>
   );
-};
+}

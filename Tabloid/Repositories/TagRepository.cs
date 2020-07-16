@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,7 @@ namespace Tabloid.Repositories
     public class TagRepository
     {
         private readonly ApplicationDbContext _context;
+        private string _connectionString;
 
         public TagRepository(ApplicationDbContext context)
         {
@@ -42,9 +44,19 @@ namespace Tabloid.Repositories
 
         public void Delete(int id)
         {
-            var tag = GetById(id);
-            _context.Tag.Remove(tag);
-            _context.SaveChanges();
+            using (var conn = new SqlConnection(_connectionString))
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                        DELETE FROM PostTag WHERE TagId = @id;
+                        DELETE FROM Tag WHERE Id = @id;
+                    ";
+                    cmd.Parameters.AddWithValue("@id", id);
+                    cmd.ExecuteNonQuery();
+                }
+            }
         }
     }
 }
