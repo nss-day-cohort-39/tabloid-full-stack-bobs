@@ -26,9 +26,11 @@ export const CategoryList = () => {
       <div className="categoryContainer">
         <div className="row justify-content-center">
           <div className="cards-column">
-            {categories.map((category) => (
-              <Category key={category.id} category={category} />
-            ))}
+            {categories.map((category) =>
+              category.isDeleted ? null : (
+                <Category key={category.id} category={category} />
+              )
+            )}
           </div>
         </div>
       </div>
