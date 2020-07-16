@@ -13,6 +13,8 @@ import { Link, useParams, useHistory } from "react-router-dom";
 import { EditPostForm } from "../posts/EditPostForm";
 import { CommentContext } from "../../providers/CommentProvider";
 import { PostComment } from "../PostComment";
+import "../../styles/Button.css";
+import "../../styles/Modal.css";
 
 const PostDetails = () => {
   const { id } = useParams();
@@ -32,6 +34,9 @@ const PostDetails = () => {
 
   const [editModal, setEditModal] = useState(false);
   const toggleEdit = () => setEditModal(!editModal);
+
+  debugger
+
   return (
     <>
       <Card className="m-4">
@@ -67,6 +72,8 @@ const PostDetails = () => {
       <Modal isOpen={deleteModal}>
         <div>
           Are you sure you want to delete this post?
+          <br />
+          <br />
           <Button
             color="danger"
             onClick={(e) => {

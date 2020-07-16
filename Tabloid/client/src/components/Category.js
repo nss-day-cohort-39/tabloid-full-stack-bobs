@@ -12,6 +12,7 @@ import {
 } from "reactstrap";
 import { CategoryContext } from "../providers/CategoryProvider";
 import { EditCategoryForm } from "./EditCategoryForm";
+import "../styles/Button.css"
 
 export const Category = ({ category }) => {
   const { deleteCategory, updateCategory } = useContext(CategoryContext);
