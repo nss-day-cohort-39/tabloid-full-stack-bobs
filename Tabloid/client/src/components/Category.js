@@ -42,6 +42,8 @@ export const Category = ({ category }) => {
       <Modal isOpen={deleteModal}>
         <div>
           Are you sure you want to delete this category?
+          <br />
+          <br />
           <Button
             color="danger"
             onClick={(e) => {
