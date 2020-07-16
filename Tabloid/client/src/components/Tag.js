@@ -41,6 +41,8 @@ export const Tag = ({ tag }) => {
       <Modal isOpen={deleteModal}>
         <div>
           Are you sure you want to delete this Tag?
+          <br />
+          <br />
           <Button
             color="danger"
             onClick={(e) => {

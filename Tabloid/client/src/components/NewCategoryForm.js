@@ -2,6 +2,7 @@ import React, { useContext, useRef } from "react";
 import { CategoryContext } from "../providers/CategoryProvider";
 import { Button, Form, FormGroup, Label, Input } from "reactstrap";
 import { useHistory } from "react-router-dom";
+import "../styles/Button.css"
 
 export const NewCategoryForm = (props) => {
   const { addCategory } = useContext(CategoryContext);

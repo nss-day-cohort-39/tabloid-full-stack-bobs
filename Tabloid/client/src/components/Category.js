@@ -12,6 +12,7 @@ import {
 } from "reactstrap";
 import { CategoryContext } from "../providers/CategoryProvider";
 import { EditCategoryForm } from "./EditCategoryForm";
+import "../styles/Button.css"
 
 export const Category = ({ category }) => {
   const { deleteCategory, updateCategory } = useContext(CategoryContext);
@@ -41,6 +42,8 @@ export const Category = ({ category }) => {
       <Modal isOpen={deleteModal}>
         <div>
           Are you sure you want to delete this category?
+          <br />
+          <br />
           <Button
             color="danger"
             onClick={(e) => {

@@ -11,7 +11,11 @@ const Post = ({ post }) => {
           <strong>{post.title}</strong>
         </Link>
         <p>Author: {post.userProfile.displayName}</p>
-        <p>Category: {post.category.name}</p>
+        {post.category.isDeleted ? (
+          <></>
+        ) : (
+          <p>Category: {post.category.name}</p>
+        )}
       </CardBody>
     </Card>
   );

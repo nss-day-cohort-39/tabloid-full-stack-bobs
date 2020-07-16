@@ -3,6 +3,7 @@ import { PostContext } from "../../providers/PostProvider";
 import { CategoryContext } from "../../providers/CategoryProvider";
 import { Button, Form } from "reactstrap";
 import { useHistory } from "react-router-dom";
+import "../../styles/Button.css";
 
 export const EditPostForm = (props) => {
   const { updatePost } = useContext(PostContext);
@@ -22,7 +23,7 @@ export const EditPostForm = (props) => {
 
   const editPost = () => {
     updatedPost.categoryId = parseInt(updatedPost.categoryId);
-    console.log(updatedPost);
+
     updatePost(updatedPost).then(props.toggle).then(history.push("/posts"));
   };
 
@@ -61,17 +62,27 @@ export const EditPostForm = (props) => {
                 name="categoryId"
                 required
                 className="form-control"
-                defaultValue={props.post.categoryId}
+                defaultValue={
+                  props.post.category.isDeleted ? null : props.post.categoryId
+                }
                 onChange={handleControlledInputChange}
               >
-                <option value={props.post.categoryId}>
-                  {props.post.category.name}
+                <option
+                  value={
+                    props.post.category.isDeleted ? null : props.post.categoryId
+                  }
+                >
+                  {props.post.category.isDeleted
+                    ? "Select a Category"
+                    : props.post.category.name}
                 </option>
-                {categories.map((e) => (
-                  <option key={e.id} value={e.id}>
-                    {e.name}
-                  </option>
-                ))}
+                {categories.map((e) =>
+                  e.isDeleted ? null : (
+                    <option key={e.id} value={e.id}>
+                      {e.name}
+                    </option>
+                  )
+                )}
               </select>
               Header Image:
               <input
