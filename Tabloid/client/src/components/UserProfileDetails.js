@@ -1,7 +1,14 @@
-import React from 'react';
+import React, { useContext, useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { UserProfileContext } from '../providers/UserProfileProvider';
 
 export default () => {
-    return (
-        <h1>Hello</h1>
-    )
+    const { id } = useParams()
+    const { getUserProfile } = useContext(UserProfileContext)
+    const { user, setUser } = useState({ userProfile: {} })
+
+    // useEffect(() => {
+    //     getUserProfile
+    // })
+
 }

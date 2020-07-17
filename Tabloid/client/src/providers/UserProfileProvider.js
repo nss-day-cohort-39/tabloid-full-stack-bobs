@@ -59,6 +59,8 @@ export function UserProfileProvider(props) {
         .then(setUserProfiles))
   };
 
+
+
   const getUserProfile = (firebaseUserId) => {
     return getToken().then((token) =>
       fetch(`${apiUrl}/${firebaseUserId}`, {
