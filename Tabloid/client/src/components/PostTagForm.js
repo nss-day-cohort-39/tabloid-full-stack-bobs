@@ -5,7 +5,6 @@ import { PostContext } from "../providers/PostProvider";
 
 export const PostTagForm = (props) => {
 
-    debugger
     const { postTags, getAllPostTags, tags, getAllTags, addTagToPost, deleteTagFromPost, getPostTagsByPostId } = useContext(TagContext);
 
     const constructPostTag = (postId, tagId) => {
@@ -20,7 +19,20 @@ export const PostTagForm = (props) => {
         getAllTags();
       }, []);
     
+      
     const associatedPostTags = props.postTags;
+      
+    const associatedTags = tags.filter(tag => associatedPostTags.find(postTag => postTag.tagId === tag.id));
+
+    const postTagMatchingTag = (tagId, postId) => {
+        const matchingPostTag = associatedPostTags.find(postTag => {
+            return postTag.tagId === tagId && postTag.postId === postId
+        })
+        return matchingPostTag.id;
+    }
+      
+    debugger
+
     return (
         <>
             <ul>
@@ -45,7 +57,7 @@ export const PostTagForm = (props) => {
             <ul>
             {
                 associatedPostTags.map((postTag) => {
-                    const foundTag = tags.find(tag => postTag.tagId = tag.id)
+                    const foundTag = tags.find(tag => postTag.tagId === tag.id)
                     if (foundTag === undefined) {
                         return <></>
                     } else {
