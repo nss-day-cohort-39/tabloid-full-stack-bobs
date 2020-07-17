@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import { Button, Form, Badge } from 'reactstrap';
+import { Button, Form, Badge, ListGroup, ListGroupItem } from 'reactstrap';
 import { TagContext } from "../providers/TagProvider";
 import { PostContext } from "../providers/PostProvider";
 
@@ -20,14 +20,27 @@ export const PostTagForm = (props) => {
       }, []);
     
       
+    //Post-tag relationships matching current post
     const associatedPostTags = props.postTags;
       
+    //Tags currently on current post
     const associatedTags = tags.filter(tag => associatedPostTags.find(postTag => postTag.tagId === tag.id));
 
-    const postTagMatchingTag = (tagId, postId) => {
+    //Tags NOT currently on current post
+    const nonAssociatedTags = tags.filter((tag) => {
+        const matchingPostTag = postTags.find(postTag => postTag.tagId === tag.id);
+        if (matchingPostTag) {
+            return null
+        } else {
+            return tag
+        }
+    });
+
+    //Matches tag to post-tag relationship
+    const postTagMatchingTag = (tagId) => {
         const matchingPostTag = associatedPostTags.find(postTag => {
-            return postTag.tagId === tagId && postTag.postId === postId
-        })
+           return (postTag.tagId === tagId);
+        }) 
         return matchingPostTag.id;
     }
       
@@ -35,13 +48,11 @@ export const PostTagForm = (props) => {
 
     return (
         <>
-            <ul>
-            {
-                tags.map((tag) => {
-                    const foundPost = associatedPostTags.find(pt => pt.tagId === tag.id)
-                    if (foundPost) {
-                        return <></>
-                    } else {
+            <ListGroup>
+            Add:
+            <ListGroupItem>
+                {
+                    nonAssociatedTags.map((tag) => {
                         return (
                             <>
                                 <Button color="primary" outline onClick={() => constructPostTag(props.postId, tag.id)}>
@@ -49,33 +60,29 @@ export const PostTagForm = (props) => {
                                 </Button>
                             </>
                         )
-                    } 
-                })
-            }
-            </ul>
-
-            <ul>
-            {
-                associatedPostTags.map((postTag) => {
-                    const foundTag = tags.find(tag => postTag.tagId === tag.id)
-                    if (foundTag === undefined) {
-                        return <></>
-                    } else {
+                    })
+                }
+            </ListGroupItem>
+            Delete:
+            <ListGroupItem>
+                {
+                    associatedTags.map((tag) => {
                         return (
                             <>
-                                <Button color="primary" onClick={() => deleteTagFromPost(postTag.id)}>
-                                    {foundTag.name} X
+                                <Button color="primary" onClick={() => deleteTagFromPost(postTagMatchingTag(tag.id))}>
+                                    {tag.name} X
                                 </Button>
                             </>
-                        ) 
-                    }
-                })
-            }
-            </ul>
+                        )
+                    })
+                }
+            </ListGroupItem>
 
             <Button onClick={props.toggle}>
                 Save Tags
             </Button>
+
+            </ListGroup>
         </>
     )
 
