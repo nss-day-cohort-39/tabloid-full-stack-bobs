@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from "react";
 import { Button, Form, Badge, ListGroup, ListGroupItem } from 'reactstrap';
 import { TagContext } from "../providers/TagProvider";
 import { PostContext } from "../providers/PostProvider";
+import "../styles/Button.css"
 
 export const PostTagForm = (props) => {
 
@@ -66,6 +67,7 @@ export const PostTagForm = (props) => {
                     })
                 }
             </ListGroupItem>
+            <br />
             Delete:
             <ListGroupItem>
                 {
@@ -80,8 +82,8 @@ export const PostTagForm = (props) => {
                     })
                 }
             </ListGroupItem>
-
-            <Button onClick={props.toggle}>
+            <br />
+            <Button color="success" onClick={props.toggle}>
                 Save Tags
             </Button>
 
