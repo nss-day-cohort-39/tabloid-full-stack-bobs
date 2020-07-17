@@ -7,7 +7,7 @@ import {
   Modal,
   ModalHeader,
   ModalBody,
-  Dropdown,
+  UncontrolledDropdown,
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
@@ -25,21 +25,16 @@ const PostList = () => {
   } = useContext(PostContext);
   const { categories, getAllCategories } = useContext(CategoryContext);
   const [myView, setMyView] = useState(false);
-  const [list, setList] = useState(posts);
-  const user = JSON.parse(sessionStorage.getItem("userProfile"));
-  const [userPosts, setUserPosts] = useState([]);
   const [modal, setModal] = useState(false);
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [categoryValue, setCategoryValue] = useState(0);
+  const [categoryValue, setCategoryValue] = useState(null);
+  const [buttonValue, setButtonValue] = useState("");
+  const [headerValue, setHeaderValue] = useState("");
+  const user = JSON.parse(sessionStorage.getItem("userProfile"));
   const category = useRef();
 
   const toggleButton = () => {
     setMyView(!myView);
-    setCategoryValue(0);
-  };
-
-  const toggleDropdown = () => {
-    setDropdownOpen(!dropdownOpen);
+    setCategoryValue(null);
   };
 
   const toggleModal = () => {
@@ -49,53 +44,53 @@ const PostList = () => {
   useEffect(() => {
     getAllCategories();
     if (myView === true) {
-      if (categoryValue === 0) {
-        // setList(userPosts)
+      if (categoryValue === null) {
         getPostsByUserProfileId(user.id);
       } else {
         getPostsByCategoryByUser(user.id, parseInt(categoryValue));
       }
-      document.getElementById("postListHeader").innerHTML = "My Posts";
-      document.getElementById("postToggleButton").innerHTML = "All Posts";
+
+      setButtonValue("All Posts");
+      setHeaderValue("My Posts");
     } else {
-      if (categoryValue === 0) {
-        // setList(posts)
+      if (categoryValue === null) {
         getAllPosts();
       } else {
         getPostsByCategory(parseInt(categoryValue));
       }
-      document.getElementById("postListHeader").innerHTML = "All Posts";
-      document.getElementById("postToggleButton").innerHTML = "My Posts";
+
+      setButtonValue("My Posts");
+      setHeaderValue("All Posts");
     }
   }, [myView, categoryValue]);
 
   return (
     <>
       <Button id="postToggleButton" onClick={() => toggleButton()}>
-        My Posts
+        {buttonValue}
       </Button>
       <Button onClick={toggleModal}>Add Post</Button>
-
-      <Input
-        value={categoryValue}
-        type="select"
-        onChange={(e) => {
-          setCategoryValue(category.current.value);
-        }}
-        innerRef={category}
-      >
-        <option value="0">Select a Category</option>
-        {categories.map((category) => {
-          return (
-            <option key={category.id} value={category.id}>
-              {category.name}
-            </option>
-          );
-        })}
-      </Input>
+      <UncontrolledDropdown>
+        <DropdownToggle caret>Posts By Category</DropdownToggle>
+        <DropdownMenu value={categoryValue} type="select" innerRef={category}>
+          {categories.map((category) => {
+            return (
+              <DropdownItem
+                key={category.id}
+                value={category.id}
+                onClick={(e) => {
+                  setCategoryValue(category.id);
+                }}
+              >
+                {category.name}
+              </DropdownItem>
+            );
+          })}
+        </DropdownMenu>
+      </UncontrolledDropdown>
 
       <div className="container">
-        <h2 id="postListHeader">All Posts</h2>
+        <h2 id="postListHeader">{headerValue}</h2>
         <div className="row justify-content-center">
           <div className="cards-column">
             {posts.map((post) => (
