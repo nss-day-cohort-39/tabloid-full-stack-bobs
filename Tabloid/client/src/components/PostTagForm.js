@@ -60,7 +60,7 @@ export const PostTagForm = (props) => {
                         return (
                             <>
                                 <Button key={tag.id} color="primary" outline onClick={() => constructPostTag(props.postId, tag.id)}>
-                                    {tag.name}
+                                    + {tag.name}
                                 </Button>
                             </>
                         )
@@ -75,7 +75,7 @@ export const PostTagForm = (props) => {
                         return (
                             <>
                                 <Button key={tag.id} color="primary" onClick={() => deleteTagFromPost(postTagMatchingTag(tag.id))}>
-                                    {tag.name} X
+                                    X {tag.name}
                                 </Button>
                             </>
                         )
