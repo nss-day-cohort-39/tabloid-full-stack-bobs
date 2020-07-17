@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Tabloid.Data;
 using Tabloid.Models;
@@ -12,6 +13,13 @@ namespace Tabloid.Repositories
         public UserProfileRepository(ApplicationDbContext context)
         {
             _context = context;
+        }
+
+        public List<UserProfile> GetAll()
+        {
+            return _context.UserProfile
+                            .Include(up => up.UserType)
+                            .ToList();
         }
 
         public UserProfile GetByFirebaseUserId(string firebaseUserId)
