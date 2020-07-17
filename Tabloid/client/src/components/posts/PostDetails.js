@@ -13,12 +13,15 @@ import { Link, useParams, useHistory } from "react-router-dom";
 import { EditPostForm } from "../posts/EditPostForm";
 import { CommentContext } from "../../providers/CommentProvider";
 import { PostComment } from "../PostComment";
+import { TagContext } from "../../providers/TagProvider";
+import { PostTagForm } from "../PostTagForm";
 import "../../styles/Button.css";
 import "../../styles/Modal.css";
 
 const PostDetails = () => {
   const { id } = useParams();
   const { getPostById, deletePost } = useContext(PostContext);
+  const { getPostTagsByPostId, postTags, getAllPostTags, addTagToPost, deleteTagFromPost } = useContext(TagContext);
   const [post, setPost] = useState({ userProfile: {} });
   const history = useHistory();
 
@@ -27,6 +30,7 @@ const PostDetails = () => {
   useEffect(() => {
     getPostById(id).then(setPost);
     getCommentsByPostId(id);
+    getPostTagsByPostId(id);
   }, []);
 
   const [deleteModal, setDeleteModal] = useState(false);
@@ -34,6 +38,9 @@ const PostDetails = () => {
 
   const [editModal, setEditModal] = useState(false);
   const toggleEdit = () => setEditModal(!editModal);
+
+  const [postTagModal, setPostTagModal] = useState(false);
+  const togglePostTag = () => setPostTagModal(!postTagModal);
 
   return (
     <>
@@ -47,6 +54,12 @@ const PostDetails = () => {
           <p> {post.content}</p>
           <p>{post.publishDateTime}</p>
           <p>Author: {post.userProfile.displayName}</p>
+          <ul>
+            Tags:
+            {postTags.map((pt) => {
+              return <li key={pt.id}>{pt.tag.name}</li>
+            })}
+          </ul>
         </CardBody>
         <PostComment comments={comments} postId={id} />
         <Button id="backToPosts" onClick={() => history.push("/posts")}>
@@ -60,6 +73,15 @@ const PostDetails = () => {
           {" "}
           Delete{" "}
         </Button>
+        <Button color="success" onClick={togglePostTag}>
+          {" "}
+          Manage Tags{" "}
+        </Button>
+        <Modal isOpen={postTagModal}>
+          <ModalBody>
+            <PostTagForm postId={parseInt(id)} postTags={postTags}  toggle={togglePostTag}/>
+          </ModalBody>
+        </Modal>
       </Card>
       <Modal isOpen={editModal}>
         <ModalHeader>EDIT POST</ModalHeader>
@@ -91,3 +113,4 @@ const PostDetails = () => {
 };
 
 export default PostDetails;
+
