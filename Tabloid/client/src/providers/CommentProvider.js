@@ -52,7 +52,6 @@ export const CommentProvider = (props) => {
     );
 
   const updateComment = (comment, postId) => {
-    debugger;
     return getToken().then((token) =>
       fetch(`/api/comment/${comment.id}`, {
         method: "PUT",
