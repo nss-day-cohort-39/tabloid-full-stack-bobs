@@ -11,48 +11,17 @@ import {
 } from "reactstrap";
 import { Link, useParams, useHistory } from "react-router-dom";
 import { EditPostForm } from "../posts/EditPostForm";
-<<<<<<< HEAD
-import { TagContext } from "../../providers/TagProvider";
-import { PostTagForm } from "../PostTagForm";
-
-const PostDetails = () => {
-  let { id } = useParams();
-  id = parseInt(id);
-  const { getPostById, deletePost } = useContext(PostContext);
-  const { getPostTagsByPostId, postTags, getAllPostTags, 
-            addTagToPost, deleteTagFromPost } = useContext(TagContext);
-  const [post, setPost] = useState({ userProfile: {} });
-
-  const history = useHistory();
-
-  
-    const [deleteModal, setDeleteModal] = useState(false);
-    const toggleDelete = () => setDeleteModal(!deleteModal);
-  
-    const [editModal, setEditModal] = useState(false);
-    const toggleEdit = () => setEditModal(!editModal);
-  
-    const [postTagModal, setPostTagModal] = useState(false);
-    const togglePostTag = () => setPostTagModal(!postTagModal);
-
-  useEffect(() => {
-    getPostById(id)
-    .then(setPost)
-    .then(getPostTagsByPostId(id))
-    // .then(getAllPostTags);
-  }, [postTagModal]);
-
-  // const associatedPostTags = getPostTagsByPostId(id);
-
-=======
 import { CommentContext } from "../../providers/CommentProvider";
 import { PostComment } from "../PostComment";
+import { TagContext } from "../../providers/TagProvider";
+import { PostTagForm } from "../PostTagForm";
 import "../../styles/Button.css";
 import "../../styles/Modal.css";
 
 const PostDetails = () => {
   const { id } = useParams();
   const { getPostById, deletePost } = useContext(PostContext);
+  const { getPostTagsByPostId, postTags, getAllPostTags, addTagToPost, deleteTagFromPost } = useContext(TagContext);
   const [post, setPost] = useState({ userProfile: {} });
   const history = useHistory();
 
@@ -61,6 +30,7 @@ const PostDetails = () => {
   useEffect(() => {
     getPostById(id).then(setPost);
     getCommentsByPostId(id);
+    getPostTagsByPostId(id);
   }, []);
 
   const [deleteModal, setDeleteModal] = useState(false);
@@ -68,7 +38,9 @@ const PostDetails = () => {
 
   const [editModal, setEditModal] = useState(false);
   const toggleEdit = () => setEditModal(!editModal);
->>>>>>> 897ddc597a903f7d14693c3415ad4608918b76f4
+
+  const [postTagModal, setPostTagModal] = useState(false);
+  const togglePostTag = () => setPostTagModal(!postTagModal);
 
   return (
     <>
@@ -82,7 +54,6 @@ const PostDetails = () => {
           <p> {post.content}</p>
           <p>{post.publishDateTime}</p>
           <p>Author: {post.userProfile.displayName}</p>
-<<<<<<< HEAD
           <ul>
             Tags:
             {postTags.map((pt) => {
@@ -90,10 +61,7 @@ const PostDetails = () => {
             })}
           </ul>
         </CardBody>
-=======
-        </CardBody>
         <PostComment comments={comments} postId={id} />
->>>>>>> 897ddc597a903f7d14693c3415ad4608918b76f4
         <Button id="backToPosts" onClick={() => history.push("/posts")}>
           Back
         </Button>
@@ -105,7 +73,6 @@ const PostDetails = () => {
           {" "}
           Delete{" "}
         </Button>
-<<<<<<< HEAD
         <Button color="success" onClick={togglePostTag}>
           {" "}
           Manage Tags{" "}
@@ -115,8 +82,6 @@ const PostDetails = () => {
             <PostTagForm postId={id} postTags={postTags}/>
           </ModalBody>
         </Modal>
-=======
->>>>>>> 897ddc597a903f7d14693c3415ad4608918b76f4
       </Card>
       <Modal isOpen={editModal}>
         <ModalHeader>EDIT POST</ModalHeader>
@@ -127,11 +92,8 @@ const PostDetails = () => {
       <Modal isOpen={deleteModal}>
         <div>
           Are you sure you want to delete this post?
-<<<<<<< HEAD
-=======
           <br />
           <br />
->>>>>>> 897ddc597a903f7d14693c3415ad4608918b76f4
           <Button
             color="danger"
             onClick={(e) => {
@@ -151,7 +113,4 @@ const PostDetails = () => {
 };
 
 export default PostDetails;
-<<<<<<< HEAD
 
-=======
->>>>>>> 897ddc597a903f7d14693c3415ad4608918b76f4
