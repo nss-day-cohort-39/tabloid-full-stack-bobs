@@ -38,6 +38,9 @@ export default function Header() {
                 <NavItem>
                   <NavLink tag={RRNavLink} to="/tag">Tag Manager</NavLink>
                 </NavItem>
+                <NavItem>
+                  <NavLink tag={RRNavLink} to="/userProfiles">User Profiles</NavLink>
+                </NavItem>
               </>
             }
           </Nav>
