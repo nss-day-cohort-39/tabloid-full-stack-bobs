@@ -19,6 +19,7 @@ namespace Tabloid.Repositories
         {
             return _context.UserProfile
                             .Include(up => up.UserType)
+                            .OrderBy(up => up.DisplayName)
                             .ToList();
         }
 
