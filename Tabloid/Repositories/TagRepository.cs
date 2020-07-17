@@ -28,6 +28,7 @@ namespace Tabloid.Repositories
                        .FirstOrDefault(c => c.Id == Id);
         }
 
+
         public void Add(Tag Tag)
         {
             _context.Add(Tag);
