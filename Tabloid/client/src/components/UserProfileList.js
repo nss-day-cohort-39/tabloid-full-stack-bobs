@@ -31,7 +31,7 @@ export default () => {
                     {
                         userProfiles.map(profile => {
                             return (
-                                <tr onClick={() => history.push(`/userProfile/${profile.id}`)}>
+                                <tr key={profile.id} onClick={() => history.push(`/userProfile/${profile.id}`)}>
                                     <td>{profile.fullName}</td>
                                     <td>{profile.displayName}</td>
                                     <td>{profile.userType.name}</td>
