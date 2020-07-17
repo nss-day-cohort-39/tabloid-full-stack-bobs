@@ -15,7 +15,7 @@ export const EditCommentForm = ({ comment, postId, toggle }) => {
   };
 
   const editComment = () => {
-    updateComment(updatedComment)
+    updateComment(updatedComment, postId)
       .then(toggle)
       .then(history.push(`/posts/${postId}`));
   };
