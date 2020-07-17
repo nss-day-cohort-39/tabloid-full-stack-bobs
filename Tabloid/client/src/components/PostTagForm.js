@@ -9,7 +9,6 @@ export const PostTagForm = (props) => {
     const { postTags, getAllPostTags, tags, getAllTags, addTagToPost, deleteTagFromPost, getPostTagsByPostId } = useContext(TagContext);
 
     const constructPostTag = (postId, tagId) => {
-        debugger
         addTagToPost({
             postId: postId,
             tagId: tagId
@@ -21,9 +20,6 @@ export const PostTagForm = (props) => {
         getAllTags();
       }, [postTags]);
 
-
-    
-      
     //Post-tag relationships matching current post
     const associatedPostTags = props.postTags;
       
@@ -47,8 +43,6 @@ export const PostTagForm = (props) => {
         }) 
         return matchingPostTag.id;
     }
-      
-    debugger
 
     return (
         <>
@@ -90,8 +84,4 @@ export const PostTagForm = (props) => {
             </ListGroup>
         </>
     )
-
-
 }
-
-
