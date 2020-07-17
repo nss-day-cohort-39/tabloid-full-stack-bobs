@@ -8,6 +8,7 @@ export const PostTagForm = (props) => {
     const { postTags, getAllPostTags, tags, getAllTags, addTagToPost, deleteTagFromPost, getPostTagsByPostId } = useContext(TagContext);
 
     const constructPostTag = (postId, tagId) => {
+        debugger
         addTagToPost({
             postId: postId,
             tagId: tagId
@@ -17,7 +18,9 @@ export const PostTagForm = (props) => {
     useEffect(() => {
         getPostTagsByPostId(props.postId);
         getAllTags();
-      }, []);
+      }, [postTags]);
+
+
     
       
     //Post-tag relationships matching current post
@@ -55,7 +58,7 @@ export const PostTagForm = (props) => {
                     nonAssociatedTags.map((tag) => {
                         return (
                             <>
-                                <Button color="primary" outline onClick={() => constructPostTag(props.postId, tag.id)}>
+                                <Button key={tag.id} color="primary" outline onClick={() => constructPostTag(props.postId, tag.id)}>
                                     {tag.name}
                                 </Button>
                             </>
@@ -69,7 +72,7 @@ export const PostTagForm = (props) => {
                     associatedTags.map((tag) => {
                         return (
                             <>
-                                <Button color="primary" onClick={() => deleteTagFromPost(postTagMatchingTag(tag.id))}>
+                                <Button key={tag.id} color="primary" onClick={() => deleteTagFromPost(postTagMatchingTag(tag.id))}>
                                     {tag.name} X
                                 </Button>
                             </>

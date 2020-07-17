@@ -77,9 +77,9 @@ const PostDetails = () => {
           {" "}
           Manage Tags{" "}
         </Button>
-        <Modal isOpen={postTagModal} toggle={togglePostTag}>
+        <Modal isOpen={postTagModal}>
           <ModalBody>
-            <PostTagForm postId={id} postTags={postTags}/>
+            <PostTagForm postId={parseInt(id)} postTags={postTags}  toggle={togglePostTag}/>
           </ModalBody>
         </Modal>
       </Card>
