@@ -43,7 +43,7 @@ namespace Tabloid.Controllers
             return NoContent();
         }
 
-        [HttpPut("{Id}")]
+        [HttpPut("{id}")]
         public IActionResult Put(int id, Comment comment)
         {
             if (id != comment.Id)

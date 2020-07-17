@@ -1,12 +1,10 @@
 import React, { useContext, useState, useEffect } from "react";
 import { CommentContext } from "../providers/CommentProvider";
 import { Button, Form } from "reactstrap";
-import { useHistory } from "react-router-dom";
 
 export const EditCommentForm = ({ comment, postId, toggle }) => {
   const { updateComment } = useContext(CommentContext);
   const [updatedComment, setComment] = useState(comment);
-  const history = useHistory();
 
   const handleControlledInputChange = (event) => {
     const newComment = Object.assign({}, updatedComment);
@@ -15,9 +13,7 @@ export const EditCommentForm = ({ comment, postId, toggle }) => {
   };
 
   const editComment = () => {
-    updateComment(updatedComment, postId)
-      .then(toggle)
-      .then(history.push(`/posts/${postId}`));
+    updateComment(updatedComment, postId).then(toggle);
   };
 
   return (
@@ -25,15 +21,28 @@ export const EditCommentForm = ({ comment, postId, toggle }) => {
       <fieldset>
         <div className="form-group">
           <label htmlFor="name">
-            Comment:
+            Subject:
             <input
               type="text"
-              name="name"
+              name="subject"
               required
               autoFocus
               className="form-control"
               placeholder="Edit comment"
-              defaultValue={comment.name}
+              defaultValue={comment.subject}
+              onChange={handleControlledInputChange}
+            />
+          </label>
+          <label htmlFor="name">
+            Comment:
+            <input
+              type="text"
+              name="content"
+              required
+              autoFocus
+              className="form-control"
+              placeholder="Edit comment"
+              defaultValue={comment.content}
               onChange={handleControlledInputChange}
             />
           </label>
