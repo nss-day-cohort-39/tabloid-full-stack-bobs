@@ -20,7 +20,7 @@ export const EditCommentForm = ({ comment, postId, toggle }) => {
     <form className="editCommentForm">
       <fieldset>
         <div className="form-group">
-          <label htmlFor="name">
+          <label htmlFor="subject">
             Subject:
             <input
               type="text"
@@ -33,7 +33,7 @@ export const EditCommentForm = ({ comment, postId, toggle }) => {
               onChange={handleControlledInputChange}
             />
           </label>
-          <label htmlFor="name">
+          <label htmlFor="content">
             Comment:
             <input
               type="text"
