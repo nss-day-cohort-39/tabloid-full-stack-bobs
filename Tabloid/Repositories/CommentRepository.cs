@@ -31,5 +31,13 @@ namespace Tabloid.Repositories
             _context.Add(comment);
             _context.SaveChanges();
         }
+
+        public void DeleteComment(int id)
+        {
+            var comment = _context.Comment.FirstOrDefault(c => c.Id == id);
+            _context.Comment.Remove(comment);
+            _context.SaveChanges();
+
+        }
     }
 }
