@@ -51,24 +51,24 @@ export const CommentProvider = (props) => {
       })
     );
 
-  //   const updateTag = (tag) => {
-  //     return getToken().then((token) =>
-  //       fetch(`/api/tag/${tag.id}`, {
-  //         method: "PUT",
-  //         headers: {
-  //           Authorization: `Bearer ${token}`,
-  //           "Content-Type": "application/json",
-  //         },
-  //         body: JSON.stringify(tag),
-  //       }).then((resp) => {
-  //         if (resp.ok) {
-  //           getAllTags();
-  //         } else {
-  //           throw new Error("Unauthorized");
-  //         }
-  //       })
-  //     );
-  //   };
+  const updateComment = (comment, postId) => {
+    return getToken().then((token) =>
+      fetch(`/api/comment/${comment.id}`, {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(comment),
+      }).then((resp) => {
+        if (resp.ok) {
+          getCommentsByPostId(postId);
+        } else {
+          throw new Error("Unauthorized");
+        }
+      })
+    );
+  };
 
   return (
     <CommentContext.Provider
@@ -77,7 +77,7 @@ export const CommentProvider = (props) => {
         getCommentsByPostId,
         addComment,
         deleteComment,
-        // updateTag,
+        updateComment,
       }}
     >
       {props.children}

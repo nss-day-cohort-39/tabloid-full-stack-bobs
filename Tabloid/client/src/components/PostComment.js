@@ -10,6 +10,7 @@ import {
 } from "reactstrap";
 import { NewCommentForm } from "./NewCommentForm";
 import { CommentContext } from "../providers/CommentProvider";
+import { EditCommentForm } from "./EditCommentForm";
 
 export const PostComment = ({ comments, postId }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -21,6 +22,9 @@ export const PostComment = ({ comments, postId }) => {
 
   const [deleteModal, setDeleteModal] = useState(false);
   const toggleDelete = () => setDeleteModal(!deleteModal);
+
+  const [editModal, setEditModal] = useState(false);
+  const toggleEdit = () => setEditModal(!editModal);
 
   return (
     <div>
@@ -38,6 +42,16 @@ export const PostComment = ({ comments, postId }) => {
                 <p>{c.content}</p>
                 <p>Author: {c.userProfile.displayName}</p>
                 <p>Date Created: {c.createDateTime.toLocaleString()}</p>
+                <Button color="primary" onClick={toggleEdit}>
+                  Edit
+                </Button>
+                <Modal isOpen={editModal}>
+                  <EditCommentForm
+                    comment={c}
+                    postId={postId}
+                    toggle={toggleEdit}
+                  />
+                </Modal>
                 <Button color="danger" onClick={toggleDelete}>
                   Delete
                 </Button>
