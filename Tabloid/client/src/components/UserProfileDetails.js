@@ -22,6 +22,7 @@ export default () => {
                         : <CardImg top src="https://s3.amazonaws.com/37assets/svn/765-default-avatar.png" />
                 }
                 <CardBody>
+                    <CardText>Name: {user.fullName}</CardText>
                     <CardTitle>Display Name : {user.displayName}</CardTitle>
                     <CardText>Email: {user.email}</CardText>
                     <CardText>User Type: {user.userType.name}</CardText>
