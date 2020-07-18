@@ -29,6 +29,7 @@ const PostList = () => {
   const [categoryValue, setCategoryValue] = useState(null);
   const [buttonValue, setButtonValue] = useState("");
   const [headerValue, setHeaderValue] = useState("");
+  const [dropdownHeaderValue, setDropdownHeaderValue] = useState("");
   const user = JSON.parse(sessionStorage.getItem("userProfile"));
   const category = useRef();
 
@@ -46,7 +47,9 @@ const PostList = () => {
     if (myView === true) {
       if (categoryValue === null) {
         getPostsByUserProfileId(user.id);
+        setDropdownHeaderValue("Posts By Category");
       } else {
+        setDropdownHeaderValue();
         getPostsByCategoryByUser(user.id, parseInt(categoryValue));
       }
 
@@ -55,7 +58,9 @@ const PostList = () => {
     } else {
       if (categoryValue === null) {
         getAllPosts();
+        setDropdownHeaderValue("Posts By Category");
       } else {
+        setDropdownHeaderValue();
         getPostsByCategory(parseInt(categoryValue));
       }
 
@@ -71,20 +76,21 @@ const PostList = () => {
       </Button>
       <Button onClick={toggleModal}>Add Post</Button>
       <UncontrolledDropdown>
-        <DropdownToggle caret>Posts By Category</DropdownToggle>
+        <DropdownToggle caret>{dropdownHeaderValue}</DropdownToggle>
         <DropdownMenu value={categoryValue} type="select" innerRef={category}>
           {categories.map((category) => {
-            return (
-              <DropdownItem
-                key={category.id}
-                value={category.id}
-                onClick={(e) => {
-                  setCategoryValue(category.id);
-                }}
-              >
-                {category.name}
-              </DropdownItem>
-            );
+            if (category.isDeleted === false)
+              return (
+                <DropdownItem
+                  key={category.id}
+                  value={category.id}
+                  onClick={(e) => {
+                    setCategoryValue(category.id);
+                  }}
+                >
+                  {category.name}
+                </DropdownItem>
+              );
           })}
         </DropdownMenu>
       </UncontrolledDropdown>
