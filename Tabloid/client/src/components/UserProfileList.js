@@ -20,7 +20,7 @@ export default () => {
     return (
         <>
             <h1>User Profiles</h1>
-            <Table hover>
+            <Table>
                 <thead>
                     <tr>
                         <th>Full Name</th>
@@ -32,7 +32,7 @@ export default () => {
                     {
                         userProfiles.map(profile => {
                             return (
-                                <tr key={profile.id} onClick={() => history.push(`/userProfile/${profile.id}`)}>
+                                <tr >
                                     <td>{profile.fullName}</td>
                                     <td>{profile.displayName}</td>
                                     <td>{profile.userType.name}</td>
