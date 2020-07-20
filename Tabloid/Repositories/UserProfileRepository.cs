@@ -18,23 +18,23 @@ namespace Tabloid.Repositories
         public List<UserProfile> GetAll()
         {
             return _context.UserProfile
-                            .Include(up => up.UserType)
-                            .OrderBy(up => up.DisplayName)
-                            .ToList();
+                .Include(up => up.UserType)
+                .OrderBy(up => up.DisplayName)
+                .ToList();
         }
 
         public UserProfile GetByFirebaseUserId(string firebaseUserId)
         {
             return _context.UserProfile
-                       .Include(up => up.UserType) 
-                       .FirstOrDefault(up => up.FirebaseUserId == firebaseUserId);
+                .Include(up => up.UserType)
+                .FirstOrDefault(up => up.FirebaseUserId == firebaseUserId);
         }
 
         public UserProfile GetByUserId(int id)
         {
             return _context.UserProfile
-                            .Include(up => up.UserType)
-                            .FirstOrDefault(up => up.Id == id);
+                .Include(up => up.UserType)
+                .FirstOrDefault(up => up.Id == id);
         }
 
         public void Add(UserProfile userProfile)
@@ -50,5 +50,11 @@ namespace Tabloid.Repositories
             _context.Entry(profile).Property("IsActive").IsModified = true;
             _context.SaveChanges();
         }
+        public void Update(UserProfile userProfile)
+        {
+            _context.Entry(userProfile).State = EntityState.Modified;
+            _context.SaveChanges();
+        }
+
     }
 }

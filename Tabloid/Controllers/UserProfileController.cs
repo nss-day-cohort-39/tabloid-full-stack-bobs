@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
-using System;
 using Tabloid.Data;
 using Tabloid.Models;
 using Tabloid.Repositories;
@@ -52,6 +52,18 @@ namespace Tabloid.Controllers
         {
             _userProfileRepository.DeactivateUserProfile(id);
             return NoContent();
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult Put(int id, UserProfile userProfile)
+        {
+            if (id != userProfile.Id)
+            {
+                return BadRequest();
+            }
+            _userProfileRepository.Update(userProfile);
+            return NoContent();
+
         }
     }
 }
