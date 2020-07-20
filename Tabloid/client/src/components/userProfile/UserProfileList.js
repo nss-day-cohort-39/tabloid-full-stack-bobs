@@ -8,7 +8,7 @@ import { UserTypeContext } from '../../providers/UserTypeProvider';
 
 export default () => {
     const { userProfiles, getAllUserProfiles } = useContext(UserProfileContext)
-    const { getAllUserTypes, userTypes } = useContext(UserTypeContext)
+    const { getAllUserTypes } = useContext(UserTypeContext)
     const activeUsers = userProfiles.filter(up => up.isActive === true)
     const [modal, setModal] = useState(false)
     const toggleModal = () => setModal(!modal)
