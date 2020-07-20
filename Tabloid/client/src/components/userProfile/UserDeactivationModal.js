@@ -14,7 +14,7 @@ export default ({ modal, toggleModal, clickedUser }) => {
                 Are you sure you want to deactivate {clickedUser.fullName}?
             </ModalBody>
             <ModalFooter>
-                <Button onClick={() => {
+                <Button color="primary" onClick={() => {
                     deactivateAccount(clickedUser)
                     toggleModal()
                 }}>
