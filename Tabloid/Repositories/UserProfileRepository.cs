@@ -42,5 +42,13 @@ namespace Tabloid.Repositories
             _context.Add(userProfile);
             _context.SaveChanges();
         }
+
+        public void DeactivateUserProfile(int id)
+        {
+            var profile = GetByUserId(id);
+            profile.IsActive = false;
+            _context.Entry(profile).Property("IsActive").IsModified = true;
+            _context.SaveChanges();
+        }
     }
 }

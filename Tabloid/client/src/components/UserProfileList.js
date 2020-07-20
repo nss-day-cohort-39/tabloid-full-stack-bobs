@@ -9,6 +9,7 @@ export default () => {
     const { userProfiles, getAllUserProfiles } = useContext(UserProfileContext)
     const [modal, setModal] = useState(false)
     const toggleModal = () => setModal(!modal)
+    const [clickedUser, setClickedUser] = useState({ id: 0 })
     const history = useHistory()
 
 
@@ -38,7 +39,12 @@ export default () => {
                                     </td>
                                     <td>{profile.displayName}</td>
                                     <td>{profile.userType.name}</td>
-                                    <td style={{ color: "blue", cursor: "pointer" }} onClick={toggleModal}>
+                                    <td style={{ color: "blue", cursor: "pointer" }}
+                                        onClick={() => {
+                                            setClickedUser(profile)
+                                            toggleModal()
+                                        }}
+                                    >
                                         Deactivate
                                     </td>
                                 </tr>
@@ -47,7 +53,7 @@ export default () => {
                     }
                 </tbody>
             </Table>
-            <DeactivationModal modal={modal} toggleModal={toggleModal} />
+            <DeactivationModal modal={modal} toggleModal={toggleModal} clickedUser={clickedUser} />
         </>
     )
 }
