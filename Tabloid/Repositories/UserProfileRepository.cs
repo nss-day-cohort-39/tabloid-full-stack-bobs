@@ -30,6 +30,13 @@ namespace Tabloid.Repositories
                        .FirstOrDefault(up => up.FirebaseUserId == firebaseUserId);
         }
 
+        public UserProfile GetByUserId(int id)
+        {
+            return _context.UserProfile
+                            .Include(up => up.UserType)
+                            .FirstOrDefault(up => up.Id == id);
+        }
+
         public void Add(UserProfile userProfile)
         {
             _context.Add(userProfile);

@@ -1,10 +1,13 @@
 import React, { useContext, useEffect } from 'react';
 import { UserProfileContext } from '../providers/UserProfileProvider';
 import { Table } from 'reactstrap';
+import { Redirect, useHistory } from 'react-router-dom';
+
 
 
 export default () => {
     const { userProfiles, getAllUserProfiles } = useContext(UserProfileContext)
+    const history = useHistory()
 
 
 
@@ -16,7 +19,7 @@ export default () => {
     return (
         <>
             <h1>User Profiles</h1>
-            <Table>
+            <Table hover>
                 <thead>
                     <tr>
                         <th>Full Name</th>
@@ -28,7 +31,7 @@ export default () => {
                     {
                         userProfiles.map(profile => {
                             return (
-                                <tr>
+                                <tr key={profile.id} onClick={() => history.push(`/userProfile/${profile.id}`)}>
                                     <td>{profile.fullName}</td>
                                     <td>{profile.displayName}</td>
                                     <td>{profile.userType.name}</td>

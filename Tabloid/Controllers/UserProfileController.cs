@@ -29,6 +29,12 @@ namespace Tabloid.Controllers
             return Ok(_userProfileRepository.GetByFirebaseUserId(firebaseUserId));
         }
 
+        [HttpGet("getById/{id}")]
+        public IActionResult GetUserProfileByUserId(int id)
+        {
+            return Ok(_userProfileRepository.GetByUserId(id));
+        }
+
         [HttpPost]
         public IActionResult Post(UserProfile userProfile)
         {
