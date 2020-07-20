@@ -69,8 +69,6 @@ const PostList = () => {
         setDropdownHeaderValue(categoryMatch.name);
         getPostsByCategory(categoryValue);
       }
-      console.log(posts);
-
       setButtonValue("My Posts");
       setHeaderValue("All Posts");
     }

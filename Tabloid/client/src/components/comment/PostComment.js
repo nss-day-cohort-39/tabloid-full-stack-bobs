@@ -9,7 +9,7 @@ import {
   ModalBody,
 } from "reactstrap";
 import { NewCommentForm } from "./NewCommentForm";
-import { CommentContext } from "../providers/CommentProvider";
+import { CommentContext } from "../../providers/CommentProvider";
 import { EditCommentForm } from "./EditCommentForm";
 import { Comment } from "./Comment";
 
