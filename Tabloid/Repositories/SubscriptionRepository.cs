@@ -61,5 +61,11 @@ namespace Tabloid.Repositories
             _context.Subscription.Remove(subscription);
             _context.SaveChanges();
         }
+
+        public void Update(Subscription subscription)
+        {
+            _context.Entry(subscription).State = EntityState.Modified;
+            _context.SaveChanges();
+        }
     }
 }

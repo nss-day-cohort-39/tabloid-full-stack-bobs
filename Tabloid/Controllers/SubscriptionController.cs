@@ -28,7 +28,7 @@ namespace Tabloid.Controllers
         }
 
         [HttpGet("getBySubscriberId/{id}")]
-        public IActionResult GetSubscriptionsBySubscriberId((int id)
+        public IActionResult GetSubscriptionsBySubscriberId(int id)
         {
             return Ok(_subscriptionRepository.GetSubscriptionsBySubscriberId(id));
         }
@@ -50,6 +50,18 @@ namespace Tabloid.Controllers
         public IActionResult Delete(int id)
         {
             _subscriptionRepository.DeleteSubscription(id);
+            return NoContent();
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult Put(int id, Subscription subscription)
+        {
+            if (id != subscription.Id)
+            {
+                return BadRequest();
+            }
+
+            _subscriptionRepository.Update(subscription);
             return NoContent();
         }
     }

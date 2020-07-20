@@ -77,6 +77,10 @@ const PostDetails = () => {
           {" "}
           Manage Tags{" "}
         </Button>
+        <Button color="primary">
+          {" "}
+          Subscribe to {post.userProfile.displayName}{" "}
+        </Button>
         <Modal isOpen={postTagModal}>
           <ModalBody>
             <PostTagForm postId={parseInt(id)} postTags={postTags}  toggle={togglePostTag}/>
