@@ -73,7 +73,7 @@ const PostList = () => {
       setButtonValue("My Posts");
       setHeaderValue("All Posts");
     }
-  }, [myView, categoryValue, categories]);
+  }, [myView, categoryValue]);
 
   return (
     <>
