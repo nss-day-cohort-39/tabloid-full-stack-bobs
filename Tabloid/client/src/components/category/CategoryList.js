@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
-import { CategoryContext } from "../providers/CategoryProvider";
+import { CategoryContext } from "../../providers/CategoryProvider";
 import { Category } from "./Category";
-import "../styles/Category.css";
-import { Button, Modal, Form } from "reactstrap";
+import "../../styles/Category.css";
+import { Button, Modal } from "reactstrap";
 import { NewCategoryForm } from "./NewCategoryForm";
-import "../styles/Button.css"
-import "../styles/Modal.css"
+import "../../styles/Button.css";
+import "../../styles/Modal.css";
 
 export const CategoryList = () => {
   const { categories, getAllCategories } = useContext(CategoryContext);

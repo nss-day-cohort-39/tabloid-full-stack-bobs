@@ -10,18 +10,24 @@ import {
   ModalHeader,
 } from "reactstrap";
 import { Link, useParams, useHistory } from "react-router-dom";
-import { EditPostForm } from "../posts/EditPostForm";
+import { EditPostForm } from "../post/EditPostForm";
 import { CommentContext } from "../../providers/CommentProvider";
-import { PostComment } from "../PostComment";
+import { PostComment } from "../comment/PostComment";
 import { TagContext } from "../../providers/TagProvider";
-import { PostTagForm } from "../PostTagForm";
+import { PostTagForm } from "../tag/PostTagForm";
 import "../../styles/Button.css";
 import "../../styles/Modal.css";
 
 const PostDetails = () => {
   const { id } = useParams();
   const { getPostById, deletePost } = useContext(PostContext);
-  const { getPostTagsByPostId, postTags, getAllPostTags, addTagToPost, deleteTagFromPost } = useContext(TagContext);
+  const {
+    getPostTagsByPostId,
+    postTags,
+    getAllPostTags,
+    addTagToPost,
+    deleteTagFromPost,
+  } = useContext(TagContext);
   const [post, setPost] = useState({ userProfile: {} });
   const history = useHistory();
 
@@ -57,7 +63,7 @@ const PostDetails = () => {
           <ul>
             Tags:
             {postTags.map((pt) => {
-              return <li key={pt.id}>{pt.tag.name}</li>
+              return <li key={pt.id}>{pt.tag.name}</li>;
             })}
           </ul>
         </CardBody>
@@ -79,7 +85,11 @@ const PostDetails = () => {
         </Button>
         <Modal isOpen={postTagModal}>
           <ModalBody>
-            <PostTagForm postId={parseInt(id)} postTags={postTags}  toggle={togglePostTag}/>
+            <PostTagForm
+              postId={parseInt(id)}
+              postTags={postTags}
+              toggle={togglePostTag}
+            />
           </ModalBody>
         </Modal>
       </Card>
@@ -113,4 +123,3 @@ const PostDetails = () => {
 };
 
 export default PostDetails;
-

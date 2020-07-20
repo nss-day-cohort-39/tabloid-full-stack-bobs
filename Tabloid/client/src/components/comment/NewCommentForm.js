@@ -1,5 +1,5 @@
-import React, { useContext, useEffect, useRef } from "react";
-import { CommentContext } from "../providers/CommentProvider";
+import React, { useContext, useRef } from "react";
+import { CommentContext } from "../../providers/CommentProvider";
 import { Button, Form } from "reactstrap";
 import { useHistory } from "react-router-dom";
 

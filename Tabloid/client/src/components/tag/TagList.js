@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
-import { TagContext } from "../providers/TagProvider";
+import { TagContext } from "../../providers/TagProvider";
 import { Tag } from "./Tag";
-import "../styles/Tag.css";
+import "../../styles/Tag.css";
 import { Button, Modal, Form } from "reactstrap";
 import { NewTagForm } from "./NewTagForm";
 
