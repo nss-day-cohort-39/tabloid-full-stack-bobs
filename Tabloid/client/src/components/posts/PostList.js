@@ -49,8 +49,11 @@ const PostList = () => {
         getPostsByUserProfileId(user.id);
         setDropdownHeaderValue("Posts By Category");
       } else {
-        setDropdownHeaderValue();
-        getPostsByCategoryByUser(user.id, parseInt(categoryValue));
+        let categoryMatch = categories.find((category) => {
+          return category.id === categoryValue;
+        });
+        setDropdownHeaderValue(categoryMatch.name);
+        getPostsByCategoryByUser(user.id, categoryValue);
       }
 
       setButtonValue("All Posts");
@@ -60,14 +63,17 @@ const PostList = () => {
         getAllPosts();
         setDropdownHeaderValue("Posts By Category");
       } else {
-        setDropdownHeaderValue();
-        getPostsByCategory(parseInt(categoryValue));
+        let categoryMatch = categories.find((category) => {
+          return category.id === categoryValue;
+        });
+        setDropdownHeaderValue(categoryMatch.name);
+        getPostsByCategory(categoryValue);
       }
 
       setButtonValue("My Posts");
       setHeaderValue("All Posts");
     }
-  }, [myView, categoryValue]);
+  }, [myView, categoryValue, categories]);
 
   return (
     <>
@@ -92,6 +98,13 @@ const PostList = () => {
                 </DropdownItem>
               );
           })}
+          <DropdownItem
+            onClick={(e) => {
+              setCategoryValue(null);
+            }}
+          >
+            {"All Categories"}
+          </DropdownItem>
         </DropdownMenu>
       </UncontrolledDropdown>
 
