@@ -1,12 +1,13 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { UserProfileContext } from '../providers/UserProfileProvider';
-import { Table } from 'reactstrap';
-import { Redirect, useHistory } from 'react-router-dom';
-
+import { Table, ModalBody, Modal, ModalFooter, Button } from 'reactstrap';
+import { useHistory, Link } from 'react-router-dom';
 
 
 export default () => {
     const { userProfiles, getAllUserProfiles } = useContext(UserProfileContext)
+    const [modal, setModal] = useState(false)
+    const toggleModal = () => setModal(!modal)
     const history = useHistory()
 
 
@@ -35,13 +36,24 @@ export default () => {
                                     <td>{profile.fullName}</td>
                                     <td>{profile.displayName}</td>
                                     <td>{profile.userType.name}</td>
+                                    <td>
+                                        <Link onClick={toggleModal}>Deactivate</Link>
+                                    </td>
                                 </tr>
                             )
                         })
                     }
                 </tbody>
             </Table>
-
+            <Modal isOpen={modal} toggle={toggleModal} >
+                <ModalBody>
+                    Are you sure you want to deactivate this account?
+                </ModalBody>
+                <ModalFooter>
+                    <Button>Yes</Button>
+                    <Button>Cancel</Button>
+                </ModalFooter>
+            </Modal>
         </>
     )
 }
