@@ -20,7 +20,7 @@ export default ({ modal, toggleModal, clickedUser }) => {
                 }}>
                     Yes
                 </Button>
-                <Button>Cancel</Button>
+                <Button onClick={toggleModal}>Cancel</Button>
             </ModalFooter>
         </Modal>
     )

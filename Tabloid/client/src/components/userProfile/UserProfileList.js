@@ -9,6 +9,7 @@ import { UserTypeContext } from '../../providers/UserTypeProvider';
 export default () => {
     const { userProfiles, getAllUserProfiles } = useContext(UserProfileContext)
     const { getAllUserTypes } = useContext(UserTypeContext)
+    const currentUser = JSON.parse(sessionStorage.getItem("userProfile"))
     const activeUsers = userProfiles.filter(up => up.isActive === true)
     const [modal, setModal] = useState(false)
     const toggleModal = () => setModal(!modal)
@@ -17,7 +18,6 @@ export default () => {
     const [editModal, setEditModal] = useState(false);
     const toggleEditModal = () => setEditModal(!editModal);
     const history = useHistory()
-
 
     useEffect(() => {
         getAllUserProfiles()
@@ -39,35 +39,53 @@ export default () => {
                 </thead>
                 <tbody>
                     {
-                        activeUsers.map(profile => {
-                            return (
-                                <tr key={profile.id}>
-                                    <td style={{ cursor: "pointer" }} onClick={() => history.push(`/userProfile/${profile.id}`)}>
-                                        {profile.fullName}
-                                    </td>
-                                    <td>{profile.displayName}</td>
-                                    <td>{profile.userType.name}</td>
-                                    <td style={{ color: "blue", cursor: "pointer" }}
-                                        onClick={() => {
-                                            setClickedUser(profile)
-                                            toggleModal()
-                                        }}
-                                    >
-                                        Deactivate
-                                    </td>
-                                    <td>
-                                        <Button
+                        (currentUser.userType.name === "Admin")
+                            ?
+                            (activeUsers.map(profile => {
+
+                                return (
+                                    <tr key={profile.id}>
+                                        <td style={{ cursor: "pointer" }} onClick={() => history.push(`/userProfile/${profile.id}`)}>
+                                            {profile.fullName}
+                                        </td>
+                                        <td>{profile.displayName}</td>
+                                        <td>{profile.userType.name}</td>
+                                        <td style={{ color: "blue", cursor: "pointer" }}
                                             onClick={() => {
-                                                setSelectedUser(profile);
-                                                toggleEditModal();
+                                                setClickedUser(profile)
+                                                toggleModal()
                                             }}
                                         >
-                                            Edit
-                                        </Button>
-                                    </td>
-                                </tr>
+                                            Deactivate
+                                        </td>
+                                        <td>
+                                            <Button
+                                                onClick={() => {
+                                                    setSelectedUser(profile);
+                                                    toggleEditModal();
+                                                }}
+                                            >
+                                                Edit
+                                            </Button>
+                                        </td>
+                                    </tr>
+                                )
+                            }))
+                            :
+                            (
+                                (activeUsers.map(profile => {
+
+                                    return (
+                                        <tr key={profile.id}>
+                                            <td style={{ cursor: "pointer" }} onClick={() => history.push(`/userProfile/${profile.id}`)}>
+                                                {profile.fullName}
+                                            </td>
+                                            <td>{profile.displayName}</td>
+                                            <td>{profile.userType.name}</td>
+                                        </tr>
+                                    )
+                                }))
                             )
-                        })
                     }
                 </tbody>
             </Table>
