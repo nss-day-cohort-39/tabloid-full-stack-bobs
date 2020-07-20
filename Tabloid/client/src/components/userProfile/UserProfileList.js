@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { UserProfileContext } from "../../providers/UserProfileProvider";
 import { Table, Button, Modal, ModalBody, ModalHeader } from "reactstrap";
-import { Redirect, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { EditUserProfileForm } from "../EditUserProfileForm";
 
 export default () => {
@@ -32,24 +32,24 @@ export default () => {
         <tbody>
           {userProfiles.map((profile) => {
             return (
-              <>
-                <tr
-                  key={profile.id}
-                  onClick={() => history.push(`/userProfile/${profile.id}`)}
-                >
-                  <td>{profile.fullName}</td>
-                  <td>{profile.displayName}</td>
-                  <td>{profile.userType.name}</td>
-                </tr>
-                <Button
-                  onClick={() => {
-                    setSelectedUser(profile);
-                    toggleEditModal();
-                  }}
-                >
-                  Edit
-                </Button>
-              </>
+              <tr
+                key={profile.id}
+                onClick={() => history.push(`/userProfile/${profile.id}`)}
+              >
+                <td>{profile.fullName}</td>
+                <td>{profile.displayName}</td>
+                <td>{profile.userType.name}</td>
+                <td>
+                  <Button
+                    onClick={() => {
+                      setSelectedUser(profile);
+                      toggleEditModal();
+                    }}
+                  >
+                    Edit
+                  </Button>
+                </td>
+              </tr>
             );
           })}
         </tbody>
