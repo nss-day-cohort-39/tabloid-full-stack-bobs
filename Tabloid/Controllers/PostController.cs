@@ -38,6 +38,18 @@ namespace Tabloid.Controllers
             return Ok(_postRepository.GetById(id));
         }
 
+        [HttpGet("getByCategory/{id}")]
+        public IActionResult GetByCategoryId(int id)
+        {
+            return Ok(_postRepository.GetByCategoryId(id));
+        }
+
+        [HttpGet("getByCategoryByUser/{userId}/{categoryId}")]
+        public IActionResult GetByCategoryIdByUserId(int userId, int categoryId)
+        {
+            return Ok(_postRepository.GetByCategoryIdByUserId(userId, categoryId));
+        }
+
         [HttpPost]
         public IActionResult Post(Post post)
         {
