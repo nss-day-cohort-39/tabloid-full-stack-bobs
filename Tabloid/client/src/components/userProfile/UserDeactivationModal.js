@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Modal, ModalBody, ModalFooter, Button } from 'reactstrap';
+import { UserProfileContext } from '../../providers/UserProfileProvider';
 
 
 export default ({ modal, toggleModal, clickedUser }) => {
-
+    const { deactivateUser } = useContext(UserProfileContext)
     const deactivateAccount = (profile) => {
-
+        deactivateUser(profile)
     }
     return (
         <Modal isOpen={modal} toggle={toggleModal} >
@@ -13,7 +14,12 @@ export default ({ modal, toggleModal, clickedUser }) => {
                 Are you sure you want to deactivate {clickedUser.fullName}?
             </ModalBody>
             <ModalFooter>
-                <Button>Yes</Button>
+                <Button onClick={() => {
+                    deactivateAccount(clickedUser)
+                    toggleModal()
+                }}>
+                    Yes
+                </Button>
                 <Button>Cancel</Button>
             </ModalFooter>
         </Modal>
