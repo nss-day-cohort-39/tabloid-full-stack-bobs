@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { UserProfileContext } from '../providers/UserProfileProvider';
 import { Table, ModalBody, Modal, ModalFooter, Button } from 'reactstrap';
 import { useHistory, Link } from 'react-router-dom';
+import DeactivationModal from './DeactivationModal';
 
 
 export default () => {
@@ -9,7 +10,6 @@ export default () => {
     const [modal, setModal] = useState(false)
     const toggleModal = () => setModal(!modal)
     const history = useHistory()
-
 
 
     useEffect(() => {
@@ -32,12 +32,14 @@ export default () => {
                     {
                         userProfiles.map(profile => {
                             return (
-                                <tr >
-                                    <td>{profile.fullName}</td>
+                                <tr key={profile.id}>
+                                    <td style={{ cursor: "pointer" }} onClick={() => history.push(`/userProfile/${profile.id}`)}>
+                                        {profile.fullName}
+                                    </td>
                                     <td>{profile.displayName}</td>
                                     <td>{profile.userType.name}</td>
-                                    <td>
-                                        <Link onClick={toggleModal}>Deactivate</Link>
+                                    <td style={{ color: "blue", cursor: "pointer" }} onClick={toggleModal}>
+                                        Deactivate
                                     </td>
                                 </tr>
                             )
@@ -45,15 +47,7 @@ export default () => {
                     }
                 </tbody>
             </Table>
-            <Modal isOpen={modal} toggle={toggleModal} >
-                <ModalBody>
-                    Are you sure you want to deactivate this account?
-                </ModalBody>
-                <ModalFooter>
-                    <Button>Yes</Button>
-                    <Button>Cancel</Button>
-                </ModalFooter>
-            </Modal>
+            <DeactivationModal modal={modal} toggleModal={toggleModal} />
         </>
     )
 }
