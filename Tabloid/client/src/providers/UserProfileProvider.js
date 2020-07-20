@@ -25,8 +25,12 @@ export function UserProfileProvider(props) {
       .signInWithEmailAndPassword(email, pw)
       .then((signInResponse) => getUserProfile(signInResponse.user.uid))
       .then((userProfile) => {
-        sessionStorage.setItem("userProfile", JSON.stringify(userProfile));
-        setIsLoggedIn(true);
+        if (userProfile.isActive === false) {
+          return alert("Invalid email or password")
+        } else {
+          sessionStorage.setItem("userProfile", JSON.stringify(userProfile));
+          setIsLoggedIn(true);
+        }
       });
   };
 
