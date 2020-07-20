@@ -35,5 +35,24 @@ namespace Tabloid.Controllers
             _commentRepository.AddComment(comment);
             return CreatedAtAction("Get", new { id = comment.Id }, comment);
         }
+
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            _commentRepository.DeleteComment(id);
+            return NoContent();
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult Put(int id, Comment comment)
+        {
+            if (id != comment.Id)
+            {
+                return BadRequest();
+            }
+            _commentRepository.Update(comment);
+            return NoContent();
+
+        }
     }
 }

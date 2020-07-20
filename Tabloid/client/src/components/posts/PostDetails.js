@@ -61,7 +61,7 @@ const PostDetails = () => {
             })}
           </ul>
         </CardBody>
-        <PostComment comments={comments} postId={id} />
+        <PostComment comments={comments} postId={parseInt(id)} />
         <Button id="backToPosts" onClick={() => history.push("/posts")}>
           Back
         </Button>
