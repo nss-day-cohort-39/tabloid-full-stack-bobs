@@ -94,8 +94,25 @@ export function UserProfileProvider(props) {
       }).then(resp => resp.json()));
   };
 
+  const deactivateUser = (userProfile) => {
+    return getToken().then((token) =>
+      fetch(`${apiUrl}/${userProfile.id}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }).then((resp) => {
+        if (resp.ok) {
+          getAllUserProfiles();
+        } else {
+          throw new Error("Unauthorized");
+        }
+      })
+    )
+  };
+
   return (
-    <UserProfileContext.Provider value={{ isLoggedIn, login, logout, register, getToken, getAllUserProfiles, getUserProfile, userProfiles, getUserProfileByUserId }}>
+    <UserProfileContext.Provider value={{ isLoggedIn, login, logout, register, getToken, getAllUserProfiles, getUserProfile, userProfiles, getUserProfileByUserId, deactivateUser }}>
       {isFirebaseReady
         ? props.children
         : <Spinner className="app-spinner dark" />}

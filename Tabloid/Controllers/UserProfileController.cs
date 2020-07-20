@@ -47,10 +47,11 @@ namespace Tabloid.Controllers
                 userProfile);
         }
 
-        [HttpPut("{id}")]
+        [HttpDelete("{id}")]
         public IActionResult Deactivate(int id)
         {
-
+            _userProfileRepository.DeactivateUserProfile(id);
+            return NoContent();
         }
     }
 }
