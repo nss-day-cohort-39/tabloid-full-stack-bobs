@@ -11,11 +11,14 @@ import {
 import { NewCommentForm } from "./NewCommentForm";
 import { CommentContext } from "../providers/CommentProvider";
 import { EditCommentForm } from "./EditCommentForm";
+import { Comment } from "./Comment";
 
 export const PostComment = ({ comments, postId }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [toggleNewComment, setNewComment] = useState(false);
   const { deleteComment } = useContext(CommentContext);
+
+  const [comment, setComment] = useState({});
 
   const toggle = () => setIsOpen(!isOpen);
   const toggleNewCommentForm = () => setNewComment(!toggleNewComment);
@@ -35,48 +38,42 @@ export const PostComment = ({ comments, postId }) => {
         <Card>
           <CardBody>
             {comments.map((c) => (
-              <div key={c.id}>
-                <p>
-                  <strong>{c.subject}</strong>
-                </p>
-                <p>{c.content}</p>
-                <p>Author: {c.userProfile.displayName}</p>
-                <p>Date Created: {c.createDateTime.toLocaleString()}</p>
-                <Button color="primary" onClick={toggleEdit}>
-                  Edit
-                </Button>
-                <Modal isOpen={editModal}>
-                  <EditCommentForm
-                    comment={c}
-                    postId={postId}
-                    toggle={toggleEdit}
-                  />
-                </Modal>
-                <Button color="danger" onClick={toggleDelete}>
-                  Delete
-                </Button>
-                <Modal isOpen={deleteModal}>
-                  <div>
-                    Are you sure you want to delete this comment?
-                    <br />
-                    <br />
-                    <Button
-                      color="danger"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        deleteComment(c.id, postId);
-                        toggleDelete();
-                      }}
-                    >
-                      Yes, delete
-                    </Button>
-                    <Button color="secondary" onClick={toggleDelete}>
-                      No, go back
-                    </Button>
-                  </div>
-                </Modal>
-              </div>
+              <Comment
+                key={c.id}
+                toggleEdit={toggleEdit}
+                toggleDelete={toggleDelete}
+                setComment={setComment}
+                c={c}
+              />
             ))}
+            <Modal isOpen={editModal}>
+              <EditCommentForm
+                comment={comment}
+                postId={postId}
+                toggle={toggleEdit}
+              />
+            </Modal>
+
+            <Modal isOpen={deleteModal}>
+              <div>
+                Are you sure you want to delete this comment?
+                <br />
+                <br />
+                <Button
+                  color="danger"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    deleteComment(comment.id, postId);
+                    toggleDelete();
+                  }}
+                >
+                  Yes, delete
+                </Button>
+                <Button color="secondary" onClick={toggleDelete}>
+                  No, go back
+                </Button>
+              </div>
+            </Modal>
           </CardBody>
         </Card>
         <Button
