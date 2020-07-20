@@ -20,6 +20,7 @@ export const EditUserProfileForm = ({ userProfile, toggle }) => {
   }, []);
 
   const editUser = () => {
+    updatedUser.userTypeId = parseInt(updatedUser.userTypeId);
     updateUser(updatedUser).then(toggle);
   };
 
@@ -35,7 +36,9 @@ export const EditUserProfileForm = ({ userProfile, toggle }) => {
           >
             <option value="0">Select New User Type</option>
             {userTypes.map((userType) => (
-              <option value={userType.id}>{userType.name}</option>
+              <option key={userType.id} value={userType.id}>
+                {userType.name}
+              </option>
             ))}
           </select>
         </div>
