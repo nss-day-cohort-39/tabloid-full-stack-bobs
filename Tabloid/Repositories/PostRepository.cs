@@ -48,6 +48,22 @@ namespace Tabloid.Repositories
                             .FirstOrDefault(p => p.Id == id);
         }
 
+        public List<Post> GetByCategoryId(int id)
+        {
+            return _context.Post.Include(p => p.UserProfile)
+                                .Include(p => p.Category)
+                                .Where(p => p.CategoryId == id)
+                                .ToList();
+        }
+
+        public List<Post> GetByCategoryIdByUserId(int userId, int categoryId)
+        {
+            return _context.Post.Include(p => p.UserProfile)
+                                .Include(p => p.Category)
+                                .Where(p => p.CategoryId == categoryId && p.UserProfileId == userId)
+                                .ToList();
+        }
+
         public void AddPost(Post post)
         {
             _context.Add(post);
