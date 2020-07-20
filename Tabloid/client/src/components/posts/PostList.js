@@ -69,11 +69,26 @@ const PostList = () => {
         setDropdownHeaderValue(categoryMatch.name);
         getPostsByCategory(categoryValue);
       }
+      console.log(posts);
 
       setButtonValue("My Posts");
       setHeaderValue("All Posts");
     }
   }, [myView, categoryValue]);
+
+  const conditionalRender = () => {
+    if (posts.length > 0) {
+      return (
+        <div className="cards-column">
+          {posts.map((post) => (
+            <Post key={post.id} post={post} />
+          ))}
+        </div>
+      );
+    } else {
+      return <h3>No posts in this category</h3>;
+    }
+  };
 
   return (
     <>
@@ -110,13 +125,7 @@ const PostList = () => {
 
       <div className="container">
         <h2 id="postListHeader">{headerValue}</h2>
-        <div className="row justify-content-center">
-          <div className="cards-column">
-            {posts.map((post) => (
-              <Post key={post.id} post={post} />
-            ))}
-          </div>
-        </div>
+        <div className="row justify-content-center">{conditionalRender()}</div>
       </div>
       <Modal isOpen={modal} toggle={toggleModal}>
         <ModalHeader toggle={toggleModal}></ModalHeader>
