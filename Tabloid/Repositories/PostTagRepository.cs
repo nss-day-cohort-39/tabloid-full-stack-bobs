@@ -25,10 +25,6 @@ namespace Tabloid.Repositories
                             .Include(pt => pt.Post)
                             .ToList();
         }
-
-
-
-
         public List<PostTag> GetPostTagsByPostId(int id)
         {
             return _context.PostTag.Include(pt => pt.Tag)
