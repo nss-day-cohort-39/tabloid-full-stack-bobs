@@ -1,6 +1,6 @@
-import React, { useContext, useState, useEffect } from "react";
-import { CommentContext } from "../providers/CommentProvider";
-import { Button, Form } from "reactstrap";
+import React, { useContext, useState } from "react";
+import { CommentContext } from "../../providers/CommentProvider";
+import { Button } from "reactstrap";
 
 export const EditCommentForm = ({ comment, postId, toggle }) => {
   const { updateComment } = useContext(CommentContext);

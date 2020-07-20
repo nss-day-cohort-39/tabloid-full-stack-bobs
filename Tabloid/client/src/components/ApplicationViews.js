@@ -1,15 +1,15 @@
 import React, { useContext } from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 import { UserProfileContext } from "../providers/UserProfileProvider";
-import Login from "./Login";
-import Register from "./Register";
+import Login from "../components/auth/Login";
+import Register from "../components/auth/Register";
 import Hello from "./Hello";
-import PostList from "./posts/PostList";
-import PostDetails from "./posts/PostDetails";
-import { CategoryList } from './CategoryList'
-import { TagList } from "./TagList";
-import UserProfileList from "./UserProfileList";
-import UserProfileDetails from "./UserProfileDetails";
+import PostList from "./post/PostList";
+import PostDetails from "./post/PostDetails";
+import { CategoryList } from "./category/CategoryList";
+import { TagList } from "./tag/TagList";
+import UserProfileList from "./userProfile/UserProfileList";
+import UserProfileDetails from "./userProfile/UserProfileDetails";
 
 export default function ApplicationViews() {
   const { isLoggedIn } = useContext(UserProfileContext);
@@ -55,4 +55,4 @@ export default function ApplicationViews() {
       </Switch>
     </main>
   );
-};
+}

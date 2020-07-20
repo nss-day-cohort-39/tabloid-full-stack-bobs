@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
-import { CategoryContext } from "../providers/CategoryProvider";
+import { CategoryContext } from "../../providers/CategoryProvider";
 import { Button } from "reactstrap";
-import "../styles/Button.css"
+import "../../styles/Button.css";
 
 export const EditCategoryForm = (props) => {
   const { updateCategory } = useContext(CategoryContext);
