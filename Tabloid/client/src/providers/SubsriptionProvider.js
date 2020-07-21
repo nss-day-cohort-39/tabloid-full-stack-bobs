@@ -84,4 +84,17 @@ export const SubscriptionProvider = (props) => {
         );
       };
 
-}
+      return (
+        <SubscriptionContext.Provider
+          value={{
+            subscriptions,
+            getSubscriptionsBySubscriberId,
+            getSubscriptionsByProviderId,
+            addSubscription,
+            updateSubscription
+          }}
+        >
+          {props.children}
+        </SubscriptionContext.Provider>
+      );
+    };

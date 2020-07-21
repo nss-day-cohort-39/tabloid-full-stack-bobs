@@ -20,15 +20,11 @@ namespace Tabloid.Repositories
         public List<Subscription> GetAll()
         {
             return _context.Subscription
-                            .Include(s => s.SubscriberUser)
-                            .Include(s => s.ProviderUser)
                             .ToList();
         }
         public List<Subscription> GetSubscriptionsBySubscriberId(int id)
         {
             return _context.Subscription
-                                .Include(s => s.SubscriberUser)
-                                .Include(s => s.ProviderUser)
                                 .Where(s => s.SubscriberUserProfileId == id)
                                 .ToList();
         }
@@ -36,8 +32,6 @@ namespace Tabloid.Repositories
         public List<Subscription> GetSubscriptionsByProviderId(int id)
         {
             return _context.Subscription
-                                .Include(s => s.SubscriberUser)
-                                .Include(s => s.ProviderUser)
                                 .Where(s => s.ProviderUserProfileId == id)
                                 .ToList();
         }

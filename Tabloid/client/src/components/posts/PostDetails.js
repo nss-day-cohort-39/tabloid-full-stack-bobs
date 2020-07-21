@@ -17,6 +17,7 @@ import { TagContext } from "../../providers/TagProvider";
 import { PostTagForm } from "../PostTagForm";
 import "../../styles/Button.css";
 import "../../styles/Modal.css";
+import { SubscriptionContext } from "../../providers/SubsriptionProvider";
 
 const PostDetails = () => {
   const { id } = useParams();
@@ -26,21 +27,35 @@ const PostDetails = () => {
   const history = useHistory();
 
   const { comments, getCommentsByPostId } = useContext(CommentContext);
+  const { subscriptions, getAllSubscriptions, addSubscription } = useContext(SubscriptionContext);
+  
+  const user = JSON.parse(sessionStorage.getItem("userProfile"));
 
   useEffect(() => {
     getPostById(id).then(setPost);
     getCommentsByPostId(id);
     getPostTagsByPostId(id);
   }, []);
-
+  
+  
   const [deleteModal, setDeleteModal] = useState(false);
   const toggleDelete = () => setDeleteModal(!deleteModal);
-
+  
   const [editModal, setEditModal] = useState(false);
   const toggleEdit = () => setEditModal(!editModal);
-
+  
   const [postTagModal, setPostTagModal] = useState(false);
   const togglePostTag = () => setPostTagModal(!postTagModal);
+  
+  const constructSubscription = () => {
+    addSubscription({
+      SubscriberUserProfileId: user.id,
+      ProviderUserProfileId: post.userProfile.id,
+      BeginDateTime: Date.now(),
+      EndDateTime: Date('2099-01-01')
+    })
+    debugger
+  }
 
   return (
     <>
@@ -77,7 +92,7 @@ const PostDetails = () => {
           {" "}
           Manage Tags{" "}
         </Button>
-        <Button color="primary">
+        <Button color="primary" onClick={constructSubscription}>
           {" "}
           Subscribe to {post.userProfile.displayName}{" "}
         </Button>
