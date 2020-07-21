@@ -42,7 +42,7 @@ export default () => {
         <>
             <h1>User Profiles</h1>
             {isAdmin &&
-                <Button onClick={toggleView} >View Deactivated</Button>
+                <Button onClick={toggleView} >{pageView}</Button>
             }
             <Table>
                 <thead>
