@@ -20,6 +20,8 @@ export default () => {
     const toggleEditModal = () => setEditModal(!editModal);
     const toggleView = () => setActiveProfilesView(!activeProfilesView)
     const [isAdmin, setIsAdmin] = useState(false)
+    const [pageView, setPageView] = useState("User Profiles")
+    const [header, setHeader] = useState("")
 
     const userTypeCheck = () => {
         if (currentUser.userType.name === "Admin") {
@@ -33,16 +35,20 @@ export default () => {
         getAllUserTypes().then(userTypeCheck);
         if (activeProfilesView === true) {
             getActiveUserProfiles()
+                .then(() => setPageView("View Deactivated Users"))
+                .then(() => setHeader("User Profiles"))
         } else {
             getDeactivatedUserProfiles()
+                .then(() => setPageView("View Active Users"))
+                .then(() => setHeader("Deactivated Users"))
         }
-    }, [activeProfilesView])
+    }, [activeProfilesView, pageView])
 
     return (
         <>
-            <h1>User Profiles</h1>
+            <h1>{header}</h1>
             {isAdmin &&
-                <Button onClick={toggleView} >{pageView}</Button>
+                <Button onClick={toggleView}>{pageView}</Button>
             }
             <Table>
                 <thead>
