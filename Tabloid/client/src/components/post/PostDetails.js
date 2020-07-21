@@ -17,30 +17,87 @@ import { TagContext } from "../../providers/TagProvider";
 import { PostTagForm } from "../tag/PostTagForm";
 import "../../styles/Button.css";
 import "../../styles/Modal.css";
+import { SubscriptionContext } from "../../providers/SubsriptionProvider";
 
 const PostDetails = () => {
   const { id } = useParams();
   const { getPostById, deletePost } = useContext(PostContext);
   const { getPostTagsByPostId, postTags } = useContext(TagContext);
   const [post, setPost] = useState({ userProfile: {} });
+  const user = JSON.parse(sessionStorage.getItem("userProfile"));
+
+  
   const history = useHistory();
-
-  const { comments, getCommentsByPostId } = useContext(CommentContext);
-
+  
   useEffect(() => {
     getPostById(id).then(setPost);
     getCommentsByPostId(id);
     getPostTagsByPostId(id);
+    getAllSubscriptions();
   }, []);
-
+  
+  const { comments, getCommentsByPostId } = useContext(CommentContext);
+  const { subscriptions, getAllSubscriptions, addSubscription, updateSubscription } = useContext(SubscriptionContext);
+  
   const [deleteModal, setDeleteModal] = useState(false);
   const toggleDelete = () => setDeleteModal(!deleteModal);
-
+  
   const [editModal, setEditModal] = useState(false);
   const toggleEdit = () => setEditModal(!editModal);
-
+  
   const [postTagModal, setPostTagModal] = useState(false);
   const togglePostTag = () => setPostTagModal(!postTagModal);
+  
+  //These variables set datetimes for creating and editing subscriptions
+  const CurrentDate = new Date();
+  const EndDateTime = "9999-01-01T00:00:00"
+
+  //Searches for an active subscription between the current user and the author of the post
+  const foundSubscription = subscriptions.find((s) => (s.subscriberUserProfileId === user.id && s.providerUserProfileId === post.userProfile.id && s.endDateTime === EndDateTime))
+  
+  //Searches for an INACTIVE subscription between the current user and the author of the post
+  const foundDeactivatedSubscription = subscriptions.find((s) => (s.subscriberUserProfileId === user.id && s.providerUserProfileId === post.userProfile.id && s.endDateTime !== EndDateTime))
+  
+  //This function checks for an inactive subscription. If found, it will be reactivated. If not found, a subscription will be created
+  const constructSubscription = () => {
+    if (foundDeactivatedSubscription) {
+      foundDeactivatedSubscription.endDateTime = EndDateTime
+      updateSubscription(foundDeactivatedSubscription);
+    } else {
+      addSubscription({
+        SubscriberUserProfileId: user.id,
+        ProviderUserProfileId: post.userProfile.id,
+        BeginDateTime: CurrentDate,
+        EndDateTime: EndDateTime
+      })
+    }
+  }
+
+  //This function deactivates a subscription
+  const endSubscription = () => {
+    foundSubscription.EndDateTime = CurrentDate;
+    updateSubscription(foundSubscription);
+  }
+  
+  //This function checks whether there is an active subscription and renders the appropriate buttons
+  const conditionalSubscribeButton = () => {
+    return (
+    (!foundSubscription) ?
+      <>
+        <Button color="primary" onClick={constructSubscription}>
+          {" "}
+          Subscribe to {post.userProfile.displayName}{" "}
+        </Button>
+      </>
+    :
+      <>
+        <Button color="danger" onClick={endSubscription}>
+          {" "}
+          Unsubscribe from {post.userProfile.displayName}{" "}
+        </Button>
+      </>
+    )
+  }
 
   return (
     <>
@@ -77,6 +134,8 @@ const PostDetails = () => {
           {" "}
           Manage Tags{" "}
         </Button>
+        {conditionalSubscribeButton()}
+        
         <Modal isOpen={postTagModal}>
           <ModalBody>
             <PostTagForm
