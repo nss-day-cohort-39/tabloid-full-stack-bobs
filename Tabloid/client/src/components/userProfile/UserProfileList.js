@@ -40,6 +40,7 @@ export default () => {
                     {
                         activeUsers.map(profile => {
                             return <UserProfile
+                                key={profile.id}
                                 user={profile}
                                 setClickedUser={setClickedUser}
                                 toggleModal={toggleModal}
