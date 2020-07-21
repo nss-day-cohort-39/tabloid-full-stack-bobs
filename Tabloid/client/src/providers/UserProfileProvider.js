@@ -25,8 +25,12 @@ export function UserProfileProvider(props) {
       .signInWithEmailAndPassword(email, pw)
       .then((signInResponse) => getUserProfile(signInResponse.user.uid))
       .then((userProfile) => {
-        sessionStorage.setItem("userProfile", JSON.stringify(userProfile));
-        setIsLoggedIn(true);
+        if (userProfile.isActive === false) {
+          return alert("Invalid email or password")
+        } else {
+          sessionStorage.setItem("userProfile", JSON.stringify(userProfile));
+          setIsLoggedIn(true);
+        }
       });
   };
 
@@ -103,6 +107,23 @@ export function UserProfileProvider(props) {
     );
   };
 
+  const deactivateUser = (userProfile) => {
+    return getToken().then((token) =>
+      fetch(`${apiUrl}/${userProfile.id}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }).then((resp) => {
+        if (resp.ok) {
+          getAllUserProfiles();
+        } else {
+          throw new Error("Unauthorized");
+        }
+      })
+    )
+  };
+
   const updateUser = (userProfile) =>
     getToken().then((token) =>
       fetch(`${apiUrl}/${userProfile.id}`, {
@@ -127,14 +148,15 @@ export function UserProfileProvider(props) {
         getUserProfile,
         userProfiles,
         getUserProfileByUserId,
+        deactivateUser,
         updateUser,
       }}
     >
       {isFirebaseReady ? (
         props.children
       ) : (
-        <Spinner className="app-spinner dark" />
-      )}
+          <Spinner className="app-spinner dark" />
+        )}
     </UserProfileContext.Provider>
   );
 }

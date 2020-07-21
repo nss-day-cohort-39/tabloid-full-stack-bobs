@@ -1,68 +1,66 @@
-import React, { useContext, useEffect, useState } from "react";
-import { UserProfileContext } from "../../providers/UserProfileProvider";
-import { Table, Button, Modal, ModalBody, ModalHeader } from "reactstrap";
-import { useHistory } from "react-router-dom";
+import React, { useContext, useEffect, useState } from 'react';
+import { UserProfileContext } from '../../providers/UserProfileProvider';
+import UserDeactivationModal from './UserDeactivationModal';
+import { Table, Modal, ModalBody, ModalHeader } from "reactstrap";
 import { EditUserProfileForm } from "../EditUserProfileForm";
+import { UserTypeContext } from '../../providers/UserTypeProvider';
+import UserProfile from './UserProfile';
+
 
 export default () => {
-  const { userProfiles, getAllUserProfiles } = useContext(UserProfileContext);
-  const history = useHistory();
+    const { userProfiles, getAllUserProfiles } = useContext(UserProfileContext)
+    const { getAllUserTypes } = useContext(UserTypeContext)
+    const activeUsers = userProfiles.filter(up => up.isActive === true)
+    const [modal, setModal] = useState(false)
+    const toggleModal = () => setModal(!modal)
+    const [clickedUser, setClickedUser] = useState({ id: 0 })
+    const [selectedUser, setSelectedUser] = useState({});
+    const [editModal, setEditModal] = useState(false);
+    const toggleEditModal = () => setEditModal(!editModal);
 
-  const [selectedUser, setSelectedUser] = useState({});
+    useEffect(() => {
+        getAllUserProfiles()
+            .then(() => getAllUserTypes())
+    }, [])
 
-  const [editModal, setEditModal] = useState(false);
-
-  const toggleEditModal = () => setEditModal(!editModal);
-
-  useEffect(() => {
-    getAllUserProfiles();
-  }, []);
-
-  return (
-    <>
-      <h1>User Profiles</h1>
-      <Table hover>
-        <thead>
-          <tr>
-            <th>Full Name</th>
-            <th>Display Name</th>
-            <th>User Type</th>
-          </tr>
-        </thead>
-        <tbody>
-          {userProfiles.map((profile) => {
-            return (
-              <tr
-                key={profile.id}
-                onClick={() => history.push(`/userProfile/${profile.id}`)}
-              >
-                <td>{profile.fullName}</td>
-                <td>{profile.displayName}</td>
-                <td>{profile.userType.name}</td>
-                <td>
-                  <Button
-                    onClick={() => {
-                      setSelectedUser(profile);
-                      toggleEditModal();
-                    }}
-                  >
-                    Edit
-                  </Button>
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </Table>
-      <Modal isOpen={editModal}>
-        <ModalHeader>Edit User Type</ModalHeader>
-        <ModalBody>
-          <EditUserProfileForm
-            userProfile={selectedUser}
-            toggle={toggleEditModal}
-          />
-        </ModalBody>
-      </Modal>
-    </>
-  );
-};
+    return (
+        <>
+            <h1>User Profiles</h1>
+            <Table>
+                <thead>
+                    <tr>
+                        <th>Full Name</th>
+                        <th>Display Name</th>
+                        <th>User Type</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {
+                        activeUsers.map(profile => {
+                            return <UserProfile
+                                key={profile.id}
+                                user={profile}
+                                setClickedUser={setClickedUser}
+                                toggleModal={toggleModal}
+                                setSelectedUser={setSelectedUser}
+                                toggleEditModal={toggleEditModal}
+                            />
+                        })
+                    }
+                </tbody>
+            </Table>
+            <Modal isOpen={editModal}>
+                <ModalHeader>Edit User Type</ModalHeader>
+                <ModalBody>
+                    <EditUserProfileForm
+                        userProfile={selectedUser}
+                        toggle={toggleEditModal}
+                    />
+                </ModalBody>
+            </Modal>
+            <UserDeactivationModal modal={modal} toggleModal={toggleModal} clickedUser={clickedUser} />
+        </>
+    )
+}
