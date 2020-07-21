@@ -38,11 +38,6 @@ const PostDetails = () => {
   
   const { comments, getCommentsByPostId } = useContext(CommentContext);
   const { subscriptions, getAllSubscriptions, addSubscription, updateSubscription } = useContext(SubscriptionContext);
-  debugger
-
-  const foundSubscription = subscriptions.find((s) => (s.SubscriberUserProfileId === user.id && s.ProviderUserProfileId === post.userProfile.id && s.EndDateTime !== EndDateTime))
-
-  
   
   const [deleteModal, setDeleteModal] = useState(false);
   const toggleDelete = () => setDeleteModal(!deleteModal);
@@ -53,32 +48,38 @@ const PostDetails = () => {
   const [postTagModal, setPostTagModal] = useState(false);
   const togglePostTag = () => setPostTagModal(!postTagModal);
   
-  const [subscribeButton, setSubscribeButton] = useState(true);
+  const [subscribeButton, setSubscribeButton] = useState(false);
   const toggleSubscribeButton = () => setSubscribeButton(!subscribeButton);
-
+  
   const CurrentDate = new Date();
-
-  const EndDateTime = new Date("9999-01-01")
+  const EndDateTime = "9999-01-01T00:00:00"
+  
+  const foundSubscription = subscriptions.find((s) => (s.subscriberUserProfileId === user.id && s.providerUserProfileId === post.userProfile.id && s.endDateTime === EndDateTime))
+  const foundDeactivatedSubscription = subscriptions.find((s) => (s.subscriberUserProfileId === user.id && s.providerUserProfileId === post.userProfile.id && s.endDateTime !== EndDateTime))
   
   const constructSubscription = () => {
-    addSubscription({
-      SubscriberUserProfileId: user.id,
-      ProviderUserProfileId: post.userProfile.id,
-      BeginDateTime: CurrentDate,
-      EndDateTime: EndDateTime
-    })
-    debugger
+
+    if (foundDeactivatedSubscription) {
+      foundDeactivatedSubscription.endDateTime = EndDateTime
+      updateSubscription(foundDeactivatedSubscription);
+    } else {
+      addSubscription({
+        SubscriberUserProfileId: user.id,
+        ProviderUserProfileId: post.userProfile.id,
+        BeginDateTime: CurrentDate,
+        EndDateTime: EndDateTime
+      })
+    }
   }
 
   const endSubscription = () => {
-    updateSubscription({
-      EndDateTime: CurrentDate
-    })
+    foundSubscription.EndDateTime = CurrentDate;
+    updateSubscription(foundSubscription);
   }
 
   const conditionalSubscribeButton = () => {
     return (
-    (foundSubscription) ?
+    (!foundSubscription) ?
       <>
         <Button color="primary" onClick={constructSubscription}>
           {" "}
@@ -89,7 +90,7 @@ const PostDetails = () => {
       <>
         <Button color="danger" onClick={endSubscription}>
           {" "}
-          Unsubscribe {post.userProfile.displayName}{" "}
+          Unsubscribe from {post.userProfile.displayName}{" "}
         </Button>
       </>
     )
