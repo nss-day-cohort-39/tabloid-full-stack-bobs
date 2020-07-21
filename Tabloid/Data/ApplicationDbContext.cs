@@ -14,6 +14,7 @@ namespace Tabloid.Data
                 public DbSet<Post> Post { get; set; }
                 public DbSet<PostTag> PostTag { get; set; }
                 public DbSet<Comment> Comment { get; set; }
+                public DbSet<Subscription> Subscription { get; set; }
     }
 }
 
