@@ -51,14 +51,18 @@ const PostDetails = () => {
   const [subscribeButton, setSubscribeButton] = useState(false);
   const toggleSubscribeButton = () => setSubscribeButton(!subscribeButton);
   
+  //These variables set datetimes for creating and editing subscriptions
   const CurrentDate = new Date();
   const EndDateTime = "9999-01-01T00:00:00"
-  
+
+  //Searches for an active subscription between the current user and the author of the post
   const foundSubscription = subscriptions.find((s) => (s.subscriberUserProfileId === user.id && s.providerUserProfileId === post.userProfile.id && s.endDateTime === EndDateTime))
+  
+  //Searches for an INACTIVE subscription between the current user and the author of the post
   const foundDeactivatedSubscription = subscriptions.find((s) => (s.subscriberUserProfileId === user.id && s.providerUserProfileId === post.userProfile.id && s.endDateTime !== EndDateTime))
   
+  //This function checks for an inactive subscription. If found, it will be reactivated. If not found, a subscription will be created
   const constructSubscription = () => {
-
     if (foundDeactivatedSubscription) {
       foundDeactivatedSubscription.endDateTime = EndDateTime
       updateSubscription(foundDeactivatedSubscription);
@@ -72,11 +76,13 @@ const PostDetails = () => {
     }
   }
 
+  //This function deactivates a subscription
   const endSubscription = () => {
     foundSubscription.EndDateTime = CurrentDate;
     updateSubscription(foundSubscription);
   }
-
+  
+  //This function checks whether there is an active subscription and renders the appropriate buttons
   const conditionalSubscribeButton = () => {
     return (
     (!foundSubscription) ?
