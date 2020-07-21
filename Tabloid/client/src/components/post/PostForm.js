@@ -1,3 +1,9 @@
+/* 
+Author: Calvin Curry
+Component Responsibilty: Renders a form that allows users to create a new
+post by entering in the required information and clicking a button to save it
+*/
+
 import React, { useContext, useEffect, useRef } from "react";
 import { CategoryContext } from "../../providers/CategoryProvider";
 import { PostContext } from "../../providers/PostProvider";

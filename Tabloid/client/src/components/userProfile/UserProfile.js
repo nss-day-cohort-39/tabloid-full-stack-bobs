@@ -1,3 +1,8 @@
+/* 
+Author(s): Calvin Curry
+Component Responsibility: Provides structure of a user profile that
+renders on the UserProfileList component.
+*/
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Button } from 'reactstrap';

@@ -1,3 +1,8 @@
+/* 
+Author(s): Calvin Curry
+Component Responsibility: Renders a list of active user profiles. Users with the user
+type of Admin can toggle the list and view deactivated profiles as well. 
+*/
 import React, { useContext, useEffect, useState } from 'react';
 import { UserProfileContext } from '../../providers/UserProfileProvider';
 import UserDeactivationModal from './UserDeactivationModal';

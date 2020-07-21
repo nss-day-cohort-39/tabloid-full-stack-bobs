@@ -1,3 +1,7 @@
+/* 
+Author(s): Calvin Curry
+Component Responsibility: Houses functions that extract data from the API
+*/
 import React, { useState, useEffect, createContext } from "react";
 import { Spinner } from "reactstrap";
 import * as firebase from "firebase/app";
