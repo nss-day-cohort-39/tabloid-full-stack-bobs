@@ -8,10 +8,8 @@ export default ({ toggleModal }) => {
 
     const { categories, getAllCategories } = useContext(CategoryContext)
     const userProfile = JSON.parse(sessionStorage.getItem("userProfile"))
-    const form = document.querySelector(".postForm")
     const { addPost } = useContext(PostContext)
     const publicationDate = useRef()
-    const history = useHistory()
     const category = useRef()
     const imageUrl = useRef()
     const content = useRef()

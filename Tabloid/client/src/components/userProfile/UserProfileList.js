@@ -8,7 +8,7 @@ import UserProfile from './UserProfile';
 
 
 export default () => {
-    const { userProfiles, getAllUserProfiles, getActiveUserProfiles, getDeactivatedUserProfiles } = useContext(UserProfileContext)
+    const { userProfiles, getActiveUserProfiles, getDeactivatedUserProfiles } = useContext(UserProfileContext)
     const currentUser = JSON.parse(sessionStorage.getItem("userProfile"))
     const { getAllUserTypes } = useContext(UserTypeContext)
     const [activeProfilesView, setActiveProfilesView] = useState(true)
