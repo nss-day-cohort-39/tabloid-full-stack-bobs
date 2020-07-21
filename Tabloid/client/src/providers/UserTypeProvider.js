@@ -1,5 +1,9 @@
+/* 
+Author(s): Alex Curnow
+Component Responsibilty: Pulls user types into the front end of the app and
+sets them for use elsewhere. 
+*/
 import React, { useState, useContext, createContext } from "react";
-import { useHistory } from "react-router-dom";
 import { UserProfileContext } from "./UserProfileProvider";
 
 export const UserTypeContext = createContext();
@@ -7,7 +11,6 @@ export const UserTypeContext = createContext();
 export const UserTypeProvider = (props) => {
   const [userTypes, setUserTypes] = useState([]);
   const { getToken } = useContext(UserProfileContext);
-  const history = useHistory();
 
   const getAllUserTypes = () =>
     getToken().then((token) =>

@@ -1,4 +1,8 @@
-import React, { useState, useEffect, useContext } from "react";
+/* 
+Author(s): Alex Curnow, Billy Blackman
+Component Responsibilty: Generates HTML for a tag and handles deleting a tag.
+*/
+import React, { useState, useContext } from "react";
 import { Card, CardTitle, CardBody, Modal, Button } from "reactstrap";
 import { TagContext } from "../../providers/TagProvider";
 import { EditTagForm } from "./EditTagForm";

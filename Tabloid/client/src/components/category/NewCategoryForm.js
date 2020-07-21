@@ -1,3 +1,8 @@
+/* 
+Author(s): Alex Curnow, Billy Blackman
+Component Responsibilty: This component generates the form, and calls
+the function that allows a user to add a new category.
+*/
 import React, { useContext, useRef } from "react";
 import { CategoryContext } from "../../providers/CategoryProvider";
 import { Button, Form, FormGroup, Label, Input } from "reactstrap";

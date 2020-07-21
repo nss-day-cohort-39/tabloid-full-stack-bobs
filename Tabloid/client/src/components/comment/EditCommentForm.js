@@ -1,3 +1,8 @@
+/* 
+Author(s): Alex Curnow
+Component Responsibilty: generates the comment edit form and calls the update
+comment method that allows a user to edit ("PUT") comments.
+*/
 import React, { useContext, useState } from "react";
 import { CommentContext } from "../../providers/CommentProvider";
 import { Button } from "reactstrap";

@@ -1,3 +1,10 @@
+/* 
+Author(s): Alex Curnow, Billy Blackman
+Component Responsibility: This component is responsible for generating a list of all
+categories as well as toggling the edit category modal, which in turn
+calls the Edit Category From component.  
+*/
+
 import React, { useContext, useEffect, useState } from "react";
 import { CategoryContext } from "../../providers/CategoryProvider";
 import { Category } from "./Category";
