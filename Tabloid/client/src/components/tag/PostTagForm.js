@@ -1,3 +1,9 @@
+/* 
+Author(s): Billy Blackman
+Component Responsibilty: Allows users to associate (add) and unassociate (remove)
+tags from posts, essentially creating and deleting Post-Tag relationships in 
+the database.
+*/
 import React, { useContext, useEffect } from "react";
 import { Button, ListGroup, ListGroupItem } from "reactstrap";
 import { TagContext } from "../../providers/TagProvider";
@@ -60,7 +66,7 @@ export const PostTagForm = (props) => {
         <ListGroupItem>
           {nonAssociatedTags.map((tag) => {
             return (
-              <>
+              <span key={`non-associatedTag--${tag.id}`}>
                 <Button
                   key={tag.id}
                   color="primary"
@@ -69,7 +75,7 @@ export const PostTagForm = (props) => {
                 >
                   + {tag.name}
                 </Button>
-              </>
+              </span>
             );
           })}
         </ListGroupItem>
@@ -78,7 +84,7 @@ export const PostTagForm = (props) => {
         <ListGroupItem>
           {associatedTags.map((tag) => {
             return (
-              <>
+              <span key={`associatedTag--${tag.id}`}>
                 <Button
                   key={tag.id}
                   color="primary"
@@ -86,7 +92,7 @@ export const PostTagForm = (props) => {
                 >
                   X {tag.name}
                 </Button>
-              </>
+              </span>
             );
           })}
         </ListGroupItem>

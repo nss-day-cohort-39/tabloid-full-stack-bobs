@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState, useRef } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { PostContext } from "../../providers/PostProvider";
 import { CategoryContext } from "../../providers/CategoryProvider";
 import Post from "./Post";
@@ -11,7 +11,6 @@ import {
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
-  Input,
 } from "reactstrap";
 import PostForm from "./PostForm";
 

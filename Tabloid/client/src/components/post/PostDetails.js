@@ -9,7 +9,7 @@ import {
   ModalBody,
   ModalHeader,
 } from "reactstrap";
-import { Link, useParams, useHistory } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import { EditPostForm } from "../post/EditPostForm";
 import { CommentContext } from "../../providers/CommentProvider";
 import { PostComment } from "../comment/PostComment";
@@ -21,13 +21,7 @@ import "../../styles/Modal.css";
 const PostDetails = () => {
   const { id } = useParams();
   const { getPostById, deletePost } = useContext(PostContext);
-  const {
-    getPostTagsByPostId,
-    postTags,
-    getAllPostTags,
-    addTagToPost,
-    deleteTagFromPost,
-  } = useContext(TagContext);
+  const { getPostTagsByPostId, postTags } = useContext(TagContext);
   const [post, setPost] = useState({ userProfile: {} });
   const history = useHistory();
 

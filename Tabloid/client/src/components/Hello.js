@@ -24,7 +24,7 @@ export default function Hello() {
             borderRadius: "40%",
           }}
           src="https://www.towson.edu/cla/images/cla-bulletin-board2-m.jpg"
-          alt="bulletin-board image"
+          alt="bulletin board"
         />
       </center>
     </>

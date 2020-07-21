@@ -1,3 +1,8 @@
+/* 
+Author(s): Alex Curnow, Billy Blackman
+Component Responsibilty: Generates the new tag form, allowing users
+to add new tags to the system.
+*/
 import React, { useContext, useRef } from "react";
 import { TagContext } from "../../providers/TagProvider";
 import { Button, Form, FormGroup, Label, Input } from "reactstrap";

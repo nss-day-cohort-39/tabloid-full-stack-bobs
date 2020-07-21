@@ -1,13 +1,16 @@
+/* 
+Author(s): Alex Curnow
+Component Responsibilty: This provider defines the fetch requests
+that allow for full CRUD functionality on comments.
+*/
 import React, { useState, useContext, createContext } from "react";
 import { UserProfileContext } from "./UserProfileProvider";
-import { useHistory } from "react-router-dom";
 
 export const CommentContext = createContext();
 
 export const CommentProvider = (props) => {
   const [comments, setComments] = useState([]);
   const { getToken } = useContext(UserProfileContext);
-  const history = useHistory();
 
   const getCommentsByPostId = (id) =>
     getToken().then((token) =>

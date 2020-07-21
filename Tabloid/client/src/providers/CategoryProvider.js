@@ -1,13 +1,17 @@
+/* 
+Author(s): Alex Curnow, Billy Blackman
+Component Responsibility: This provider is responsible for fetch requests that allow
+for full CRUD functionality on categories. 
+*/
+
 import React, { useState, useContext, createContext } from "react";
 import { UserProfileContext } from "./UserProfileProvider";
-import { useHistory } from "react-router-dom";
 
 export const CategoryContext = createContext();
 
 export const CategoryProvider = (props) => {
   const [categories, setCategories] = useState([]);
   const { getToken } = useContext(UserProfileContext);
-  const history = useHistory();
 
   const getAllCategories = () =>
     getToken().then((token) =>
