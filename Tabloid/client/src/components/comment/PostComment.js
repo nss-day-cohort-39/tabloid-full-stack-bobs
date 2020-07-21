@@ -1,3 +1,8 @@
+/* 
+Author(s): Alex Curnow
+Component Responsibilty: Generates a list of all comments on a post and calls
+the new, delete, and edit comments components.
+*/
 import React, { useState, useContext } from "react";
 import {
   Collapse,

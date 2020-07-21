@@ -1,3 +1,8 @@
+/* 
+Author(s): Alex Curnow, Billy Blackman
+Component Responsibilty: Handles communication with the back end
+allowing for CRUD functionality on both Tags and Post-Tag relationships.
+*/
 import React, { useState, useContext, createContext } from "react";
 import { UserProfileContext } from "./UserProfileProvider";
 import { useHistory } from "react-router-dom";
@@ -8,7 +13,6 @@ export const TagProvider = (props) => {
   const [postTags, setPostTags] = useState([]);
   const [tags, setTags] = useState([]);
   const { getToken } = useContext(UserProfileContext);
-  const history = useHistory();
 
   const getAllTags = () =>
     getToken().then((token) =>
@@ -22,7 +26,7 @@ export const TagProvider = (props) => {
         .then(setTags)
     );
 
-    const getAllPostTags = () =>
+  const getAllPostTags = () =>
     getToken().then((token) =>
       fetch("/api/postTag", {
         method: "GET",
@@ -45,7 +49,7 @@ export const TagProvider = (props) => {
         .then((res) => res.json())
         .then(setPostTags)
     );
-  }
+  };
 
   const addTag = (tag) =>
     getToken().then((token) =>
@@ -65,7 +69,7 @@ export const TagProvider = (props) => {
       })
     );
 
-    const addTagToPost = (postTag) =>
+  const addTagToPost = (postTag) =>
     getToken().then((token) =>
       fetch("/api/postTag", {
         method: "POST",
@@ -99,7 +103,7 @@ export const TagProvider = (props) => {
       })
     );
 
-    const deleteTagFromPost = (id) =>
+  const deleteTagFromPost = (id) =>
     getToken().then((token) =>
       fetch(`/api/postTag/${id}`, {
         method: "DELETE",

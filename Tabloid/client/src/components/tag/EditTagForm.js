@@ -1,3 +1,8 @@
+/* 
+Author(s): Alex Curnow, Billy Blackman
+Component Responsibilty: Generates the edit tag form and calls the 
+appropriate function to update ("PUT") a tag.
+*/
 import React, { useContext, useState } from "react";
 import { TagContext } from "../../providers/TagProvider";
 import { Button } from "reactstrap";

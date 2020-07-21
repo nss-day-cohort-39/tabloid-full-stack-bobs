@@ -1,7 +1,6 @@
-import React, { useState, useContext, createContext } from "react";
-import { UserProfileContext } from "./UserProfileProvider";
+import React, { useState, createContext } from "react";
 
-export const PostContext = React.createContext();
+export const PostContext = createContext();
 
 export const PostProvider = (props) => {
   const [posts, setPosts] = useState([]);

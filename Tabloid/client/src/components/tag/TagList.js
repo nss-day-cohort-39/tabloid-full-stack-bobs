@@ -1,3 +1,7 @@
+/* 
+Author(s): Alex Curnow, Billy Blackman
+Component Responsibilty: Generates a list of all tags in the system.
+*/
 import React, { useContext, useEffect, useState } from "react";
 import { TagContext } from "../../providers/TagProvider";
 import { Tag } from "./Tag";
