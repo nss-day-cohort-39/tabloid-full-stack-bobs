@@ -1,3 +1,9 @@
+/* 
+Author(s): Alex Curnow
+Component Responsibilty: This component generates the HTML for a single comment,
+sets the currently selected comment in its parent component, and toggles the edit
+and delete modal forms in its parent component.
+*/
 import React from "react";
 import { Button } from "reactstrap";
 

@@ -1,33 +1,37 @@
+/* 
+Author(s): Alex Curnow, Billy Blackman
+Component Responsibilty: Generates the new tag form, allowing users
+to add new tags to the system.
+*/
 import React, { useContext, useRef } from "react";
-import { CategoryContext } from "../providers/CategoryProvider";
+import { TagContext } from "../../providers/TagProvider";
 import { Button, Form, FormGroup, Label, Input } from "reactstrap";
 import { useHistory } from "react-router-dom";
-import "../styles/Button.css"
 
-export const NewCategoryForm = (props) => {
-  const { addCategory } = useContext(CategoryContext);
+export const NewTagForm = (props) => {
+  const { addTag } = useContext(TagContext);
 
   const name = useRef("");
 
   const history = useHistory();
 
-  const constructNewCategory = () => {
-    return addCategory({
+  const constructNewTag = () => {
+    return addTag({
       name: name.current.value,
     }).then(() => {
-      history.push("/category");
+      history.push("/tag");
     });
   };
 
   return (
     <Form className="postForm">
       <FormGroup>
-        <Label htmlFor="title">Category Name</Label>
+        <Label htmlFor="title">Tag Name</Label>
         <Input
           type="text"
           name="title"
-          id="categoryName"
-          placeholder="Enter category name"
+          id="TagName"
+          placeholder="Enter Tag name"
           innerRef={name}
           required
           autoFocus
@@ -38,7 +42,7 @@ export const NewCategoryForm = (props) => {
         type="submit"
         onClick={(e) => {
           e.preventDefault();
-          constructNewCategory().then(props.toggle);
+          constructNewTag().then(props.toggle);
         }}
       >
         Submit

@@ -1,21 +1,18 @@
-import React, { useState, useEffect, useContext } from "react";
-import {
-  Card,
-  CardTitle,
-  CardSubtitle,
-  CardBody,
-  CardImg,
-  Modal,
-  Button,
-  ModalHeader,
-  Form,
-} from "reactstrap";
-import { CategoryContext } from "../providers/CategoryProvider";
+/* 
+Author(s): Alex Curnow, Billy Blackman
+Component Responsibility: This component is responsible for generating the HTML for a
+category, toggling the edit and delete category modals, and actually
+deleting a category.
+*/
+
+import React, { useState, useContext } from "react";
+import { Card, CardTitle, CardBody, Modal, Button } from "reactstrap";
+import { CategoryContext } from "../../providers/CategoryProvider";
 import { EditCategoryForm } from "./EditCategoryForm";
-import "../styles/Button.css"
+import "../../styles/Button.css";
 
 export const Category = ({ category }) => {
-  const { deleteCategory, updateCategory } = useContext(CategoryContext);
+  const { deleteCategory } = useContext(CategoryContext);
 
   const [editModal, setEditModal] = useState(false);
   const toggleEdit = () => setEditModal(!editModal);

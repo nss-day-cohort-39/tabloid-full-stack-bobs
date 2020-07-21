@@ -1,12 +1,15 @@
-import React, { useContext, useEffect, useRef } from "react";
-import { CommentContext } from "../providers/CommentProvider";
+/* 
+Author(s): Alex Curnow
+Component Responsibilty: Generates HTML for the new comment form
+and calls the method that allows users to add new comments to a post.
+*/
+import React, { useContext, useRef } from "react";
+import { CommentContext } from "../../providers/CommentProvider";
 import { Button, Form } from "reactstrap";
-import { useHistory } from "react-router-dom";
 
 export const NewCommentForm = ({ postId, toggleModal }) => {
   const { addComment } = useContext(CommentContext);
   const userProfile = JSON.parse(sessionStorage.getItem("userProfile"));
-  const history = useHistory();
 
   const subject = useRef();
   const content = useRef();

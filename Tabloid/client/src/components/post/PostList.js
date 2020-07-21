@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState, useRef } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { PostContext } from "../../providers/PostProvider";
 import { CategoryContext } from "../../providers/CategoryProvider";
 import Post from "./Post";
@@ -11,7 +11,6 @@ import {
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
-  Input,
 } from "reactstrap";
 import PostForm from "./PostForm";
 
@@ -31,7 +30,6 @@ const PostList = () => {
   const [headerValue, setHeaderValue] = useState("");
   const [dropdownHeaderValue, setDropdownHeaderValue] = useState("");
   const user = JSON.parse(sessionStorage.getItem("userProfile"));
-  const category = useRef();
 
   const toggleButton = () => {
     setMyView(!myView);
@@ -69,8 +67,6 @@ const PostList = () => {
         setDropdownHeaderValue(categoryMatch.name);
         getPostsByCategory(categoryValue);
       }
-      console.log(posts);
-
       setButtonValue("My Posts");
       setHeaderValue("All Posts");
     }
@@ -98,7 +94,7 @@ const PostList = () => {
       <Button onClick={toggleModal}>Add Post</Button>
       <UncontrolledDropdown>
         <DropdownToggle caret>{dropdownHeaderValue}</DropdownToggle>
-        <DropdownMenu value={categoryValue} type="select" innerRef={category}>
+        <DropdownMenu value={categoryValue} type="select">
           {categories.map((category) => {
             if (category.isDeleted === false)
               return (

@@ -1,6 +1,11 @@
-import React, { useContext, useState, useEffect } from "react";
-import { CommentContext } from "../providers/CommentProvider";
-import { Button, Form } from "reactstrap";
+/* 
+Author(s): Alex Curnow
+Component Responsibilty: generates the comment edit form and calls the update
+comment method that allows a user to edit ("PUT") comments.
+*/
+import React, { useContext, useState } from "react";
+import { CommentContext } from "../../providers/CommentProvider";
+import { Button } from "reactstrap";
 
 export const EditCommentForm = ({ comment, postId, toggle }) => {
   const { updateComment } = useContext(CommentContext);

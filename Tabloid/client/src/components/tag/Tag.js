@@ -1,20 +1,14 @@
-import React, { useState, useEffect, useContext } from "react";
-import {
-  Card,
-  CardTitle,
-  CardSubtitle,
-  CardBody,
-  CardImg,
-  Modal,
-  Button,
-  ModalHeader,
-  Form,
-} from "reactstrap";
-import { TagContext } from "../providers/TagProvider";
+/* 
+Author(s): Alex Curnow, Billy Blackman
+Component Responsibilty: Generates HTML for a tag and handles deleting a tag.
+*/
+import React, { useState, useContext } from "react";
+import { Card, CardTitle, CardBody, Modal, Button } from "reactstrap";
+import { TagContext } from "../../providers/TagProvider";
 import { EditTagForm } from "./EditTagForm";
 
 export const Tag = ({ tag }) => {
-  const { deleteTag, updateTag } = useContext(TagContext);
+  const { deleteTag } = useContext(TagContext);
 
   const [editModal, setEditModal] = useState(false);
   const toggleEdit = () => setEditModal(!editModal);

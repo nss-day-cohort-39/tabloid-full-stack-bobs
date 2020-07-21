@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
-using System;
 using Tabloid.Data;
 using Tabloid.Models;
 using Tabloid.Repositories;
@@ -45,6 +45,25 @@ namespace Tabloid.Controllers
                 nameof(GetUserProfile),
                 new { firebaseUserId = userProfile.FirebaseUserId },
                 userProfile);
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult Deactivate(int id)
+        {
+            _userProfileRepository.DeactivateUserProfile(id);
+            return NoContent();
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult Put(int id, UserProfile userProfile)
+        {
+            if (id != userProfile.Id)
+            {
+                return BadRequest();
+            }
+            _userProfileRepository.Update(userProfile);
+            return NoContent();
+
         }
     }
 }

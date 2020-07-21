@@ -1,7 +1,14 @@
+/* 
+Author(s): Alex Curnow, Billy Blackman
+Component Responsibilty: This component generates the form that allows
+a user to edit an existing category, and also calls the update category 
+method from the category provider.
+*/
+
 import React, { useContext, useState } from "react";
-import { CategoryContext } from "../providers/CategoryProvider";
+import { CategoryContext } from "../../providers/CategoryProvider";
 import { Button } from "reactstrap";
-import "../styles/Button.css"
+import "../../styles/Button.css";
 
 export const EditCategoryForm = (props) => {
   const { updateCategory } = useContext(CategoryContext);

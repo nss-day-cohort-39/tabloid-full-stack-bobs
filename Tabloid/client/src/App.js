@@ -8,23 +8,26 @@ import { CategoryProvider } from "./providers/CategoryProvider";
 import { TagProvider } from "./providers/TagProvider";
 import { CommentProvider } from "./providers/CommentProvider";
 import { SubscriptionProvider } from "./providers/SubsriptionProvider";
+import { UserTypeProvider } from "./providers/UserTypeProvider";
 
 function App() {
   return (
     <Router>
       <UserProfileProvider>
-        <PostProvider>
-          <SubscriptionProvider>
-            <TagProvider>
-              <CommentProvider>
-                <CategoryProvider>
-                  <Header />
-                  <ApplicationViews />
-                </CategoryProvider>
-              </CommentProvider>
-            </TagProvider>
-          </SubscriptionProvider>
-        </PostProvider>
+        <UserTypeProvider>
+          <PostProvider>
+            <SubscriptionProvider>
+              <TagProvider>
+                <CommentProvider>
+                  <CategoryProvider>
+                    <Header />
+                    <ApplicationViews />
+                  </CategoryProvider>
+                </CommentProvider>
+              </TagProvider>
+            </SubscriptionProvider>
+          </PostProvider>
+        </UserTypeProvider>
       </UserProfileProvider>
     </Router>
   );

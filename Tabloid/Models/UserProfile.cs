@@ -46,5 +46,6 @@ namespace Tabloid.Models
                 return $"{FirstName} {LastName}";
             }
         }
+        public bool IsActive { get; set; }
     }
 }
