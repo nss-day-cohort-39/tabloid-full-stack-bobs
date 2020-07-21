@@ -24,14 +24,19 @@ export default () => {
   return (
     <>
       <Card>
-        {user.imageLocation ? (
-          <CardImg top src={user.imageLocation} alt={user.displayName} />
-        ) : (
-          <CardImg
-            top
-            src="https://s3.amazonaws.com/37assets/svn/765-default-avatar.png"
-          />
-        )}
+        {
+          (user.imageLocation)
+            ?
+            (
+              <CardImg top src={user.imageLocation} alt={user.displayName} />
+            )
+            : (
+              <CardImg
+                top
+                src="https://s3.amazonaws.com/37assets/svn/765-default-avatar.png"
+              />
+            )
+        }
         <CardBody>
           <CardText>Name: {user.fullName}</CardText>
           <CardTitle>Display Name : {user.displayName}</CardTitle>
