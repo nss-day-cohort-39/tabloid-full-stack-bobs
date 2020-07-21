@@ -39,8 +39,8 @@ export default () => {
         getAllUserTypes().then(userTypeCheck);
         if (activeProfilesView === true) {
             getActiveUserProfiles()
-                .then(() => setPageView("View Deactivated Users"))
-                .then(() => setHeader("User Profiles"))
+            setHeader("User Profiles")
+            setPageView("View Deactivated Users")
         } else {
             getDeactivatedUserProfiles()
                 .then(() => setPageView("View Active Users"))
