@@ -2,7 +2,7 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { Button } from 'reactstrap';
 
-export default ({ user, setClickedUser, setSelectedUser, toggleModal, toggleEditModal }) => {
+export default ({ user, setClickedUser, setSelectedUser, toggleModal, toggleEditModal, isAdmin }) => {
     const currentUser = JSON.parse(sessionStorage.getItem("userProfile"))
     const history = useHistory()
 
@@ -13,7 +13,7 @@ export default ({ user, setClickedUser, setSelectedUser, toggleModal, toggleEdit
             </td>
             <td>{user.displayName}</td>
             <td>{user.userType.name}</td>
-            {currentUser.userType.name === "Admin" &&
+            {isAdmin &&
                 <>
                     <td style={{ color: "blue", cursor: "pointer" }}
                         onClick={() => {

@@ -11,16 +11,14 @@ export default () => {
     const { userProfiles, getAllUserProfiles, getActiveUserProfiles, getDeactivatedUserProfiles } = useContext(UserProfileContext)
     const currentUser = JSON.parse(sessionStorage.getItem("userProfile"))
     const { getAllUserTypes } = useContext(UserTypeContext)
-    const activeUsers = userProfiles.filter(up => up.isActive === true)
-    const inactiveUsers = userProfiles.filter(up => up.isActive === false)
-    const [activeView, setActiveView] = useState(true)
+    const [activeProfilesView, setActiveProfilesView] = useState(true)
     const [modal, setModal] = useState(false)
     const toggleModal = () => setModal(!modal)
     const [clickedUser, setClickedUser] = useState({ id: 0 })
     const [selectedUser, setSelectedUser] = useState({});
     const [editModal, setEditModal] = useState(false);
     const toggleEditModal = () => setEditModal(!editModal);
-    const toggleView = () => setActiveView(!activeView)
+    const toggleView = () => setActiveProfilesView(!activeProfilesView)
     const [isAdmin, setIsAdmin] = useState(false)
 
     const userTypeCheck = () => {
@@ -33,12 +31,12 @@ export default () => {
 
     useEffect(() => {
         getAllUserTypes().then(userTypeCheck);
-        if (activeView === true) {
+        if (activeProfilesView === true) {
             getActiveUserProfiles()
         } else {
             getDeactivatedUserProfiles()
         }
-    }, [activeView])
+    }, [activeProfilesView])
 
     return (
         <>
@@ -66,6 +64,7 @@ export default () => {
                                 toggleModal={toggleModal}
                                 setSelectedUser={setSelectedUser}
                                 toggleEditModal={toggleEditModal}
+                                isAdmin={isAdmin}
                             />
                         })
                     }
