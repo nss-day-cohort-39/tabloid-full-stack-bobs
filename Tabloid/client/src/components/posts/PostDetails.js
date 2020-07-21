@@ -24,18 +24,24 @@ const PostDetails = () => {
   const { getPostById, deletePost } = useContext(PostContext);
   const { getPostTagsByPostId, postTags, getAllPostTags, addTagToPost, deleteTagFromPost } = useContext(TagContext);
   const [post, setPost] = useState({ userProfile: {} });
-  const history = useHistory();
-
-  const { comments, getCommentsByPostId } = useContext(CommentContext);
-  const { subscriptions, getAllSubscriptions, addSubscription } = useContext(SubscriptionContext);
-  
   const user = JSON.parse(sessionStorage.getItem("userProfile"));
 
+  
+  const history = useHistory();
+  
   useEffect(() => {
     getPostById(id).then(setPost);
     getCommentsByPostId(id);
     getPostTagsByPostId(id);
+    getAllSubscriptions();
   }, []);
+  
+  const { comments, getCommentsByPostId } = useContext(CommentContext);
+  const { subscriptions, getAllSubscriptions, addSubscription, updateSubscription } = useContext(SubscriptionContext);
+  debugger
+
+  const foundSubscription = subscriptions.find((s) => (s.SubscriberUserProfileId === user.id && s.ProviderUserProfileId === post.userProfile.id && s.EndDateTime !== EndDateTime))
+
   
   
   const [deleteModal, setDeleteModal] = useState(false);
@@ -46,8 +52,11 @@ const PostDetails = () => {
   
   const [postTagModal, setPostTagModal] = useState(false);
   const togglePostTag = () => setPostTagModal(!postTagModal);
+  
+  const [subscribeButton, setSubscribeButton] = useState(true);
+  const toggleSubscribeButton = () => setSubscribeButton(!subscribeButton);
 
-  const BeginDateTime = new Date();
+  const CurrentDate = new Date();
 
   const EndDateTime = new Date("9999-01-01")
   
@@ -55,10 +64,35 @@ const PostDetails = () => {
     addSubscription({
       SubscriberUserProfileId: user.id,
       ProviderUserProfileId: post.userProfile.id,
-      BeginDateTime: BeginDateTime,
+      BeginDateTime: CurrentDate,
       EndDateTime: EndDateTime
     })
     debugger
+  }
+
+  const endSubscription = () => {
+    updateSubscription({
+      EndDateTime: CurrentDate
+    })
+  }
+
+  const conditionalSubscribeButton = () => {
+    return (
+    (foundSubscription) ?
+      <>
+        <Button color="primary" onClick={constructSubscription}>
+          {" "}
+          Subscribe to {post.userProfile.displayName}{" "}
+        </Button>
+      </>
+    :
+      <>
+        <Button color="danger" onClick={endSubscription}>
+          {" "}
+          Unsubscribe {post.userProfile.displayName}{" "}
+        </Button>
+      </>
+    )
   }
 
   return (
@@ -96,10 +130,8 @@ const PostDetails = () => {
           {" "}
           Manage Tags{" "}
         </Button>
-        <Button color="primary" onClick={constructSubscription}>
-          {" "}
-          Subscribe to {post.userProfile.displayName}{" "}
-        </Button>
+        {conditionalSubscribeButton()}
+        
         <Modal isOpen={postTagModal}>
           <ModalBody>
             <PostTagForm postId={parseInt(id)} postTags={postTags}  toggle={togglePostTag}/>

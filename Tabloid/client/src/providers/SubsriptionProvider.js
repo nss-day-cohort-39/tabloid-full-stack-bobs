@@ -68,7 +68,7 @@ export const SubscriptionProvider = (props) => {
     const updateSubscription = (subscription) => {
         return getToken().then((token) =>
           fetch(`/api/subscription/${subscription.id}`, {
-            method: "PUT",
+            method: "PATCH",
             headers: {
               Authorization: `Bearer ${token}`,
               "Content-Type": "application/json",
@@ -87,6 +87,7 @@ export const SubscriptionProvider = (props) => {
       return (
         <SubscriptionContext.Provider
           value={{
+            getAllSubscriptions,
             subscriptions,
             getSubscriptionsBySubscriberId,
             getSubscriptionsByProviderId,
