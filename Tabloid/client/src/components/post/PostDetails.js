@@ -48,9 +48,6 @@ const PostDetails = () => {
   const [postTagModal, setPostTagModal] = useState(false);
   const togglePostTag = () => setPostTagModal(!postTagModal);
   
-  const [subscribeButton, setSubscribeButton] = useState(false);
-  const toggleSubscribeButton = () => setSubscribeButton(!subscribeButton);
-  
   //These variables set datetimes for creating and editing subscriptions
   const CurrentDate = new Date();
   const EndDateTime = "9999-01-01T00:00:00"
