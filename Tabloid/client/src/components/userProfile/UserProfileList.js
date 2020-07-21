@@ -14,7 +14,6 @@ export default () => {
     const currentUser = JSON.parse(sessionStorage.getItem("userProfile"))
     const activeUsers = userProfiles.filter(up => up.isActive === true)
     const [modal, setModal] = useState(false)
-    const [view, setView] = useState()
     const toggleModal = () => setModal(!modal)
     const [clickedUser, setClickedUser] = useState({ id: 0 })
     const [selectedUser, setSelectedUser] = useState({});
