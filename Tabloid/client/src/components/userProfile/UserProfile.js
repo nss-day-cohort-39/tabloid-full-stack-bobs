@@ -1,10 +1,27 @@
-import React from 'react';
+/* 
+Author(s): Calvin Curry
+Component Responsibility: Provides structure of a user profile that
+renders on the UserProfileList component.
+*/
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Button } from 'reactstrap';
 
-export default ({ user, setClickedUser, setSelectedUser, toggleModal, toggleEditModal }) => {
-    const currentUser = JSON.parse(sessionStorage.getItem("userProfile"))
+export default ({ user, setClickedUser, setSelectedUser, toggleModal, toggleEditModal, isAdmin, setDeactivatedUser, toggleReactivationModal }) => {
+    const [activeUser, setActiveUser] = useState(true)
     const history = useHistory()
+
+    const activeUserCheck = () => {
+        if (user.isActive) {
+            setActiveUser(true)
+        } else {
+            setActiveUser(false)
+        }
+    }
+
+    useEffect(() => {
+        activeUserCheck()
+    }, [activeUser])
 
     return (
         <tr key={user.id}>
@@ -13,7 +30,7 @@ export default ({ user, setClickedUser, setSelectedUser, toggleModal, toggleEdit
             </td>
             <td>{user.displayName}</td>
             <td>{user.userType.name}</td>
-            {currentUser.userType.name === "Admin" &&
+            {(isAdmin && activeUser) &&
                 <>
                     <td style={{ color: "blue", cursor: "pointer" }}
                         onClick={() => {
@@ -34,6 +51,18 @@ export default ({ user, setClickedUser, setSelectedUser, toggleModal, toggleEdit
                         </Button>
                     </td>
                 </>
+            }
+            {!activeUser &&
+                <td>
+                    <Button
+                        onClick={() => {
+                            setDeactivatedUser(user)
+                            toggleReactivationModal()
+                        }}
+                    >
+                        Reactivate
+                    </Button>
+                </td>
             }
 
         </tr>

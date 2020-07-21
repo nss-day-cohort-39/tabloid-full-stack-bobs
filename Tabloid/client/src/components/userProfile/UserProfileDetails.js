@@ -1,3 +1,8 @@
+/* 
+Author(s): Calvin Curry
+Component Responsibility: Creates a profile card that
+displays details about a single user. 
+*/
 import React, { useContext, useState, useEffect } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { UserProfileContext } from "../../providers/UserProfileProvider";

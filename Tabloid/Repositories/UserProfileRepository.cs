@@ -37,6 +37,22 @@ namespace Tabloid.Repositories
                 .FirstOrDefault(up => up.Id == id);
         }
 
+        public List<UserProfile> GetActiveUsers()
+        {
+            return _context.UserProfile
+               .Include(up => up.UserType)
+               .Where(up => up.IsActive == true)
+               .ToList();
+        }
+
+        public List<UserProfile> GetDeactivatedUsers()
+        {
+            return _context.UserProfile
+               .Include(up => up.UserType)
+               .Where(up => up.IsActive == false)
+               .ToList();
+        }
+
         public void Add(UserProfile userProfile)
         {
             _context.Add(userProfile);
@@ -50,6 +66,15 @@ namespace Tabloid.Repositories
             _context.Entry(profile).Property("IsActive").IsModified = true;
             _context.SaveChanges();
         }
+
+        public void ReactivateUserProfile(int id)
+        {
+            var profile = GetByUserId(id);
+            profile.IsActive = true;
+            _context.Entry(profile).Property("IsActive").IsModified = true;
+            _context.SaveChanges();
+        }
+
         public void Update(UserProfile userProfile)
         {
             _context.Entry(userProfile).State = EntityState.Modified;

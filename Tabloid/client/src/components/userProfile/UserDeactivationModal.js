@@ -1,3 +1,8 @@
+/* 
+Author(s): Calvin Curry
+Component Responsibility: Renders a modal that allows Admin users to 
+deactivate an active user profile.
+*/
 import React, { useContext } from 'react';
 import { Modal, ModalBody, ModalFooter, Button } from 'reactstrap';
 import { UserProfileContext } from '../../providers/UserProfileProvider';

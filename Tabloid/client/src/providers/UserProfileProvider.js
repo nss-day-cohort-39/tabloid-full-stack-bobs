@@ -1,3 +1,7 @@
+/* 
+Author(s): Calvin Curry
+Component Responsibility: Houses functions that extract data from the API
+*/
 import React, { useState, useEffect, createContext } from "react";
 import { Spinner } from "reactstrap";
 import * as firebase from "firebase/app";
@@ -94,6 +98,32 @@ export function UserProfileProvider(props) {
     );
   };
 
+  const getActiveUserProfiles = () => {
+    return getToken().then((token) =>
+      fetch(`${apiUrl}/activeUsers`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((resp) => resp.json())
+        .then(setUserProfiles)
+    );
+  };
+
+  const getDeactivatedUserProfiles = () => {
+    return getToken().then((token) =>
+      fetch(`${apiUrl}/deactivatedUsers`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((resp) => resp.json())
+        .then(setUserProfiles)
+    );
+  };
+
   const saveUser = (userProfile) => {
     return getToken().then((token) =>
       fetch(apiUrl, {
@@ -116,13 +146,32 @@ export function UserProfileProvider(props) {
         },
       }).then((resp) => {
         if (resp.ok) {
-          getAllUserProfiles();
+          getActiveUserProfiles();
         } else {
           throw new Error("Unauthorized");
         }
       })
     )
   };
+
+  const reactivateUser = (userProfile) => {
+    return getToken().then((token) =>
+      fetch(`${apiUrl}/reactivateUser/${userProfile.id}`, {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }).then((resp) => {
+        if (resp.ok) {
+          getDeactivatedUserProfiles();
+        } else {
+          throw new Error("Unauthorized");
+        }
+      })
+    )
+  };
+
+
 
   const updateUser = (userProfile) =>
     getToken().then((token) =>
@@ -149,7 +198,10 @@ export function UserProfileProvider(props) {
         userProfiles,
         getUserProfileByUserId,
         deactivateUser,
+        reactivateUser,
         updateUser,
+        getActiveUserProfiles,
+        getDeactivatedUserProfiles
       }}
     >
       {isFirebaseReady ? (

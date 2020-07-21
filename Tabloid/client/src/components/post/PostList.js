@@ -1,3 +1,10 @@
+/* 
+Author(s): Calvin Curry, Daniel Hero
+Component Responsibility: Renders a list of user posts. If the ALL POSTS button
+is clicked, the user can view a list of all user posts. If the MY POSTS button is clicked, 
+a list of posts created by that specific user will be rendered.
+*/
+
 import React, { useContext, useEffect, useState } from "react";
 import { PostContext } from "../../providers/PostProvider";
 import { CategoryContext } from "../../providers/CategoryProvider";
