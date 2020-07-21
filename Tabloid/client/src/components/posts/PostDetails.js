@@ -46,13 +46,17 @@ const PostDetails = () => {
   
   const [postTagModal, setPostTagModal] = useState(false);
   const togglePostTag = () => setPostTagModal(!postTagModal);
+
+  const BeginDateTime = new Date();
+
+  const EndDateTime = new Date("9999-01-01")
   
   const constructSubscription = () => {
     addSubscription({
       SubscriberUserProfileId: user.id,
       ProviderUserProfileId: post.userProfile.id,
-      BeginDateTime: Date.now(),
-      EndDateTime: Date('2099-01-01')
+      BeginDateTime: BeginDateTime,
+      EndDateTime: EndDateTime
     })
     debugger
   }
