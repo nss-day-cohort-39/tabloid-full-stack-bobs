@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Button } from 'reactstrap';
 
-export default ({ user, setClickedUser, setSelectedUser, toggleModal, toggleEditModal, isAdmin, isActive }) => {
+export default ({ user, setClickedUser, setSelectedUser, toggleModal, toggleEditModal, isAdmin, setDeactivatedUser, toggleReactivationModal }) => {
     const [activeUser, setActiveUser] = useState(true)
     const history = useHistory()
 
@@ -49,7 +49,14 @@ export default ({ user, setClickedUser, setSelectedUser, toggleModal, toggleEdit
             }
             {!activeUser &&
                 <td>
-                    <Button>Reactivate</Button>
+                    <Button
+                        onClick={() => {
+                            setDeactivatedUser(user)
+                            toggleReactivationModal()
+                        }}
+                    >
+                        Reactivate
+                    </Button>
                 </td>
             }
 

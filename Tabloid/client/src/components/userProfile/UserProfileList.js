@@ -5,6 +5,7 @@ import { Table, Modal, ModalBody, ModalHeader, Button } from "reactstrap";
 import { EditUserProfileForm } from "../EditUserProfileForm";
 import { UserTypeContext } from '../../providers/UserTypeProvider';
 import UserProfile from './UserProfile';
+import UserReactivationModal from './UserReactivationModal';
 
 
 export default () => {
@@ -15,9 +16,12 @@ export default () => {
     const [modal, setModal] = useState(false)
     const toggleModal = () => setModal(!modal)
     const [clickedUser, setClickedUser] = useState({ id: 0 })
+    const [deactivatedUser, setDeactivatedUser] = useState({ id: 0 })
     const [selectedUser, setSelectedUser] = useState({});
     const [editModal, setEditModal] = useState(false);
+    const [reactivationModal, setReactivationModal] = useState(false)
     const toggleEditModal = () => setEditModal(!editModal);
+    const toggleReactivationModal = () => setReactivationModal(!reactivationModal)
     const toggleView = () => setActiveProfilesView(!activeProfilesView)
     const [isAdmin, setIsAdmin] = useState(false)
     const [pageView, setPageView] = useState("User Profiles")
@@ -67,9 +71,11 @@ export default () => {
                                 key={profile.id}
                                 user={profile}
                                 setClickedUser={setClickedUser}
+                                setDeactivatedUser={setDeactivatedUser}
                                 toggleModal={toggleModal}
                                 setSelectedUser={setSelectedUser}
                                 toggleEditModal={toggleEditModal}
+                                toggleReactivationModal={toggleReactivationModal}
                                 isAdmin={isAdmin}
                             />
                         })
@@ -86,6 +92,11 @@ export default () => {
                 </ModalBody>
             </Modal>
             <UserDeactivationModal modal={modal} toggleModal={toggleModal} clickedUser={clickedUser} />
+            <UserReactivationModal
+                reactivationModal={reactivationModal}
+                toggleReactivationModal={toggleReactivationModal}
+                deactivatedUser={deactivatedUser}
+            />
         </>
     )
 }

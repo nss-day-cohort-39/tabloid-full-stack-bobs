@@ -142,13 +142,32 @@ export function UserProfileProvider(props) {
         },
       }).then((resp) => {
         if (resp.ok) {
-          getAllUserProfiles();
+          getActiveUserProfiles();
         } else {
           throw new Error("Unauthorized");
         }
       })
     )
   };
+
+  const reactivateUser = (userProfile) => {
+    return getToken().then((token) =>
+      fetch(`${apiUrl}/reactivateUser/${userProfile.id}`, {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }).then((resp) => {
+        if (resp.ok) {
+          getDeactivatedUserProfiles();
+        } else {
+          throw new Error("Unauthorized");
+        }
+      })
+    )
+  };
+
+
 
   const updateUser = (userProfile) =>
     getToken().then((token) =>
@@ -175,6 +194,7 @@ export function UserProfileProvider(props) {
         userProfiles,
         getUserProfileByUserId,
         deactivateUser,
+        reactivateUser,
         updateUser,
         getActiveUserProfiles,
         getDeactivatedUserProfiles

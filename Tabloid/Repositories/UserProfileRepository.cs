@@ -66,6 +66,15 @@ namespace Tabloid.Repositories
             _context.Entry(profile).Property("IsActive").IsModified = true;
             _context.SaveChanges();
         }
+
+        public void ReactivateUserProfile(int id)
+        {
+            var profile = GetByUserId(id);
+            profile.IsActive = true;
+            _context.Entry(profile).Property("IsActive").IsModified = true;
+            _context.SaveChanges();
+        }
+
         public void Update(UserProfile userProfile)
         {
             _context.Entry(userProfile).State = EntityState.Modified;
