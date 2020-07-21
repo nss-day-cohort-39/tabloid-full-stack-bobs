@@ -37,6 +37,22 @@ namespace Tabloid.Repositories
                 .FirstOrDefault(up => up.Id == id);
         }
 
+        public List<UserProfile> GetActiveUsers()
+        {
+            return _context.UserProfile
+               .Include(up => up.UserType)
+               .Where(up => up.IsActive == true)
+               .ToList();
+        }
+
+        public List<UserProfile> GetDeactivatedUsers()
+        {
+            return _context.UserProfile
+               .Include(up => up.UserType)
+               .Where(up => up.IsActive == false)
+               .ToList();
+        }
+
         public void Add(UserProfile userProfile)
         {
             _context.Add(userProfile);

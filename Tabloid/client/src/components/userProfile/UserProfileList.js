@@ -1,31 +1,51 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { UserProfileContext } from '../../providers/UserProfileProvider';
 import UserDeactivationModal from './UserDeactivationModal';
-import { Table, Modal, ModalBody, ModalHeader } from "reactstrap";
+import { Table, Modal, ModalBody, ModalHeader, Button } from "reactstrap";
 import { EditUserProfileForm } from "../EditUserProfileForm";
 import { UserTypeContext } from '../../providers/UserTypeProvider';
 import UserProfile from './UserProfile';
 
 
 export default () => {
-    const { userProfiles, getAllUserProfiles } = useContext(UserProfileContext)
+    const { userProfiles, getAllUserProfiles, getActiveUserProfiles, getDeactivatedUserProfiles } = useContext(UserProfileContext)
+    const currentUser = JSON.parse(sessionStorage.getItem("userProfile"))
     const { getAllUserTypes } = useContext(UserTypeContext)
     const activeUsers = userProfiles.filter(up => up.isActive === true)
+    const inactiveUsers = userProfiles.filter(up => up.isActive === false)
+    const [activeView, setActiveView] = useState(true)
     const [modal, setModal] = useState(false)
     const toggleModal = () => setModal(!modal)
     const [clickedUser, setClickedUser] = useState({ id: 0 })
     const [selectedUser, setSelectedUser] = useState({});
     const [editModal, setEditModal] = useState(false);
     const toggleEditModal = () => setEditModal(!editModal);
+    const toggleView = () => setActiveView(!activeView)
+    const [isAdmin, setIsAdmin] = useState(false)
+
+    const userTypeCheck = () => {
+        if (currentUser.userType.name === "Admin") {
+            setIsAdmin(true)
+        } else {
+            setIsAdmin(false)
+        }
+    }
 
     useEffect(() => {
-        getAllUserProfiles()
-            .then(() => getAllUserTypes())
-    }, [])
+        getAllUserTypes().then(userTypeCheck);
+        if (activeView === true) {
+            getActiveUserProfiles()
+        } else {
+            getDeactivatedUserProfiles()
+        }
+    }, [activeView])
 
     return (
         <>
             <h1>User Profiles</h1>
+            {isAdmin &&
+                <Button onClick={toggleView} >View Deactivated</Button>
+            }
             <Table>
                 <thead>
                     <tr>
@@ -38,7 +58,7 @@ export default () => {
                 </thead>
                 <tbody>
                     {
-                        activeUsers.map(profile => {
+                        userProfiles.map(profile => {
                             return <UserProfile
                                 key={profile.id}
                                 user={profile}

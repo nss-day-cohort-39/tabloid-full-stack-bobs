@@ -94,6 +94,32 @@ export function UserProfileProvider(props) {
     );
   };
 
+  const getActiveUserProfiles = () => {
+    return getToken().then((token) =>
+      fetch(`${apiUrl}/activeUsers`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((resp) => resp.json())
+        .then(setUserProfiles)
+    );
+  };
+
+  const getDeactivatedUserProfiles = () => {
+    return getToken().then((token) =>
+      fetch(`${apiUrl}/deactivatedUsers`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((resp) => resp.json())
+        .then(setUserProfiles)
+    );
+  };
+
   const saveUser = (userProfile) => {
     return getToken().then((token) =>
       fetch(apiUrl, {
@@ -150,6 +176,8 @@ export function UserProfileProvider(props) {
         getUserProfileByUserId,
         deactivateUser,
         updateUser,
+        getActiveUserProfiles,
+        getDeactivatedUserProfiles
       }}
     >
       {isFirebaseReady ? (
