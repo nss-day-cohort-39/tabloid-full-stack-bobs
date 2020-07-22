@@ -6,9 +6,8 @@ type of Admin can toggle the list and view deactivated profiles as well.
 import React, { useContext, useEffect, useState } from 'react';
 import { UserProfileContext } from '../../providers/UserProfileProvider';
 import UserDeactivationModal from './UserDeactivationModal';
-import { Table, Modal, ModalBody, ModalHeader, Button } from "reactstrap";
+import { Modal, ModalBody, ModalHeader, Button, ListGroup } from "reactstrap";
 import { EditUserProfileForm } from "../EditUserProfileForm";
-import { UserTypeContext } from '../../providers/UserTypeProvider';
 import UserProfile from './UserProfile';
 import UserReactivationModal from './UserReactivationModal';
 
@@ -16,7 +15,6 @@ import UserReactivationModal from './UserReactivationModal';
 export default () => {
     const { userProfiles, getActiveUserProfiles, getDeactivatedUserProfiles } = useContext(UserProfileContext)
     const currentUser = JSON.parse(sessionStorage.getItem("userProfile"))
-    const { getAllUserTypes } = useContext(UserTypeContext)
     const [activeProfilesView, setActiveProfilesView] = useState(true)
     const [modal, setModal] = useState(false)
     const toggleModal = () => setModal(!modal)
@@ -33,7 +31,7 @@ export default () => {
     const [header, setHeader] = useState("")
 
     const userTypeCheck = () => {
-        if (currentUser.userType.name === "Admin") {
+        if (currentUser.userTypeId === 1) {
             setIsAdmin(true)
         } else {
             setIsAdmin(false)
@@ -41,52 +39,41 @@ export default () => {
     }
 
     useEffect(() => {
-        getAllUserTypes().then(userTypeCheck);
+        userTypeCheck();
         if (activeProfilesView === true) {
             getActiveUserProfiles()
-            setHeader("User Profiles")
+                .then(() => setHeader("User Profiles"))
             setPageView("View Deactivated Users")
         } else {
             getDeactivatedUserProfiles()
                 .then(() => setPageView("View Active Users"))
                 .then(() => setHeader("Deactivated Users"))
         }
-    }, [activeProfilesView, pageView])
+    }, [activeProfilesView])
 
     return (
         <>
-            <h1>{header}</h1>
+            <h1 className="userProfileHeader">{header}</h1>
             {isAdmin &&
-                <Button onClick={toggleView}>{pageView}</Button>
+                <Button color="primary" className="userProfileToggleButton" onClick={toggleView}>{pageView}</Button>
             }
-            <Table>
-                <thead>
-                    <tr>
-                        <th>Full Name</th>
-                        <th>Display Name</th>
-                        <th>User Type</th>
-                        <th></th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {
-                        userProfiles.map(profile => {
-                            return <UserProfile
-                                key={profile.id}
-                                user={profile}
-                                setClickedUser={setClickedUser}
-                                setDeactivatedUser={setDeactivatedUser}
-                                toggleModal={toggleModal}
-                                setSelectedUser={setSelectedUser}
-                                toggleEditModal={toggleEditModal}
-                                toggleReactivationModal={toggleReactivationModal}
-                                isAdmin={isAdmin}
-                            />
-                        })
-                    }
-                </tbody>
-            </Table>
+            <ListGroup className="userProfileList">
+                {
+                    userProfiles.map(profile => {
+                        return <UserProfile
+                            key={profile.id}
+                            user={profile}
+                            setClickedUser={setClickedUser}
+                            setDeactivatedUser={setDeactivatedUser}
+                            toggleModal={toggleModal}
+                            setSelectedUser={setSelectedUser}
+                            toggleEditModal={toggleEditModal}
+                            toggleReactivationModal={toggleReactivationModal}
+                            isAdmin={isAdmin}
+                        />
+                    })
+                }
+            </ListGroup>
             <Modal isOpen={editModal}>
                 <ModalHeader>Edit User Type</ModalHeader>
                 <ModalBody>
@@ -105,3 +92,5 @@ export default () => {
         </>
     )
 }
+
+
