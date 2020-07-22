@@ -8,7 +8,6 @@ import { UserProfileContext } from '../../providers/UserProfileProvider';
 import UserDeactivationModal from './UserDeactivationModal';
 import { Modal, ModalBody, ModalHeader, Button, ListGroup } from "reactstrap";
 import { EditUserProfileForm } from "../EditUserProfileForm";
-import { UserTypeContext } from '../../providers/UserTypeProvider';
 import UserProfile from './UserProfile';
 import UserReactivationModal from './UserReactivationModal';
 
@@ -41,7 +40,6 @@ export default () => {
 
     useEffect(() => {
         userTypeCheck();
-        getActiveUserProfiles();
         if (activeProfilesView === true) {
             getActiveUserProfiles()
             setHeader("User Profiles")
