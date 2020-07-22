@@ -22,11 +22,25 @@ export default ({ user, setClickedUser, setSelectedUser, toggleModal, toggleEdit
     }
 
     const showProfileImage = () => {
-        return <img className="userProfileImage" src={user.imageLocation} alt={user.displayName} />
+        return (
+            <img
+                className="userProfileImage"
+                src={user.imageLocation}
+                alt={user.displayName}
+                onClick={() => history.push(`/userProfile/${user.id}`)}
+            />
+        )
     }
 
     const showDefaultImage = () => {
-        return <img className="userProfileImage" src="https://st3.depositphotos.com/4111759/13425/v/450/depositphotos_134255626-stock-illustration-avatar-male-profile-gray-person.jpg" />
+        return (
+            <img
+                className="userProfileImage"
+                src="https://st3.depositphotos.com/4111759/13425/v/450/depositphotos_134255626-stock-illustration-avatar-male-profile-gray-person.jpg"
+                alt={user.displayName}
+                onClick={() => history.push(`/userProfile/${user.id}`)}
+            />
+        )
     }
 
     useEffect(() => {
@@ -44,7 +58,7 @@ export default ({ user, setClickedUser, setSelectedUser, toggleModal, toggleEdit
                 {userImage}
             </div>
             <div className="userProfileInfo">
-                <p style={{ cursor: "pointer" }} onClick={() => history.push(`/userProfile/${user.id}`)}>
+                <p className="userProfileFullName" onClick={() => history.push(`/userProfile/${user.id}`)}>
                     <strong>Name:</strong> {user.fullName}
                 </p>
                 <p><strong>Display Name:</strong> {user.displayName}</p>

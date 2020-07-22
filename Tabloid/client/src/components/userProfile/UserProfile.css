@@ -1,0 +1,45 @@
+.userProfileCard {
+    display: flex !important;
+    flex-direction: row !important;
+    position: absolute;
+    justify-content: space-evenly;
+}
+
+.userProfileList {
+    width: 60%;
+    position: absolute;
+    margin-left: 20%;
+}
+
+.userProfileHeader {
+    text-align: center;
+}
+
+.userProfileImage {
+    cursor: pointer;
+    width: 200px;
+}
+
+.adminButtons {
+    display: flex;
+    flex-direction: column;
+    padding-top: 5%;
+}
+
+.adminButton {
+    width: 170px;
+}
+
+.userProfileInfo {
+    padding-top: 5%;
+    width: 320px;
+}
+
+.userProfileToggleButton {
+    height: 40px;
+    width: 210px;
+}
+
+.userProfileFullName {
+    cursor: pointer;
+}

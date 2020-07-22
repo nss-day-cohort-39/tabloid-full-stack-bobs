@@ -31,9 +31,9 @@ export default () => {
     const [isAdmin, setIsAdmin] = useState(false)
     const [pageView, setPageView] = useState("User Profiles")
     const [header, setHeader] = useState("")
-    console.log(currentUser)
+
     const userTypeCheck = () => {
-        if (currentUser.userTypeId === 2) {
+        if (currentUser.userTypeId === 1) {
             setIsAdmin(true)
         } else {
             setIsAdmin(false)
