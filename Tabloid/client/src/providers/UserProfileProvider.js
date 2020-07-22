@@ -180,7 +180,7 @@ export function UserProfileProvider(props) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(userProfile),
-      }).then(getAllUserProfiles)
+      }).then(getActiveUserProfiles)
     );
 
   return (
