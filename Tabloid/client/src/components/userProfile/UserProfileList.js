@@ -16,7 +16,6 @@ import UserReactivationModal from './UserReactivationModal';
 export default () => {
     const { userProfiles, getActiveUserProfiles, getDeactivatedUserProfiles } = useContext(UserProfileContext)
     const currentUser = JSON.parse(sessionStorage.getItem("userProfile"))
-    const { getAllUserTypes } = useContext(UserTypeContext)
     const [activeProfilesView, setActiveProfilesView] = useState(true)
     const [modal, setModal] = useState(false)
     const toggleModal = () => setModal(!modal)
@@ -41,7 +40,8 @@ export default () => {
     }
 
     useEffect(() => {
-        getAllUserTypes().then(userTypeCheck);
+        userTypeCheck();
+        getActiveUserProfiles();
         if (activeProfilesView === true) {
             getActiveUserProfiles()
             setHeader("User Profiles")
@@ -51,7 +51,7 @@ export default () => {
                 .then(() => setPageView("View Active Users"))
                 .then(() => setHeader("Deactivated Users"))
         }
-    }, [activeProfilesView, pageView])
+    }, [activeProfilesView])
 
     return (
         <>

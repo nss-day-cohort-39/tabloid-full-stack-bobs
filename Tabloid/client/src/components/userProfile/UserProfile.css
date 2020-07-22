@@ -43,3 +43,24 @@
 .userProfileFullName {
     cursor: pointer;
 }
+
+.userProfileDetailsCard {
+    height: 600px;
+    margin-left: 35%;
+    width: 440px;
+}
+
+.userProfileDetailsImage {
+    height:300px;
+}
+
+.userProfileCardButton {
+    width: 30%;
+}
+
+.userProfileDetailsSpinner {
+    height: 7em !important;
+    margin-left: 45%;
+    margin-top: 15%;
+    width: 7em !important;
+}
