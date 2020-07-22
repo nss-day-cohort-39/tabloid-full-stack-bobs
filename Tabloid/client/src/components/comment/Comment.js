@@ -6,11 +6,16 @@ and delete modal forms in its parent component.
 */
 import React from "react";
 import { Button, Card, CardBody } from "reactstrap";
+import "./Comment.css";
 
 export const Comment = ({ c, toggleEdit, toggleDelete, setComment }) => {
   const [date, time] = c.createDateTime.split("T");
   return (
     <Card key={c.id} style={{ margin: "20px" }}>
+      <div className="userProfile">
+        <img className="profileImg" src={c.userProfile.imageLocation} />
+        <span>{c.userProfile.displayName}</span>
+      </div>
       <CardBody>
         <p>
           <strong>Subject: </strong>
@@ -19,10 +24,6 @@ export const Comment = ({ c, toggleEdit, toggleDelete, setComment }) => {
         <p>
           <strong>Comment: </strong>
           {c.content}
-        </p>
-        <p>
-          <strong>From User: </strong>
-          {c.userProfile.displayName}
         </p>
         <p>
           <strong>Date Created: </strong>
