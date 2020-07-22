@@ -171,8 +171,6 @@ export function UserProfileProvider(props) {
     )
   };
 
-
-
   const updateUser = (userProfile) =>
     getToken().then((token) =>
       fetch(`${apiUrl}/${userProfile.id}`, {
@@ -182,7 +180,7 @@ export function UserProfileProvider(props) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(userProfile),
-      }).then(getAllUserProfiles)
+      }).then(getActiveUserProfiles)
     );
 
   return (
