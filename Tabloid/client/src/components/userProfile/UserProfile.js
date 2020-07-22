@@ -5,11 +5,13 @@ renders on the UserProfileList component.
 */
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Button } from 'reactstrap';
+import { Button, ListGroupItem } from 'reactstrap';
+import "./UserProfile.css"
 
 export default ({ user, setClickedUser, setSelectedUser, toggleModal, toggleEditModal, isAdmin, setDeactivatedUser, toggleReactivationModal }) => {
     const [activeUser, setActiveUser] = useState(true)
     const history = useHistory()
+    const [userImage, setUserImage] = useState()
 
     const activeUserCheck = () => {
         if (user.isActive) {
@@ -19,29 +21,50 @@ export default ({ user, setClickedUser, setSelectedUser, toggleModal, toggleEdit
         }
     }
 
+    const showProfileImage = () => {
+        return <img className="userProfileImage" src={user.imageLocation} alt={user.displayName} />
+    }
+
+    const showDefaultImage = () => {
+        return <img className="userProfileImage" src="https://st3.depositphotos.com/4111759/13425/v/450/depositphotos_134255626-stock-illustration-avatar-male-profile-gray-person.jpg" />
+    }
+
     useEffect(() => {
         activeUserCheck()
+        if (user.imageLocation) {
+            setUserImage(showProfileImage)
+        } else {
+            setUserImage(showDefaultImage)
+        }
     }, [activeUser])
 
     return (
-        <tr key={user.id}>
-            <td style={{ cursor: "pointer" }} onClick={() => history.push(`/userProfile/${user.id}`)}>
-                {user.fullName}
-            </td>
-            <td>{user.displayName}</td>
-            <td>{user.userType.name}</td>
-            {(isAdmin && activeUser) &&
-                <>
-                    <td style={{ color: "blue", cursor: "pointer" }}
-                        onClick={() => {
-                            setClickedUser(user)
-                            toggleModal()
-                        }}
-                    >
-                        Deactivate
-                    </td>
-                    <td>
+        <ListGroupItem className="userProfileCard" key={user.id}>
+            <div>
+                {userImage}
+            </div>
+            <div className="userProfileInfo">
+                <p style={{ cursor: "pointer" }} onClick={() => history.push(`/userProfile/${user.id}`)}>
+                    <strong>Name:</strong> {user.fullName}
+                </p>
+                <p><strong>Display Name:</strong> {user.displayName}</p>
+                <p><strong>User Type:</strong> {user.userType.name}</p>
+            </div>
+            <div className="adminButtons">
+                {(isAdmin && activeUser) &&
+                    <>
                         <Button
+                            color="danger"
+                            className="adminButton deactivate"
+                            onClick={() => {
+                                setClickedUser(user)
+                                toggleModal()
+                            }}
+                        >
+                            Deactivate
+                        </Button>
+                        <Button
+                            className="adminButton edit"
                             onClick={() => {
                                 setSelectedUser(user);
                                 toggleEditModal();
@@ -49,12 +72,13 @@ export default ({ user, setClickedUser, setSelectedUser, toggleModal, toggleEdit
                         >
                             Edit
                         </Button>
-                    </td>
-                </>
-            }
-            {!activeUser &&
-                <td>
+
+                    </>
+                }
+                {!activeUser &&
                     <Button
+                        color="success"
+                        className="adminButton reactivate"
                         onClick={() => {
                             setDeactivatedUser(user)
                             toggleReactivationModal()
@@ -62,9 +86,8 @@ export default ({ user, setClickedUser, setSelectedUser, toggleModal, toggleEdit
                     >
                         Reactivate
                     </Button>
-                </td>
-            }
-
-        </tr>
+                }
+            </div>
+        </ListGroupItem>
     )
 }

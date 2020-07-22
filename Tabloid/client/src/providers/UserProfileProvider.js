@@ -171,8 +171,6 @@ export function UserProfileProvider(props) {
     )
   };
 
-
-
   const updateUser = (userProfile) =>
     getToken().then((token) =>
       fetch(`${apiUrl}/${userProfile.id}`, {
